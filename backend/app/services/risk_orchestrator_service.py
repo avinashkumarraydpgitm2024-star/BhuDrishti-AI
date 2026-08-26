@@ -5,16 +5,15 @@ from sqlalchemy.orm import Session
 from backend.app.models.risk_assessment import RiskAssessment
 from backend.app.models.risk_zone import RiskZone
 from backend.app.schemas.risk_assessment import RiskAssessmentCreate
+from backend.app.services.alert_service import (
+    create_alert_from_assessment,
+)
 from backend.app.services.risk_assessment_service import (
     create_risk_assessment,
 )
 from backend.app.services.risk_engine_service import (
     calculate_baseline_risk,
 )
-from backend.app.services.risk_fusion_service import (
-    build_risk_engine_input,
-)
-
 from backend.app.services.risk_fusion_service import (
     build_risk_engine_input,
     validate_risk_input_availability,
@@ -71,7 +70,15 @@ def run_risk_assessment(
         valid_until=valid_until,
     )
 
-    return create_risk_assessment(
+    assessment = create_risk_assessment(
         db=db,
         assessment_data=assessment_data,
     )
+
+    create_alert_from_assessment(
+        db=db,
+        risk_zone=risk_zone,
+        assessment=assessment,
+    )
+
+    return assessment

@@ -17,6 +17,9 @@ from backend.app.models.sensor_reading import SensorReading
 from backend.app.models.user import User, UserRole
 from backend.app.models.weather_forecast import WeatherForecast
 from backend.app.models.weather_observation import WeatherObservation
+from backend.app.models.village import Village
+from backend.app.models.road_segment import RoadSegment
+from backend.app.models.alert import Alert, AlertStatus
 
 
 __all__ = [
@@ -34,4 +37,8 @@ __all__ = [
     "LandslideEvent",
     "LandslideSeverity",
     "SatelliteObservation",
+    "Village",
+    "RoadSegment",
+    "Alert",
+    "AlertStatus",
 ]

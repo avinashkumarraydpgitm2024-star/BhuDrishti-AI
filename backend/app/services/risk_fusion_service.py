@@ -14,6 +14,10 @@ from backend.app.services.historical_risk_service import (
     calculate_historical_risk_score,
 )
 
+from backend.app.services.satellite_observation_service import (
+    get_latest_satellite_observation_for_zone,
+)
+
 
 def get_future_weather_for_zone(
     db: Session,
@@ -150,6 +154,10 @@ def validate_risk_input_availability(
         risk_input.soil_moisture_percent,
         risk_input.slope_degrees,
         risk_input.precipitation_probability_percent,
+        risk_input.historical_risk_score,
+        risk_input.satellite_ndwi,
+        risk_input.satellite_soil_moisture_index,
+        risk_input.satellite_ndvi,
     ]
 
     available_count = sum(
@@ -161,6 +169,10 @@ def validate_risk_input_availability(
         raise ValueError(
             "Insufficient data to generate a reliable risk assessment."
         )
+
+
+
+
 
 
 
