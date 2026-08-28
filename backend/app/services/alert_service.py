@@ -171,3 +171,53 @@ def create_alert_from_assessment(
 
     return alert
 
+
+def acknowledge_alert(
+    db: Session,
+    *,
+    alert: Alert,
+) -> Alert:
+    from datetime import datetime, timezone
+
+    if alert.status == AlertStatus.RESOLVED:
+        raise ValueError(
+            "Resolved alert cannot be acknowledged."
+        )
+
+    if alert.status == AlertStatus.ACKNOWLEDGED:
+        return alert
+
+    alert.status = AlertStatus.ACKNOWLEDGED
+    alert.acknowledged_at = datetime.now(timezone.utc)
+
+    db.add(alert)
+    db.commit()
+    db.refresh(alert)
+
+    return alert
+
+
+def resolve_alert(
+    db: Session,
+    *,
+    alert: Alert,
+) -> Alert:
+    from datetime import datetime, timezone
+
+    if alert.status == AlertStatus.RESOLVED:
+        return alert
+
+    if alert.status == AlertStatus.ACTIVE:
+        alert.acknowledged_at = (
+            alert.acknowledged_at
+            or datetime.now(timezone.utc)
+        )
+
+    alert.status = AlertStatus.RESOLVED
+    alert.resolved_at = datetime.now(timezone.utc)
+
+    db.add(alert)
+    db.commit()
+    db.refresh(alert)
+
+    return alert

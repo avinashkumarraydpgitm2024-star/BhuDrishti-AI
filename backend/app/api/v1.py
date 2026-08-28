@@ -22,6 +22,7 @@ from backend.app.api.routes.villages import router as villages_router
 from backend.app.api.routes.road_segments import router as road_segments_router
 from backend.app.api.routes.gis import router as gis_router
 from backend.app.api.routes.alerts import router as alerts_router
+from backend.app.api.routes.alert_deliveries import router as alert_deliveries_router
 
 
 router = APIRouter()
@@ -41,5 +42,7 @@ router.include_router(villages_router)
 router.include_router(road_segments_router)
 router.include_router(gis_router)
 router.include_router(alerts_router)
+router.include_router(alert_deliveries_router)
+
 
 

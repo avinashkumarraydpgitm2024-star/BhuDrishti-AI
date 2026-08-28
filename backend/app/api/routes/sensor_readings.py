@@ -3,12 +3,16 @@ from sqlalchemy.orm import Session
 
 from backend.app.core.auth import require_roles
 from backend.app.core.database import get_db
+from backend.app.core.device_auth import authenticate_sensor_device
+from backend.app.models.sensor import Sensor
 from backend.app.models.user import User
 from backend.app.schemas.sensor_reading import (
     SensorReadingCreate,
     SensorReadingRead,
 )
 from backend.app.services.sensor_reading_service import (
+    DuplicateDeviceEventError,
+    SensorNotFoundError,
     create_sensor_reading,
     get_latest_sensor_reading,
     get_sensor_by_public_id,
@@ -30,22 +34,27 @@ router = APIRouter(
 def submit_sensor_reading(
     reading_data: SensorReadingCreate,
     db: Session = Depends(get_db),
-    current_user: User = Depends(
-        require_roles(
-            "admin",
-            "authority",
-            "field_officer",
-        )
-    ),
+    authenticated_sensor: Sensor = Depends(authenticate_sensor_device),
 ) -> SensorReadingRead:
+    if reading_data.sensor_public_id != authenticated_sensor.public_id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Authenticated sensor does not match payload sensor.",
+        )
+
     try:
         reading = create_sensor_reading(
             db=db,
             reading_data=reading_data,
         )
-    except ValueError as exc:
+    except SensorNotFoundError as exc:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(exc),
+        ) from exc
+    except DuplicateDeviceEventError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
             detail=str(exc),
         ) from exc
 
@@ -133,3 +142,6 @@ def get_reading_history(
         SensorReadingRead.model_validate(reading)
         for reading in readings
     ]
+
+
+

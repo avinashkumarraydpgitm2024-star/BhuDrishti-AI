@@ -91,3 +91,83 @@ def get_alert(
         )
 
     return AlertRead.model_validate(alert)
+
+@router.post(
+    "/{public_id}/acknowledge",
+    response_model=AlertRead,
+)
+def acknowledge_alert_endpoint(
+    public_id: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(
+        require_roles(
+            "admin",
+            "authority",
+            "field_officer",
+        )
+    ),
+) -> AlertRead:
+    from backend.app.services.alert_service import (
+        acknowledge_alert,
+    )
+
+    alert = get_alert_by_public_id(
+        db=db,
+        public_id=public_id,
+    )
+
+    if alert is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Alert not found.",
+        )
+
+    try:
+        alert = acknowledge_alert(
+            db=db,
+            alert=alert,
+        )
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(exc),
+        ) from exc
+
+    return AlertRead.model_validate(alert)
+
+
+@router.post(
+    "/{public_id}/resolve",
+    response_model=AlertRead,
+)
+def resolve_alert_endpoint(
+    public_id: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(
+        require_roles(
+            "admin",
+            "authority",
+        )
+    ),
+) -> AlertRead:
+    from backend.app.services.alert_service import (
+        resolve_alert,
+    )
+
+    alert = get_alert_by_public_id(
+        db=db,
+        public_id=public_id,
+    )
+
+    if alert is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Alert not found.",
+        )
+
+    alert = resolve_alert(
+        db=db,
+        alert=alert,
+    )
+
+    return AlertRead.model_validate(alert)

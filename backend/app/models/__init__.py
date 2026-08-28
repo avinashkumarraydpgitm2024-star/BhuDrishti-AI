@@ -20,6 +20,7 @@ from backend.app.models.weather_observation import WeatherObservation
 from backend.app.models.village import Village
 from backend.app.models.road_segment import RoadSegment
 from backend.app.models.alert import Alert, AlertStatus
+from backend.app.models.alert_delivery import AlertDelivery, NotificationChannel, DeliveryStatus
 
 
 __all__ = [
@@ -41,4 +42,8 @@ __all__ = [
     "RoadSegment",
     "Alert",
     "AlertStatus",
+    "AlertDelivery",
+    "NotificationChannel",
+    "DeliveryStatus",
 ]
+

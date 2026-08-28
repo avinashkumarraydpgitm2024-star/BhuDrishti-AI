@@ -1,9 +1,14 @@
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
 class SensorReadingCreate(BaseModel):
+    device_event_id: str = Field(
+        min_length=8,
+        max_length=64,
+    )
+
     sensor_public_id: str = Field(
         min_length=36,
         max_length=36,
@@ -60,11 +65,10 @@ class SensorReadingCreate(BaseModel):
         le=0,
     )
 
-
     recorded_at: datetime
 
     @model_validator(mode="after")
-    def validate_measurements(self):
+    def validate_reading(self):
         measurement_fields = (
             self.soil_moisture_percent,
             self.rainfall_mm,
@@ -80,6 +84,23 @@ class SensorReadingCreate(BaseModel):
                 "At least one sensor measurement must be provided."
             )
 
+        if (
+            self.recorded_at.tzinfo is None
+            or self.recorded_at.utcoffset() is None
+        ):
+            raise ValueError(
+                "recorded_at must include timezone information."
+            )
+
+        max_future_time = datetime.now(timezone.utc) + timedelta(
+            minutes=5
+        )
+
+        if self.recorded_at > max_future_time:
+            raise ValueError(
+                "recorded_at cannot be more than 5 minutes in the future."
+            )
+
         return self
 
 
@@ -89,6 +110,7 @@ class SensorReadingRead(BaseModel):
     )
 
     public_id: str
+    device_event_id: str
 
     soil_moisture_percent: float | None = None
     rainfall_mm: float | None = None
@@ -104,5 +126,3 @@ class SensorReadingRead(BaseModel):
 
     recorded_at: datetime
     received_at: datetime
-    
-

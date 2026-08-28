@@ -6,6 +6,7 @@ from backend.app.core.database import get_db
 from backend.app.models.user import User
 from backend.app.schemas.sensor import (
     SensorCreate,
+    SensorProvisionRead,
     SensorRead,
 )
 from backend.app.services.sensor_service import (
@@ -13,6 +14,7 @@ from backend.app.services.sensor_service import (
     get_sensor_by_code,
     get_sensor_by_public_id,
     list_sensors,
+    rotate_sensor_device_api_key,
 )
 
 
@@ -24,7 +26,7 @@ router = APIRouter(
 
 @router.post(
     "",
-    response_model=SensorRead,
+    response_model=SensorProvisionRead,
     status_code=status.HTTP_201_CREATED,
 )
 def register_sensor(
@@ -36,7 +38,7 @@ def register_sensor(
             "authority",
         )
     ),
-) -> SensorRead:
+) -> SensorProvisionRead:
     existing_sensor = get_sensor_by_code(
         db=db,
         sensor_code=sensor_data.sensor_code,
@@ -49,7 +51,7 @@ def register_sensor(
         )
 
     try:
-        sensor = create_sensor(
+        sensor, device_api_key = create_sensor(
             db=db,
             sensor_data=sensor_data,
         )
@@ -59,7 +61,10 @@ def register_sensor(
             detail=str(exc),
         ) from exc
 
-    return SensorRead.model_validate(sensor)
+    sensor_response = SensorRead.model_validate(sensor).model_dump()
+    sensor_response["device_api_key"] = device_api_key
+
+    return SensorProvisionRead(**sensor_response)
 
 
 @router.get(
@@ -124,3 +129,46 @@ def get_sensor(
         )
 
     return SensorRead.model_validate(sensor)
+
+
+
+
+
+
+
+@router.post(
+    "/{public_id}/rotate-device-key",
+    response_model=SensorProvisionRead,
+)
+def rotate_sensor_device_key(
+    public_id: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(
+        require_roles(
+            "admin",
+            "authority",
+        )
+    ),
+) -> SensorProvisionRead:
+    sensor = get_sensor_by_public_id(
+        db=db,
+        public_id=public_id,
+    )
+
+    if sensor is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Sensor not found.",
+        )
+
+    new_device_api_key = rotate_sensor_device_api_key(
+        db=db,
+        sensor=sensor,
+    )
+
+    sensor_response = SensorRead.model_validate(sensor).model_dump()
+    sensor_response["device_api_key"] = new_device_api_key
+
+    return SensorProvisionRead(**sensor_response)
+
+

@@ -1,12 +1,21 @@
 from datetime import datetime, timezone
 
 from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from backend.app.models.sensor import Sensor
 from backend.app.models.sensor_reading import SensorReading
 from backend.app.schemas.sensor_reading import SensorReadingCreate
 from backend.app.services.data_quality_service import evaluate_reading_quality
+
+
+class SensorNotFoundError(ValueError):
+    pass
+
+
+class DuplicateDeviceEventError(ValueError):
+    pass
 
 
 def get_sensor_by_public_id(
@@ -30,15 +39,26 @@ def create_sensor_reading(
     )
 
     if sensor is None:
-        raise ValueError(
+        raise SensorNotFoundError(
             "Sensor not found."
+        )
+
+    existing_event = db.scalar(
+        select(SensorReading).where(
+            SensorReading.device_event_id == reading_data.device_event_id
+        )
+    )
+
+    if existing_event is not None:
+        raise DuplicateDeviceEventError(
+            "Duplicate device event."
         )
 
     quality_status = evaluate_reading_quality(
         reading_data
     )
-
     reading = SensorReading(
+        device_event_id=reading_data.device_event_id,
         sensor_id=sensor.id,
         soil_moisture_percent=reading_data.soil_moisture_percent,
         rainfall_mm=reading_data.rainfall_mm,
@@ -71,6 +91,16 @@ def create_sensor_reading(
     try:
         db.commit()
         db.refresh(reading)
+
+    except IntegrityError as exc:
+        db.rollback()
+
+        if "sensor_readings.device_event_id" in str(exc.orig):
+            raise DuplicateDeviceEventError(
+                "Duplicate device event."
+            ) from exc
+
+        raise
 
     except Exception:
         db.rollback()
@@ -117,6 +147,9 @@ def get_sensor_reading_history(
     return list(
         db.scalars(statement).all()
     )
+
+
+
 
 
 

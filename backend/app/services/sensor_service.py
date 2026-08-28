@@ -3,6 +3,7 @@ from datetime import datetime, timezone
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from backend.app.core.device_security import generate_device_api_key, hash_device_api_key
 from backend.app.models.risk_zone import RiskZone
 from backend.app.models.sensor import Sensor
 from backend.app.schemas.sensor import SensorCreate
@@ -46,7 +47,8 @@ def get_risk_zone_by_public_id(
 def create_sensor(
     db: Session,
     sensor_data: SensorCreate,
-) -> Sensor:
+) -> tuple[Sensor, str]:
+    device_api_key = generate_device_api_key()
     risk_zone_id: int | None = None
 
     if sensor_data.risk_zone_public_id:
@@ -64,6 +66,7 @@ def create_sensor(
 
     sensor = Sensor(
         sensor_code=sensor_data.sensor_code.strip().upper(),
+        device_api_key_hash=hash_device_api_key(device_api_key),
         name=sensor_data.name.strip(),
         sensor_type=sensor_data.sensor_type,
         risk_zone_id=risk_zone_id,
@@ -88,7 +91,7 @@ def create_sensor(
         db.rollback()
         raise
 
-    return sensor
+    return sensor, device_api_key
 
 
 def list_sensors(
@@ -109,3 +112,44 @@ def list_sensors(
     return list(
         db.scalars(statement).all()
     )
+
+
+
+def rotate_sensor_device_api_key(
+    db: Session,
+    sensor: Sensor,
+) -> str:
+    new_device_api_key = generate_device_api_key()
+
+    sensor.device_api_key_hash = hash_device_api_key(
+        new_device_api_key
+    )
+
+    try:
+        db.commit()
+        db.refresh(sensor)
+    except Exception:
+        db.rollback()
+        raise
+
+    return new_device_api_key
+
+
+def rotate_sensor_device_api_key(
+    db: Session,
+    sensor: Sensor,
+) -> str:
+    new_device_api_key = generate_device_api_key()
+
+    sensor.device_api_key_hash = hash_device_api_key(
+        new_device_api_key
+    )
+
+    try:
+        db.commit()
+        db.refresh(sensor)
+    except Exception:
+        db.rollback()
+        raise
+
+    return new_device_api_key

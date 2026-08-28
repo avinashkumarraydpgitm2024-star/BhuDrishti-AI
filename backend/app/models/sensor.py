@@ -50,6 +50,11 @@ class Sensor(Base):
         index=True,
     )
 
+    device_api_key_hash: Mapped[str | None] = mapped_column(
+        String(64),
+        nullable=True,
+    )
+
     name: Mapped[str] = mapped_column(
         String(150),
         nullable=False,
@@ -140,3 +145,4 @@ class Sensor(Base):
         default=lambda: datetime.now(timezone.utc),
         onupdate=lambda: datetime.now(timezone.utc),
     )
+

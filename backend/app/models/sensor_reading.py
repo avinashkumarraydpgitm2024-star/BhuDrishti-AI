@@ -24,6 +24,13 @@ class SensorReading(Base):
         default=lambda: str(uuid.uuid4()),
     )
 
+    device_event_id: Mapped[str] = mapped_column(
+        String(64),
+        unique=True,
+        nullable=False,
+        index=True,
+    )
+
     sensor_id: Mapped[int] = mapped_column(
         ForeignKey(
             "sensors.id",

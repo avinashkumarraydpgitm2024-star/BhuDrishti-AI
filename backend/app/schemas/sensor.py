@@ -81,3 +81,8 @@ class SensorRead(SensorBase):
 
     updated_at: datetime
         
+class SensorProvisionRead(SensorRead):
+    device_api_key: str = Field(
+        min_length=32,
+        max_length=128,
+    )
