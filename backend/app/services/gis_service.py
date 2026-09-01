@@ -1,4 +1,4 @@
-from sqlalchemy import func, select
+﻿from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from backend.app.models.alert import Alert, AlertStatus
@@ -15,6 +15,9 @@ from backend.app.services.road_segment_service import (
 )
 from backend.app.services.village_service import (
     list_villages,
+)
+from backend.app.services.satellite_observation_service import (
+    get_latest_satellite_observation_for_zone,
 )
 
 
@@ -36,6 +39,13 @@ def build_gis_map_data(
     latest_assessment = get_latest_risk_assessment(
         db=db,
         risk_zone_id=risk_zone.id,
+    )
+
+    latest_satellite_observation = (
+        get_latest_satellite_observation_for_zone(
+            db=db,
+            risk_zone_id=risk_zone.id,
+        )
     )
 
     active_alerts = list(
@@ -83,6 +93,7 @@ def build_gis_map_data(
     return {
         "risk_zone": risk_zone,
         "latest_risk_assessment": latest_assessment,
+        "latest_satellite_observation": latest_satellite_observation,
         "active_alerts": active_alerts,
         "villages": villages,
         "road_segments": road_segments,
@@ -93,3 +104,4 @@ def build_gis_map_data(
         "delivered_notification_count": delivered_notification_count,
         "failed_notification_count": failed_notification_count,
     }
+

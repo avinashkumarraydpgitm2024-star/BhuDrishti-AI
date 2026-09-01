@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+﻿import { useEffect, useMemo, useState } from "react";
 
 import apiClient from "../api/client";
 import HazardMap from "../components/map/HazardMap";
@@ -95,6 +95,10 @@ export default function DashboardPage() {
   }, [isTestData, isAssessmentExpired]);
 
 
+  const satelliteObservation =
+    dashboard?.latest_satellite_observation ?? null;
+
+
   if (loading) {
     return (
       <div className="dashboard-state">
@@ -149,7 +153,7 @@ export default function DashboardPage() {
           <div>
             <span>Slope</span>
             <strong>
-              {dashboard.risk_zone.slope_degrees ?? "N/A"}�
+              {dashboard.risk_zone.slope_degrees ?? "N/A"}ï¿½
             </strong>
           </div>
         </div>
@@ -239,6 +243,106 @@ export default function DashboardPage() {
         </div>
       </section>
 
+
+      <section className="satellite-section">
+        <div className="section-heading">
+          <div>
+            <span className="section-kicker">
+              SATELLITE INTELLIGENCE
+            </span>
+
+            <h3>Sentinel-2 Observation</h3>
+          </div>
+
+          <span className="panel-tag">
+            SATELLITE
+          </span>
+        </div>
+
+        <div className="satellite-card">
+          <div className="satellite-header">
+            <div>
+              <strong>
+                {satelliteObservation?.satellite_name ||
+                  "Sentinel-2"}
+              </strong>
+
+              <span>
+                {satelliteObservation?.provider ||
+                  "Copernicus Data Space"}
+              </span>
+            </div>
+
+            <span className="satellite-status">
+              {satelliteObservation
+                ? "OBSERVATION AVAILABLE"
+                : "NO OBSERVATION"}
+            </span>
+          </div>
+
+          <div className="satellite-metrics">
+            <div>
+              <span>NDVI</span>
+              <strong>
+                {satelliteObservation?.ndvi != null
+                  ? satelliteObservation.ndvi.toFixed(3)
+                  : "N/A"}
+              </strong>
+              <small>Vegetation index</small>
+            </div>
+
+            <div>
+              <span>NDWI</span>
+              <strong>
+                {satelliteObservation?.ndwi != null
+                  ? satelliteObservation.ndwi.toFixed(3)
+                  : "N/A"}
+              </strong>
+              <small>Water index</small>
+            </div>
+
+            <div>
+              <span>SOIL MOISTURE</span>
+              <strong>
+                {satelliteObservation?.soil_moisture_index != null
+                  ? satelliteObservation.soil_moisture_index.toFixed(3)
+                  : "N/A"}
+              </strong>
+              <small>Satellite-derived index</small>
+            </div>
+
+            <div>
+              <span>CLOUD COVER</span>
+              <strong>
+                {satelliteObservation?.cloud_cover_percent != null
+                  ? `${satelliteObservation.cloud_cover_percent.toFixed(1)}%`
+                  : "N/A"}
+              </strong>
+              <small>Scene quality</small>
+            </div>
+          </div>
+
+          <div className="satellite-meta">
+            <div>
+              <span>Captured</span>
+              <strong>
+                {satelliteObservation?.captured_at
+                  ? new Date(
+                      satelliteObservation.captured_at
+                    ).toLocaleString()
+                  : "No observation available"}
+              </strong>
+            </div>
+
+            <div>
+              <span>Scene ID</span>
+              <strong>
+                {satelliteObservation?.scene_id || "N/A"}
+              </strong>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section className="dashboard-grid">
         <article className="panel map-panel">
@@ -359,5 +463,8 @@ export default function DashboardPage() {
     </main>
   );
 }
+
+
+
 
 

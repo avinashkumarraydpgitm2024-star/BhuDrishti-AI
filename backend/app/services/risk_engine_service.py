@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+﻿from dataclasses import dataclass
 
 from backend.app.models.risk_assessment import RiskSeverity
 
@@ -123,6 +123,7 @@ def calculate_baseline_risk(
         minimum=0,
         maximum=1,
     )
+
     satellite_ndwi_score = _normalize(
         data.satellite_ndwi,
         minimum=-1,
@@ -141,11 +142,10 @@ def calculate_baseline_risk(
         maximum=1,
     )
 
-
     satellite_vegetation_stress_score = (
         1 - satellite_ndvi_score
-        if satellite_ndvi_score is not None
-        else None
+        if data.satellite_ndvi is not None
+        else 0.0
     )
 
     weighted_scores = {
@@ -156,17 +156,17 @@ def calculate_baseline_risk(
         "historical_risk": historical_risk_score * 0.12,
         "satellite_ndwi": (
             satellite_ndwi_score * 0.05
-            if satellite_ndwi_score is not None
+            if data.satellite_ndwi is not None
             else 0
         ),
         "satellite_soil_moisture": (
             satellite_soil_moisture_score * 0.05
-            if satellite_soil_moisture_score is not None
+            if data.satellite_soil_moisture_index is not None
             else 0
         ),
         "satellite_vegetation_stress": (
             satellite_vegetation_stress_score * 0.05
-            if satellite_vegetation_stress_score is not None
+            if data.satellite_ndvi is not None
             else 0
         ),
         "vibration": vibration_score * 0.05,
@@ -209,8 +209,10 @@ def calculate_baseline_risk(
         data.tilt_degrees,
         data.precipitation_probability_percent,
         data.historical_risk_score,
+        data.satellite_ndwi,
+        data.satellite_soil_moisture_index,
+        data.satellite_ndvi,
     ]
-    
 
     available_count = sum(
         value is not None
@@ -244,9 +246,3 @@ def calculate_baseline_risk(
         dominant_factor=dominant_factor,
         explanation=explanation,
     )
-
-
-
-
-
-
