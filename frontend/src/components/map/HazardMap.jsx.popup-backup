@@ -1,4 +1,4 @@
-﻿import { useMemo, useState } from "react";
+﻿import { useMemo } from "react";
 import Map, {
   Layer,
   Marker,
@@ -83,8 +83,6 @@ export default function HazardMap({
 
   const latitude = Number(riskZone.latitude);
   const longitude = Number(riskZone.longitude);
-  const [showPopup, setShowPopup] = useState(false);
-
   const severity = latestRiskAssessment?.severity || "UNKNOWN";
   const score = latestRiskAssessment?.risk_probability_percent ?? null;
   const color = riskColor(severity);
@@ -215,7 +213,7 @@ export default function HazardMap({
           />
         </Source>
 
-        <Marker longitude={longitude} latitude={latitude} anchor="center" onClick={() => setShowPopup(true)}>
+        <Marker longitude={longitude} latitude={latitude} anchor="center">
           <div
             className="risk-3d-marker"
             style={{
@@ -288,5 +286,3 @@ export default function HazardMap({
     </div>
   );
 }
-
-

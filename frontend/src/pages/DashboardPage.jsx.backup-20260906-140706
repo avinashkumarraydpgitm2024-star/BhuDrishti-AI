@@ -1,0 +1,1185 @@
+﻿import { useEffect, useMemo, useState } from "react";
+
+import apiClient from "../api/client";
+import HazardMap from "../components/map/HazardMap";
+
+import "./DashboardPage.css";
+
+const RISK_ZONE_ID = "fe1f520f-e8a0-40bd-9eb1-c876502a28d1";
+
+export default function DashboardPage() {
+  const [dashboard, setDashboard] = useState(null);
+  const [sensors, setSensors] = useState([]);
+  const [riskHistory, setRiskHistory] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    let mounted = true;
+
+    const loadDashboard = async () => {
+      try {
+        setLoading(true);
+        setError("");
+
+        const [
+          dashboardResponse,
+          sensorResponse,
+          historyResponse,
+        ] = await Promise.all([
+          apiClient.get(`/gis/map-data/${RISK_ZONE_ID}`),
+          apiClient.get("/sensors"),
+          apiClient.get(
+            `/risk-assessments/history/${RISK_ZONE_ID}?limit=7`
+          ),
+        ]);
+
+        const sensorList = sensorResponse.data || [];
+
+        let sensorWithReading = null;
+
+        if (sensorList.length > 0) {
+          const sensor = sensorList[0];
+
+          try {
+            const readingResponse = await apiClient.get(
+              `/sensor-readings/${sensor.public_id}/latest`
+            );
+
+            sensorWithReading = {
+              ...sensor,
+              latest_reading: readingResponse.data,
+            };
+          } catch (readingError) {
+            if (readingError?.response?.status === 404) {
+              sensorWithReading = {
+                ...sensor,
+                latest_reading: null,
+              };
+            } else {
+              throw readingError;
+            }
+          }
+        }
+
+        if (!mounted) return;
+
+        setSensors(sensorList);
+
+        setRiskHistory(
+          Array.isArray(historyResponse.data)
+            ? historyResponse.data
+            : []
+        );
+
+        setDashboard({
+          ...dashboardResponse.data,
+          sensor: sensorWithReading,
+        });
+      } catch (err) {
+        if (!mounted) return;
+
+        setError(
+          err?.response?.data?.detail ||
+            "Failed to load dashboard data."
+        );
+      } finally {
+        if (mounted) {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadDashboard();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const risk =
+    dashboard?.latest_risk_assessment || null;
+
+  const weather =
+    dashboard?.current_weather || null;
+
+  const satellite =
+    dashboard?.latest_satellite_observation || null;
+
+  const forecasts =
+    dashboard?.weather_forecasts || [];
+
+  const sensor =
+    dashboard?.sensor || null;
+
+  const sensorReading =
+    sensor?.latest_reading || null;
+
+  const alerts =
+    dashboard?.active_alerts || [];
+
+  const riskValue =
+    risk?.risk_probability_percent ?? null;
+
+  const severity =
+    risk?.severity || "UNKNOWN";
+
+  const severityLabel =
+    String(severity)
+      .replace(/_/g, " ")
+      .replace(/\b\w/g, (letter) =>
+        letter.toUpperCase()
+      );
+
+  const activeSensorCount = useMemo(
+    () =>
+      sensors.filter(
+        (item) =>
+          String(item?.status || "")
+            .toLowerCase() === "active"
+      ).length,
+    [sensors]
+  );
+
+  const totalSensorCount = sensors.length;
+
+  const sensorStatus = useMemo(() => {
+    const active = sensors.filter(
+      (item) =>
+        String(item?.status || "")
+          .toLowerCase() === "active"
+    ).length;
+
+    const maintenance = sensors.filter(
+      (item) =>
+        String(item?.status || "")
+          .toLowerCase() === "maintenance"
+    ).length;
+
+    const offline = sensors.filter(
+      (item) =>
+        String(item?.status || "")
+          .toLowerCase() === "offline"
+    ).length;
+
+    const faulty = sensors.filter(
+      (item) =>
+        String(item?.status || "")
+          .toLowerCase() === "faulty"
+    ).length;
+
+    return {
+      active,
+      maintenance,
+      offline,
+      faulty,
+      total: sensors.length,
+    };
+  }, [sensors]);
+
+  const rainfallForecastTotal = useMemo(
+    () =>
+      forecasts
+        .slice(0, 24)
+        .reduce(
+          (sum, item) =>
+            sum +
+            Number(
+              item?.rain_mm ??
+                item?.precipitation_mm ??
+                0
+            ),
+          0
+        ),
+    [forecasts]
+  );
+
+  const maxForecastRain = useMemo(
+    () =>
+      Math.max(
+        1,
+        ...forecasts
+          .slice(0, 24)
+          .map((item) =>
+            Number(
+              item?.rain_mm ??
+                item?.precipitation_mm ??
+                0
+            )
+          )
+      ),
+    [forecasts]
+  );
+
+  const trendPoints = useMemo(() => {
+    const history = [...riskHistory]
+      .sort(
+        (a, b) =>
+          new Date(a.assessed_at).getTime() -
+          new Date(b.assessed_at).getTime()
+      )
+      .slice(-7);
+
+    if (history.length > 0) {
+      return history.map((item) => ({
+        value: Number(
+          item.risk_probability_percent || 0
+        ),
+        label: new Date(
+          item.assessed_at
+        ).toLocaleDateString([], {
+          month: "short",
+          day: "2-digit",
+        }),
+      }));
+    }
+
+    if (riskValue !== null) {
+      return [
+        {
+          value: Number(riskValue),
+          label: new Date().toLocaleDateString([], {
+            month: "short",
+            day: "2-digit",
+          }),
+        },
+      ];
+    }
+
+    return [];
+  }, [riskHistory, riskValue]);
+
+  const trendPath = useMemo(() => {
+    if (trendPoints.length < 2) return "";
+
+    const width = 700;
+    const height = 190;
+    const paddingX = 20;
+    const paddingY = 18;
+
+    const usableWidth =
+      width - paddingX * 2;
+
+    const usableHeight =
+      height - paddingY * 2;
+
+    return trendPoints
+      .map((point, index) => {
+        const x =
+          paddingX +
+          (index /
+            Math.max(1, trendPoints.length - 1)) *
+            usableWidth;
+
+        const y =
+          paddingY +
+          (1 -
+            Math.min(
+              100,
+              Math.max(0, point.value)
+            ) /
+              100) *
+            usableHeight;
+
+        return `${index === 0 ? "M" : "L"} ${x} ${y}`;
+      })
+      .join(" ");
+  }, [trendPoints]);
+
+  const isTestData = useMemo(() => {
+    const zoneCode =
+      dashboard?.risk_zone?.zone_code?.toLowerCase() ||
+      "";
+
+    return zoneCode.startsWith("test");
+  }, [dashboard]);
+
+  const intelligenceStatus = isTestData
+    ? "TEST / CONTROLLED DATA"
+    : "LIVE INTELLIGENCE";
+
+  if (loading) {
+    return (
+      <div className="dashboard-state">
+        <div className="dashboard-loader" />
+        <p>
+          Loading BhuDrishti intelligence...
+        </p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="dashboard-state dashboard-error">
+        <h2>Dashboard unavailable</h2>
+        <p>{error}</p>
+      </div>
+    );
+  }
+
+  return (
+    <main className="dashboard-main reference-dashboard">
+
+      {/* =====================================================
+          WELCOME HEADER
+          ===================================================== */}
+
+      <section className="reference-welcome">
+
+        <div>
+          <h1>
+            Welcome to BhuDrishti AI
+          </h1>
+
+          <p>
+            Real-time monitoring • AI-powered risk
+            assessment • Early warnings • Safer
+            North-East India
+          </p>
+        </div>
+
+        <div className="zone-selector">
+          <span className="zone-selector-icon">
+            ◉
+          </span>
+
+          <span>
+            {dashboard?.risk_zone?.name ||
+              "Monitoring Zone"}
+          </span>
+
+          <span className="zone-selector-arrow">
+            ▾
+          </span>
+        </div>
+
+      </section>
+
+
+      {/* =====================================================
+          KPI CARDS
+          ===================================================== */}
+
+      <section className="reference-kpi-grid">
+
+        <article className="reference-kpi monitoring-kpi">
+
+          <div className="kpi-icon">
+            ●
+          </div>
+
+          <div className="kpi-content">
+            <span>
+              Monitoring Zones
+            </span>
+
+            <strong>
+              1
+            </strong>
+
+            <small className="kpi-positive">
+              ↑ 0 this week
+            </small>
+          </div>
+
+          <span className="kpi-action">
+            ▦
+          </span>
+
+        </article>
+
+
+        <article className="reference-kpi sensor-kpi">
+
+          <div className="kpi-icon">
+            ◉
+          </div>
+
+          <div className="kpi-content">
+            <span>
+              Active Sensors
+            </span>
+
+            <strong>
+              {activeSensorCount}
+            </strong>
+
+            <small className="kpi-positive">
+              ↑ {activeSensorCount > 0 ? 1 : 0} this week
+            </small>
+          </div>
+
+          <span className="kpi-action">
+            ↗
+          </span>
+
+        </article>
+
+
+        <article className="reference-kpi alert-kpi">
+
+          <div className="kpi-icon">
+            !
+          </div>
+
+          <div className="kpi-content">
+            <span>
+              Active Alerts
+            </span>
+
+            <strong>
+              {dashboard?.active_alert_count ?? 0}
+            </strong>
+
+            <small className="kpi-positive">
+              ↑ 0 this week
+            </small>
+          </div>
+
+          <span className="kpi-action">
+            ♧
+          </span>
+
+        </article>
+
+
+        <article className="reference-kpi risk-kpi">
+
+          <div className="kpi-icon">
+            ◇
+          </div>
+
+          <div className="kpi-content">
+            <span>
+              Avg. Risk Level
+            </span>
+
+            <strong>
+              {riskValue !== null
+                ? `${Number(riskValue).toFixed(1)}%`
+                : "N/A"}
+            </strong>
+
+            <small
+              className={
+                severity === "low"
+                  ? "kpi-positive"
+                  : "kpi-warning"
+              }
+            >
+              {severityLabel}
+            </small>
+          </div>
+
+          <span className="kpi-action">
+            ▥
+          </span>
+
+        </article>
+
+      </section>
+
+
+      {/* =====================================================
+          MAP + ALERTS + WEATHER
+          ===================================================== */}
+
+      <section className="reference-primary-grid">
+
+        {/* MAP */}
+
+        <article className="reference-panel reference-map-panel">
+
+          <div className="reference-panel-header">
+
+            <div>
+              <span>
+                RISK ZONES MAP
+              </span>
+
+              <h2>
+                Real-time hazard risk levels
+                across monitoring zones
+              </h2>
+            </div>
+
+            <button
+              type="button"
+              className="map-view-button"
+            >
+              Satellite View ▾
+            </button>
+
+          </div>
+
+          <div className="reference-map">
+            <HazardMap
+              riskZone={dashboard?.risk_zone}
+              villages={dashboard?.villages || []}
+              roadSegments={
+                dashboard?.road_segments || []
+              }
+              latestRiskAssessment={
+                dashboard?.latest_risk_assessment
+              }
+            />
+
+            <div className="reference-map-legend">
+              <span>
+                <i className="legend-dot low" />
+                Low
+              </span>
+
+              <span>
+                <i className="legend-dot moderate" />
+                Moderate
+              </span>
+
+              <span>
+                <i className="legend-dot high" />
+                High
+              </span>
+
+              <span>
+                <i className="legend-dot critical" />
+                Critical
+              </span>
+            </div>
+          </div>
+
+        </article>
+
+
+        {/* ALERTS */}
+
+        <article className="reference-panel reference-alert-panel">
+
+          <div className="reference-panel-header">
+
+            <div>
+              <span>
+                RECENT ALERTS
+              </span>
+
+              <h2>
+                Latest notifications and
+                warnings
+              </h2>
+            </div>
+
+            <button
+              type="button"
+              className="panel-view-button"
+            >
+              View All
+            </button>
+
+          </div>
+
+          <div className="reference-alert-list">
+
+            {alerts.length === 0 ? (
+
+              <div className="reference-no-alerts">
+
+                <div className="no-alert-icon">
+                  ✓
+                </div>
+
+                <strong>
+                  No active alerts
+                </strong>
+
+                <span>
+                  No unresolved hazard warning
+                  is currently active.
+                </span>
+
+              </div>
+
+            ) : (
+
+              alerts.slice(0, 5).map((alert) => (
+
+                <div
+                  className="reference-alert-item"
+                  key={alert.public_id}
+                >
+
+                  <span
+                    className={`alert-dot ${String(
+                      alert.severity || ""
+                    ).toLowerCase()}`}
+                  />
+
+                  <div className="alert-item-content">
+
+                    <strong>
+                      {alert.title}
+                    </strong>
+
+                    <span>
+                      {alert.created_at
+                        ? new Date(
+                            alert.created_at
+                          ).toLocaleString()
+                        : "Recently"}
+                    </span>
+
+                  </div>
+
+                  <span
+                    className={`alert-badge ${String(
+                      alert.severity || ""
+                    ).toLowerCase()}`}
+                  >
+                    {String(
+                      alert.severity || "INFO"
+                    ).replace(
+                      /_/g,
+                      " "
+                    )}
+                  </span>
+
+                </div>
+
+              ))
+
+            )}
+
+          </div>
+
+        </article>
+
+
+        {/* WEATHER */}
+
+        <article className="reference-panel reference-weather-panel">
+
+          <div className="reference-panel-header">
+
+            <div>
+              <span>
+                LIVE WEATHER
+              </span>
+
+              <h2>
+                ☁ From Open-Meteo
+              </h2>
+            </div>
+
+          </div>
+
+          <div className="weather-location">
+
+            <strong>
+              {dashboard?.risk_zone?.name ||
+                "Monitoring Zone"}
+            </strong>
+
+            <span>
+              {dashboard?.risk_zone?.latitude ??
+                "N/A"}° N,{" "}
+              {dashboard?.risk_zone?.longitude ??
+                "N/A"}° E
+            </span>
+
+          </div>
+
+          <div className="weather-temperature">
+
+            <strong>
+              {weather?.temperature_c != null
+                ? `${weather.temperature_c}°C`
+                : "N/A"}
+            </strong>
+
+            <span>
+              {weather?.weather_description ||
+                "Current conditions"}
+            </span>
+
+          </div>
+
+          <div className="weather-stats">
+
+            <div>
+              <strong>
+                {weather?.humidity_percent != null
+                  ? `${weather.humidity_percent}%`
+                  : "N/A"}
+              </strong>
+              <span>Humidity</span>
+            </div>
+
+            <div>
+              <strong>
+                {weather?.rainfall_mm != null
+                  ? `${weather.rainfall_mm} mm`
+                  : "N/A"}
+              </strong>
+              <span>Rainfall</span>
+            </div>
+
+            <div>
+              <strong>
+                {weather?.wind_speed_mps != null
+                  ? `${weather.wind_speed_mps} m/s`
+                  : "N/A"}
+              </strong>
+              <span>Wind Speed</span>
+            </div>
+
+            <div>
+              <strong>
+                {weather?.atmospheric_pressure_hpa != null
+                  ? `${weather.atmospheric_pressure_hpa} hPa`
+                  : "N/A"}
+              </strong>
+              <span>Pressure</span>
+            </div>
+
+          </div>
+
+          <small className="weather-updated">
+            Last updated:{" "}
+            {weather?.observed_at
+              ? new Date(
+                  weather.observed_at
+                ).toLocaleString()
+              : "N/A"}
+          </small>
+
+        </article>
+
+      </section>
+
+
+      {/* =====================================================
+          LOWER ANALYTICS
+          ===================================================== */}
+
+      <section className="reference-analytics-grid">
+
+        {/* RISK TREND */}
+
+        <article className="reference-panel trend-panel">
+
+          <div className="reference-panel-header">
+
+            <div>
+              <span>
+                RISK LEVEL TREND
+              </span>
+
+              <h2>
+                Model predicted risk
+                probability
+              </h2>
+            </div>
+
+            <div className="current-risk-box">
+              <strong>
+                {riskValue !== null
+                  ? `${Number(riskValue).toFixed(1)}%`
+                  : "N/A"}
+              </strong>
+
+              <span>
+                Current Risk
+              </span>
+            </div>
+
+          </div>
+
+          <div className="risk-chart">
+
+            <div className="risk-y-axis">
+              <span>100%</span>
+              <span>75%</span>
+              <span>50%</span>
+              <span>25%</span>
+              <span>0%</span>
+            </div>
+
+            <svg
+              viewBox="0 0 700 190"
+              preserveAspectRatio="none"
+              className="risk-svg"
+            >
+
+              <line
+                x1="20"
+                y1="18"
+                x2="680"
+                y2="18"
+                className="chart-grid-line"
+              />
+
+              <line
+                x1="20"
+                y1="56"
+                x2="680"
+                y2="56"
+                className="chart-grid-line"
+              />
+
+              <line
+                x1="20"
+                y1="95"
+                x2="680"
+                y2="95"
+                className="chart-grid-line"
+              />
+
+              <line
+                x1="20"
+                y1="133"
+                x2="680"
+                y2="133"
+                className="chart-grid-line"
+              />
+
+              <line
+                x1="20"
+                y1="172"
+                x2="680"
+                y2="172"
+                className="chart-grid-line"
+              />
+
+              {trendPath && (
+                <path
+                  d={trendPath}
+                  className="risk-line"
+                />
+              )}
+
+              {trendPoints.map(
+                (point, index) => {
+
+                  const x =
+                    trendPoints.length === 1
+                      ? 350
+                      : 20 +
+                        (index /
+                          Math.max(
+                            1,
+                            trendPoints.length - 1
+                          )) *
+                          660;
+
+                  const y =
+                    18 +
+                    (1 -
+                      Math.min(
+                        100,
+                        Math.max(
+                          0,
+                          point.value
+                        )
+                      ) /
+                        100) *
+                      154;
+
+                  return (
+                    <circle
+                      key={`${point.label}-${index}`}
+                      cx={x}
+                      cy={y}
+                      r="5"
+                      className="risk-point"
+                    />
+                  );
+                }
+              )}
+
+            </svg>
+
+            <div className="risk-x-axis">
+              {trendPoints.map(
+                (point, index) => (
+                  <span key={`${point.label}-label-${index}`}>
+                    {point.label}
+                  </span>
+                )
+              )}
+            </div>
+
+          </div>
+
+        </article>
+
+
+        {/* RAINFALL */}
+
+        <article className="reference-panel rainfall-panel">
+
+          <div className="reference-panel-header">
+
+            <div>
+              <span>
+                RAINFALL (24 HOURS)
+              </span>
+
+              <h2>
+                Observed vs forecasted
+                precipitation
+              </h2>
+            </div>
+
+            <div className="chart-legend">
+              <span>
+                <i className="observed-dot" />
+                Observed
+              </span>
+
+              <span>
+                <i className="forecast-dot" />
+                Forecast
+              </span>
+            </div>
+
+          </div>
+
+          <div className="rainfall-chart">
+
+            <div className="rainfall-bars">
+
+              {forecasts
+                .slice(0, 24)
+                .map((forecast) => {
+
+                  const rain = Number(
+                    forecast?.rain_mm ??
+                      forecast?.precipitation_mm ??
+                      0
+                  );
+
+                  const height = Math.max(
+                    4,
+                    (rain / maxForecastRain) *
+                      100
+                  );
+
+                  return (
+                    <div
+                      className="rainfall-column"
+                      key={forecast.public_id}
+                    >
+
+                      <div className="rainfall-track">
+
+                        <div
+                          className="rainfall-bar"
+                          style={{
+                            height: `${height}%`,
+                          }}
+                        />
+
+                      </div>
+
+                      <span>
+                        {new Date(
+                          forecast.forecast_for
+                        ).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </span>
+
+                    </div>
+                  );
+                })}
+
+            </div>
+
+          </div>
+
+          <div className="rainfall-total">
+            24H EXPECTED RAIN{" "}
+            <strong>
+              {rainfallForecastTotal.toFixed(1)} mm
+            </strong>
+          </div>
+
+        </article>
+
+
+        {/* SENSOR STATUS */}
+
+        <article className="reference-panel sensor-status-panel">
+
+          <div className="reference-panel-header">
+
+            <div>
+              <span>
+                SENSOR STATUS
+              </span>
+
+              <h2>
+                Real-time sensor network
+                health
+              </h2>
+            </div>
+
+            <button
+              type="button"
+              className="panel-view-button"
+            >
+              View All
+            </button>
+
+          </div>
+
+          <div className="sensor-status-content">
+
+            <div
+              className="sensor-donut"
+              style={{
+                "--sensor-progress":
+                  sensorStatus.total > 0
+                    ? `${Math.round(
+                        (sensorStatus.active /
+                          sensorStatus.total) *
+                          100
+                      )}%`
+                    : "0%",
+              }}
+            >
+              <div>
+                <strong>
+                  {sensorStatus.total}
+                </strong>
+
+                <span>
+                  Total
+                  <br />
+                  Sensors
+                </span>
+              </div>
+            </div>
+
+            <div className="sensor-status-legend">
+
+              <div>
+                <i className="sensor-status-active" />
+                <span>Active</span>
+                <strong>
+                  {sensorStatus.active}
+                </strong>
+              </div>
+
+              <div>
+                <i className="sensor-status-maintenance" />
+                <span>Maintenance</span>
+                <strong>
+                  {sensorStatus.maintenance}
+                </strong>
+              </div>
+
+              <div>
+                <i className="sensor-status-offline" />
+                <span>Offline</span>
+                <strong>
+                  {sensorStatus.offline}
+                </strong>
+              </div>
+
+              <div>
+                <i className="sensor-status-faulty" />
+                <span>Faulty</span>
+                <strong>
+                  {sensorStatus.faulty}
+                </strong>
+              </div>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      </section>
+
+
+      {/* =====================================================
+          SATELLITE / SENSOR INTELLIGENCE
+          ===================================================== */}
+
+      <section className="reference-intelligence-strip">
+
+        <article>
+
+          <span>
+            SATELLITE INTELLIGENCE
+          </span>
+
+          <strong>
+            {satellite?.satellite_name ||
+              "Sentinel-2"}
+          </strong>
+
+          <small>
+            NDVI{" "}
+            {satellite?.ndvi != null
+              ? satellite.ndvi.toFixed(3)
+              : "N/A"}
+            {" • "}
+            NDWI{" "}
+            {satellite?.ndwi != null
+              ? satellite.ndwi.toFixed(3)
+              : "N/A"}
+            {" • "}
+            Soil Index{" "}
+            {satellite?.soil_moisture_index != null
+              ? satellite.soil_moisture_index.toFixed(3)
+              : "N/A"}
+          </small>
+
+        </article>
+
+
+        <article>
+
+          <span>
+            LIVE SENSOR TELEMETRY
+          </span>
+
+          <strong>
+            {sensor?.name || "No sensor"}
+          </strong>
+
+          <small>
+            Soil Moisture{" "}
+            {sensorReading?.soil_moisture_percent ??
+              "N/A"}
+            %
+            {" • "}
+            Rain Rate{" "}
+            {sensorReading?.rainfall_rate_mm_hr ??
+              "N/A"}
+            {" mm/hr"}
+          </small>
+
+        </article>
+
+      </section>
+
+
+      <div className="reference-data-status">
+        <span className="status-pulse" />
+
+        {intelligenceStatus}
+
+        <span>
+          • BhuDrishti AI intelligence services
+        </span>
+      </div>
+
+    </main>
+  );
+}
+
+

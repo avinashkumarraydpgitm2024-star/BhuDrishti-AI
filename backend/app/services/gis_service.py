@@ -7,17 +7,29 @@ from backend.app.models.alert_delivery import (
     DeliveryStatus,
 )
 from backend.app.models.risk_zone import RiskZone
+
 from backend.app.services.risk_assessment_service import (
     get_latest_risk_assessment,
 )
+
 from backend.app.services.road_segment_service import (
     list_road_segments,
 )
+
 from backend.app.services.village_service import (
     list_villages,
 )
+
 from backend.app.services.satellite_observation_service import (
     get_latest_satellite_observation_for_zone,
+)
+
+from backend.app.services.weather_service import (
+    get_latest_weather_observation,
+)
+
+from backend.app.services.weather_forecast_service import (
+    get_weather_forecasts,
 )
 
 
@@ -46,6 +58,19 @@ def build_gis_map_data(
             db=db,
             risk_zone_id=risk_zone.id,
         )
+    )
+
+    current_weather = get_latest_weather_observation(
+        db=db,
+        latitude=risk_zone.latitude,
+        longitude=risk_zone.longitude,
+    )
+
+    weather_forecasts = get_weather_forecasts(
+        db=db,
+        latitude=risk_zone.latitude,
+        longitude=risk_zone.longitude,
+        limit=168,
     )
 
     active_alerts = list(
@@ -94,6 +119,8 @@ def build_gis_map_data(
         "risk_zone": risk_zone,
         "latest_risk_assessment": latest_assessment,
         "latest_satellite_observation": latest_satellite_observation,
+        "current_weather": current_weather,
+        "weather_forecasts": weather_forecasts,
         "active_alerts": active_alerts,
         "villages": villages,
         "road_segments": road_segments,
@@ -104,4 +131,3 @@ def build_gis_map_data(
         "delivered_notification_count": delivered_notification_count,
         "failed_notification_count": failed_notification_count,
     }
-

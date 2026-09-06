@@ -45,9 +45,7 @@ export default function AppLayout() {
               `nav-item ${isActive ? "active" : ""}`
             }
           >
-            <span className="nav-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><path d="M9.5 20v-5h5v5"/></svg>
-            </span>
+            <span>01</span>
             Overview
           </NavLink>
 
@@ -58,9 +56,7 @@ export default function AppLayout() {
               `nav-item ${isActive ? "active" : ""}`
             }
           >
-            <span className="nav-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M4 5h6l2 2h8v12H4z"/><path d="M8 15h.01M12 11h.01M16 15h.01"/><path d="M8 15l4-4 4 4"/></svg>
-            </span>
+            <span>02</span>
             GIS Intelligence
           </NavLink>
 
@@ -71,9 +67,7 @@ export default function AppLayout() {
               `nav-item ${isActive ? "active" : ""}`
             }
           >
-            <span className="nav-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M12 3 20 6v5c0 5-3.3 8.6-8 10-4.7-1.4-8-5-8-10V6z"/><path d="m9 12 2 2 4-4"/></svg>
-            </span>
+            <span>03</span>
             Risk Monitoring
           </NavLink>
 
@@ -84,9 +78,7 @@ export default function AppLayout() {
               `nav-item ${isActive ? "active" : ""}`
             }
           >
-            <span className="nav-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M7 18h10a4 4 0 0 0 .5-7.97A6 6 0 0 0 6 11.2 3.4 3.4 0 0 0 7 18Z"/><path d="M8 21l1-2M12 21l1-2M16 21l1-2"/></svg>
-            </span>
+            <span>04</span>
             Rain Status
           </NavLink>
 
@@ -97,9 +89,7 @@ export default function AppLayout() {
               `nav-item ${isActive ? "active" : ""}`
             }
           >
-            <span className="nav-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"/><path d="M10 21h4"/></svg>
-            </span>
+            <span>05</span>
             Alerts
           </NavLink>
 
@@ -110,9 +100,7 @@ export default function AppLayout() {
               `nav-item ${isActive ? "active" : ""}`
             }
           >
-            <span className="nav-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M19 5l-3 3M8 16l-3 3"/></svg>
-            </span>
+            <span>06</span>
             Sensors
           </NavLink>
 
@@ -122,9 +110,7 @@ export default function AppLayout() {
               `nav-item ${isActive ? "active" : ""}`
             }
           >
-            <span className="nav-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M6 3h9l3 3v15H6z"/><path d="M9 11h6M9 15h6M9 7h3"/></svg>
-            </span>
+            <span>07</span>
             Reports
           </NavLink>
 
@@ -134,9 +120,7 @@ export default function AppLayout() {
               `nav-item ${isActive ? "active" : ""}`
             }
           >
-            <span className="nav-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.8 1.8-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V20h-2.54v-.1a1.7 1.7 0 0 0-1.03-1.56 1.7 1.7 0 0 0-1.88.34l-.06.06-1.8-1.8.06-.06A1.7 1.7 0 0 0 8.1 15a1.7 1.7 0 0 0-1.56-1.03H6V11.4h.54A1.7 1.7 0 0 0 8.1 10.37a1.7 1.7 0 0 0-.34-1.88L7.7 8.43l1.8-1.8.06.06a1.7 1.7 0 0 0 1.88.34A1.7 1.7 0 0 0 12.47 5.5V5h2.54v.5a1.7 1.7 0 0 0 1.03 1.53 1.7 1.7 0 0 0 1.88-.34l.06-.06 1.8 1.8-.06.06a1.7 1.7 0 0 0-.34 1.88A1.7 1.7 0 0 0 20.9 11H21v2.54h-.1A1.7 1.7 0 0 0 19.4 15Z"/></svg>
-            </span>
+            <span>08</span>
             Settings
           </NavLink>
 
@@ -197,13 +181,6 @@ export default function AppLayout() {
 
 
           <div className="topbar-actions">
-            <div className="topbar-clock">
-              <span className="clock-icon">☼</span>
-              <div>
-                <strong>{new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</strong>
-                <small>{new Date().toLocaleDateString([], { weekday: "short", day: "numeric", month: "short", year: "numeric" })}</small>
-              </div>
-            </div>
 
             <button
               type="button"
@@ -222,7 +199,9 @@ export default function AppLayout() {
             >
 
               <span className="theme-toggle-icon">
-                {theme === "dark" ? "☼" : "☾"}
+                {theme === "dark"
+                  ? "LIGHT"
+                  : "DARK"}
               </span>
 
               <span className="theme-toggle-label">
@@ -235,7 +214,6 @@ export default function AppLayout() {
 
 
             <div className="topbar-user">
-
 
               <div className="user-avatar">
 
@@ -272,7 +250,3 @@ export default function AppLayout() {
     </div>
   );
 }
-
-
-
-

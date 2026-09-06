@@ -1,153 +1,405 @@
+﻿/* =========================================================
+   BHUDRISHTI AI — GIS INTELLIGENCE
+   REFERENCE COMMAND CENTER STYLE
+   ========================================================= */
+
 .gis-page {
-  padding: 28px 32px 36px;
+  min-height: calc(100vh - 72px);
+  padding: 25px 30px 34px;
+  background:
+    radial-gradient(
+      circle at 88% 4%,
+      rgba(26, 104, 78, 0.10),
+      transparent 28%
+    ),
+    #071523;
+  color: #edf5fc;
 }
+
+/* =========================================================
+   HEADER
+   ========================================================= */
 
 .gis-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 24px;
-  margin-bottom: 24px;
+
+  gap: 25px;
+
+  margin-bottom: 18px;
 }
 
 .gis-header h1 {
-  margin: 6px 0 8px;
-  font-size: 30px;
+  margin: 6px 0 6px;
+
+  color: #edf5fc;
+
+  font-size: clamp(27px, 2.4vw, 36px);
+  line-height: 1.1;
+
+  letter-spacing: -0.035em;
+  font-weight: 800;
 }
 
 .gis-header p {
   margin: 0;
-  color: #94a3b8;
+
+  color: #7890a2;
+
+  font-size: 11px;
+  line-height: 1.5;
 }
 
+.gis-header p strong {
+  color: #b9cfdb;
+}
+
+
+/* =========================================================
+   RISK SUMMARY
+   ========================================================= */
+
 .gis-risk-summary {
-  min-width: 180px;
-  padding: 18px 20px;
-  border: 1px solid #26384d;
-  border-radius: 14px;
-  background: rgba(15, 29, 45, 0.88);
+  min-width: 195px;
+
+  padding: 14px 16px;
+
+  border: 1px solid #20394e;
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #0c1e2d,
+      #091825
+    );
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.025);
 }
 
 .gis-risk-summary span {
   display: block;
-  color: #94a3b8;
-  font-size: 13px;
-  margin-bottom: 8px;
+
+  margin-bottom: 7px;
+
+  color: #71899b;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .gis-risk-summary strong {
   display: block;
-  font-size: 32px;
+
+  margin-bottom: 5px;
+
+  color: #edf5fc;
+
+  font-size: 29px;
   line-height: 1;
-  margin-bottom: 8px;
+
+  font-weight: 800;
 }
 
 .gis-risk-summary small {
-  color: #fca5a5;
-  font-weight: 700;
+  color: #f1c65b;
+
+  font-size: 8px;
+  font-weight: 800;
+
   letter-spacing: 0.08em;
 }
 
+
+/* =========================================================
+   STAT CARDS
+   ========================================================= */
+
 .gis-stat-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
-  margin-bottom: 24px;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 13px;
+
+  margin-bottom: 15px;
 }
 
 .gis-stat-card {
-  padding: 18px;
-  border: 1px solid #26384d;
-  border-radius: 14px;
-  background: rgba(15, 29, 45, 0.82);
+  min-height: 105px;
+
+  padding: 15px 16px;
+
+  border: 1px solid #20394e;
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #0c1e2d,
+      #091825
+    );
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.025);
+
+  transition:
+    transform 0.16s ease,
+    border-color 0.16s ease;
+}
+
+.gis-stat-card:hover {
+  transform: translateY(-1px);
+
+  border-color: #2b5068;
 }
 
 .gis-stat-card span {
-  color: #94a3b8;
-  font-size: 13px;
+  display: block;
+
+  color: #7890a2;
+
+  font-size: 9px;
+  font-weight: 750;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .gis-stat-card strong {
   display: block;
-  margin: 8px 0 6px;
-  font-size: 28px;
+
+  margin: 8px 0 5px;
+
+  color: #edf5fc;
+
+  font-size: 27px;
+  line-height: 1;
+
+  font-weight: 800;
 }
 
 .gis-stat-card p {
   margin: 0;
-  color: #64748b;
-  font-size: 13px;
+
+  color: #60798a;
+
+  font-size: 8px;
 }
 
+
+/* =========================================================
+   MAP PANEL
+   ========================================================= */
+
 .gis-map-panel {
-  padding: 18px;
-  border: 1px solid #26384d;
-  border-radius: 16px;
-  background: rgba(10, 24, 40, 0.9);
+  overflow: hidden;
+
+  padding: 0;
+
+  border: 1px solid #20394e;
+  border-radius: 11px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #0c1c2b,
+      #091725
+    );
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.025);
 }
 
 .gis-panel-heading {
+  min-height: 66px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   gap: 16px;
-  margin-bottom: 16px;
+
+  padding: 13px 16px;
+
+  border-bottom: 1px solid #1d3346;
 }
 
 .gis-panel-heading h2 {
-  margin: 5px 0 0;
-  font-size: 20px;
+  margin: 4px 0 0;
+
+  color: #edf5fc;
+
+  font-size: 15px;
+  line-height: 1.25;
+
+  font-weight: 750;
 }
 
 .gis-live-badge {
-  padding: 7px 10px;
-  border: 1px solid rgba(34, 197, 94, 0.35);
+  flex: 0 0 auto;
+
+  padding: 6px 9px;
+
+  border: 1px solid rgba(41, 204, 137, 0.28);
   border-radius: 999px;
-  background: rgba(34, 197, 94, 0.08);
-  color: #86efac;
-  font-size: 12px;
-  font-weight: 700;
+
+  background: rgba(41, 204, 137, 0.07);
+
+  color: #66d39b;
+
+  font-size: 7px;
+  font-weight: 850;
+
   letter-spacing: 0.08em;
 }
 
+
+/* =========================================================
+   MAP
+   ========================================================= */
+
 .gis-map-wrapper {
+  height: 520px;
+
   overflow: hidden;
-  border-radius: 12px;
 }
+
+.gis-map-wrapper .leaflet-container {
+  width: 100%;
+  height: 100%;
+}
+
+.gis-map-wrapper .leaflet-control-zoom a {
+  background: #0b1d2d;
+  color: #dce8ef;
+  border-color: #29455a;
+}
+
+.gis-map-wrapper .leaflet-control-zoom a:hover {
+  background: #123149;
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   MAP LEGEND
+   ========================================================= */
 
 .gis-map-legend {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
+
   gap: 18px;
-  margin-top: 14px;
-  color: #cbd5e1;
-  font-size: 13px;
+
+  min-height: 45px;
+
+  padding: 8px 14px;
+
+  border-top: 1px solid #1d3346;
+
+  background: #091a28;
+
+  color: #9db1bf;
+
+  font-size: 8px;
 }
 
 .gis-map-legend > div {
   display: flex;
   align-items: center;
-  gap: 8px;
+
+  gap: 6px;
 }
 
+.gis-map-legend .legend-dot {
+  width: 7px;
+  height: 7px;
+
+  display: inline-block;
+
+  border-radius: 50%;
+}
+
+.gis-map-legend .legend-line {
+  width: 17px;
+  height: 3px;
+
+  display: inline-block;
+
+  border-radius: 3px;
+}
+
+.gis-map-legend .danger {
+  background: #f04d4d;
+}
+
+.gis-map-legend .village {
+  background: #5ac58d;
+}
+
+.gis-map-legend .open {
+  background: #d5dce2;
+}
+
+.gis-map-legend .blocked {
+  background: #f2a33b;
+}
+
+
+/* =========================================================
+   STATES
+   ========================================================= */
+
 .gis-state {
-  padding: 40px 32px;
-  color: #cbd5e1;
+  min-height: calc(100vh - 72px);
+
+  display: grid;
+  place-items: center;
+
+  padding: 35px;
+
+  background: #071523;
+
+  color: #9db1bf;
+
+  font-size: 12px;
 }
 
 .gis-error {
-  color: #fca5a5;
+  color: #ff8b8f;
 }
 
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
 @media (max-width: 1100px) {
+  .gis-page {
+    padding: 22px 22px 30px;
+  }
+
   .gis-stat-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .gis-map-wrapper {
+    height: 460px;
   }
 }
 
 @media (max-width: 760px) {
   .gis-page {
-    padding: 20px;
+    padding: 18px 15px 25px;
   }
 
   .gis-header {
@@ -160,5 +412,124 @@
 
   .gis-stat-grid {
     grid-template-columns: 1fr;
+  }
+
+  .gis-panel-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .gis-map-wrapper {
+    height: 380px;
+  }
+
+  .gis-map-legend {
+    gap: 10px;
+  }
+}
+/* =========================================================
+   GIS MAP — FINAL VISUAL POLISH
+   ========================================================= */
+
+.gis-map-wrapper {
+  position: relative;
+  background: #10212c;
+}
+
+.gis-map-wrapper .leaflet-container {
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    sans-serif;
+}
+
+.gis-map-wrapper .leaflet-control-zoom {
+  margin-top: 12px;
+  margin-right: 12px;
+}
+
+.gis-map-wrapper .leaflet-control-zoom a {
+  width: 30px;
+  height: 30px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid #29455a !important;
+
+  background: #0b1d2d !important;
+
+  color: #dce8ef !important;
+
+  font-size: 15px;
+}
+
+.gis-map-wrapper .leaflet-control-zoom a:hover {
+  background: #123149 !important;
+  color: #ffffff !important;
+}
+
+.gis-map-wrapper .leaflet-control-attribution {
+  padding: 3px 6px;
+
+  background: rgba(7, 21, 35, 0.88) !important;
+
+  color: #60798a !important;
+
+  font-size: 7px;
+}
+
+.gis-map-wrapper .leaflet-control-attribution a {
+  color: #6f9bb5 !important;
+}
+
+/* Popup */
+.gis-map-wrapper .leaflet-popup-content-wrapper,
+.gis-map-wrapper .leaflet-popup-tip {
+  background: #0b1d2d;
+  color: #dce8ef;
+}
+
+.gis-map-wrapper .leaflet-popup-content {
+  margin: 10px 12px;
+
+  color: #9eb2bf;
+
+  font-size: 9px;
+  line-height: 1.55;
+}
+
+.gis-map-wrapper .leaflet-popup-content strong {
+  color: #edf5fc;
+}
+
+.gis-map-wrapper .leaflet-popup-close-button {
+  color: #7890a2 !important;
+}
+
+.gis-map-wrapper .leaflet-popup-close-button:hover {
+  color: #ffffff !important;
+}
+
+/* Legend */
+.gis-map-legend {
+  position: relative;
+  z-index: 2;
+}
+
+/* Better panel separation */
+.gis-stat-card,
+.gis-risk-summary,
+.gis-map-panel {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.02),
+    0 8px 25px rgba(0,0,0,0.08);
+}
+
+/* Mobile map */
+@media (max-width: 760px) {
+  .gis-map-wrapper {
+    height: 380px;
   }
 }

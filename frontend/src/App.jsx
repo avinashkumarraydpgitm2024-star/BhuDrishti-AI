@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+﻿import { Navigate, Route, Routes } from "react-router-dom";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import AppLayout from "./components/layout/AppLayout";
@@ -8,8 +8,10 @@ import GISIntelligencePage from "./pages/GISIntelligencePage";
 import RiskMonitoringPage from "./pages/RiskMonitoringPage";
 import AlertsPage from "./pages/AlertsPage";
 import SensorsPage from "./pages/SensorsPage";
+import RainMapPage from "./pages/RainMapPage";
+import ReportsPage from "./pages/ReportsPage";
+import SettingsPage from "./pages/SettingsPage";
 import LoginPage from "./pages/LoginPage";
-
 
 export default function App() {
   return (
@@ -37,6 +39,11 @@ export default function App() {
           />
 
           <Route
+            path="/rain"
+            element={<RainMapPage />}
+          />
+
+          <Route
             path="/alerts"
             element={<AlertsPage />}
           />
@@ -44,6 +51,16 @@ export default function App() {
           <Route
             path="/sensors"
             element={<SensorsPage />}
+          />
+
+          <Route
+            path="/reports"
+            element={<ReportsPage />}
+          />
+
+          <Route
+            path="/settings"
+            element={<SettingsPage />}
           />
         </Route>
       </Route>

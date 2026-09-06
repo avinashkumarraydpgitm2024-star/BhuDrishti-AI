@@ -11,6 +11,9 @@ from backend.app.services.risk_assessment_service import (
 from backend.app.services.risk_orchestrator_service import (
     run_risk_assessment,
 )
+from backend.app.services.alert_service import (
+    create_alert_from_assessment,
+)
 
 
 router = APIRouter(
@@ -65,6 +68,12 @@ def generate_risk_assessment(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=str(exc),
         ) from exc
+
+    create_alert_from_assessment(
+        db=db,
+        risk_zone=risk_zone,
+        assessment=assessment,
+    )
 
     return RiskAssessmentRead.model_validate(
         assessment

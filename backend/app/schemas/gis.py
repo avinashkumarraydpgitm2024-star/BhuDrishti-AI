@@ -8,22 +8,43 @@ from backend.app.schemas.risk_assessment import RiskAssessmentRead
 from backend.app.schemas.satellite_observation import (
     SatelliteObservationRead,
 )
+from backend.app.schemas.weather_observation import (
+    WeatherObservationRead,
+)
+from backend.app.schemas.weather_forecast import (
+    WeatherForecastRead,
+)
+
 
 class GISMapDataRead(BaseModel):
     risk_zone: RiskZoneRead
+
     latest_risk_assessment: RiskAssessmentRead | None = None
-    latest_satellite_observation: SatelliteObservationRead | None = None
-    
+
+    latest_satellite_observation: (
+        SatelliteObservationRead | None
+    ) = None
+
+    current_weather: (
+        WeatherObservationRead | None
+    ) = None
+
+    weather_forecasts: list[WeatherForecastRead] = []
+
     active_alerts: list[AlertRead]
 
     villages: list[VillageRead]
+
     road_segments: list[RoadSegmentRead]
 
     village_count: int
+
     road_segment_count: int
+
     blocked_road_count: int
 
     active_alert_count: int
-    delivered_notification_count: int
-    failed_notification_count: int
 
+    delivered_notification_count: int
+
+    failed_notification_count: int

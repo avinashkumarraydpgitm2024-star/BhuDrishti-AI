@@ -237,8 +237,8 @@ export default function DashboardPage() {
         <div>
           <h1>Welcome to BhuDrishti AI</h1>
           <p>
-            Real-time monitoring | AI-powered risk assessment | Early
-            warnings | Safer North-East India
+            Real-time monitoring  AI-powered risk assessment  Early
+            warnings  Safer North-East India
           </p>
         </div>
 
@@ -251,14 +251,9 @@ export default function DashboardPage() {
 
       <section className="reference-kpi-grid">
         <article className="reference-kpi monitoring-kpi">
-          <div className="kpi-icon kpi-location-icon" aria-hidden="true">
-  <svg viewBox="0 0 24 24" focusable="false">
-    <path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12Z" />
-    <circle cx="12" cy="9" r="2.5" />
-  </svg>
-</div>
-<div className="kpi-content">
-  <span>Monitoring Zones</span>
+          <div className="kpi-icon"></div>
+          <div className="kpi-content">
+            <span>Monitoring Zones</span>
             <strong>1</strong>
             <small className="kpi-positive"> 0 this week</small>
           </div>
@@ -266,14 +261,9 @@ export default function DashboardPage() {
         </article>
 
         <article className="reference-kpi sensor-kpi">
-          <div className="kpi-icon kpi-sensor-icon" aria-hidden="true">
-  <svg viewBox="0 0 24 24" focusable="false">
-    <circle cx="12" cy="12" r="3" />
-    <path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M19 5l-3 3M8 16l-3 3" />
-  </svg>
-</div>
-<div className="kpi-content">
-  <span>Active Sensors</span>
+          <div className="kpi-icon"></div>
+          <div className="kpi-content">
+            <span>Active Sensors</span>
             <strong>{activeSensorCount}</strong>
             <small className="kpi-positive">
                {activeSensorCount > 0 ? 1 : 0} this week
@@ -283,14 +273,9 @@ export default function DashboardPage() {
         </article>
 
         <article className="reference-kpi alert-kpi">
-          <div className="kpi-icon kpi-alert-icon" aria-hidden="true">
-  <svg viewBox="0 0 24 24" focusable="false">
-    <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z" />
-    <path d="M10 21h4" />
-  </svg>
-</div>
-<div className="kpi-content">
-  <span>Active Alerts</span>
+          <div className="kpi-icon">!</div>
+          <div className="kpi-content">
+            <span>Active Alerts</span>
             <strong>{dashboard.active_alert_count ?? 0}</strong>
             <small className="kpi-positive">
                {dashboard.active_alert_count ?? 0} this week
@@ -300,14 +285,9 @@ export default function DashboardPage() {
         </article>
 
         <article className={`reference-kpi risk-kpi ${tone}`}>
-          <div className="kpi-icon kpi-risk-icon" aria-hidden="true">
-  <svg viewBox="0 0 24 24" focusable="false">
-    <path d="M12 3 20 6v5c0 5.1-3.4 8.7-8 10-4.6-1.3-8-4.9-8-10V6l8-3Z" />
-    <path d="m9 12 2 2 4-4" />
-  </svg>
-</div>
-<div className="kpi-content">
-  <span>Avg. Risk Level</span>
+          <div className="kpi-icon"></div>
+          <div className="kpi-content">
+            <span>Avg. Risk Level</span>
             <strong>
               {riskValue !== null ? `${formatNumber(riskValue)}%` : "N/A"}
             </strong>
@@ -396,7 +376,7 @@ export default function DashboardPage() {
           <div className="reference-panel-header">
             <div>
               <span>LIVE WEATHER</span>
-              <h2><span className="weather-heading-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M7 18h10a4 4 0 0 0 .5-7.97A6 6 0 0 0 6 11.2 3.4 3.4 0 0 0 7 18Z" /><path d="M8 21h8M12 3v2M4.9 5.9l1.4 1.4M19.1 5.9l-1.4 1.4" /></svg></span>From Open-Meteo</h2>
+              <h2> From Open-Meteo</h2>
             </div>
           </div>
 
@@ -411,7 +391,7 @@ export default function DashboardPage() {
           <div className="weather-temperature">
             <strong>
               {weather?.temperature_c != null
-                ? `${weather.temperature_c}°C`
+                ? `${weather.temperature_c}C`
                 : "N/A"}
             </strong>
             <span>{weather?.weather_description || "Current conditions"}</span>
@@ -542,69 +522,27 @@ export default function DashboardPage() {
       </section>
 
       <section className="reference-intelligence-strip">
-
-  <article className="intelligence-item satellite-intelligence">
-
-    <div className="intelligence-icon satellite-icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <path d="M4 14.5 14.5 4l5.5 5.5L9.5 20z" />
-        <path d="m7 11 6 6" />
-        <path d="M5 19 3 21" />
-        <path d="m19 5 2-2" />
-        <path d="M14 4 20 10" />
-      </svg>
-    </div>
-
-    <div className="intelligence-content">
-      <span>SATELLITE INTELLIGENCE</span>
-
-      <strong>
-        {satellite?.satellite_name || "Sentinel-2"}
-      </strong>
-
-      <small>
-        NDVI {satellite?.ndvi != null ? satellite.ndvi.toFixed(3) : "N/A"}
-        {"  "}
-        NDWI {satellite?.ndwi != null ? satellite.ndwi.toFixed(3) : "N/A"}
-        {"  "}
-        Soil Index {satellite?.soil_moisture_index != null
-          ? satellite.soil_moisture_index.toFixed(3)
-          : "N/A"}
-      </small>
-    </div>
-
-  </article>
-
-  <article className="intelligence-item sensor-intelligence">
-
-    <div className="intelligence-icon sensor-icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <path d="M4 18h2" />
-        <path d="M8 14h2" />
-        <path d="M12 10h2" />
-        <path d="M16 6h2" />
-        <path d="M19 4v16" />
-        <path d="M4 20h16" />
-      </svg>
-    </div>
-
-    <div className="intelligence-content">
-      <span>LIVE SENSOR TELEMETRY</span>
-
-      <strong>
-        {sensor?.name || "No sensor"}
-      </strong>
-
-      <small>
-        Soil Moisture {sensorReading?.soil_moisture_percent ?? "N/A"}%
-        {"  "}
-        Rain Rate {sensorReading?.rainfall_rate_mm_hr ?? "N/A"} mm/hr
-      </small>
-    </div>
-
-  </article>
-
-</section>
+        <article>
+          <span>SATELLITE INTELLIGENCE</span>
+          <strong>{satellite?.satellite_name || "Sentinel-2"}</strong>
+          <small>
+            NDVI {satellite?.ndvi != null ? satellite.ndvi.toFixed(3) : "N/A"}
+            {"  "}
+            NDWI {satellite?.ndwi != null ? satellite.ndwi.toFixed(3) : "N/A"}
+            {"  "}
+            Soil Index {satellite?.soil_moisture_index != null ? satellite.soil_moisture_index.toFixed(3) : "N/A"}
+          </small>
+        </article>
+        <article>
+          <span>LIVE SENSOR TELEMETRY</span>
+          <strong>{sensor?.name || "No sensor"}</strong>
+          <small>
+            Soil Moisture {sensorReading?.soil_moisture_percent ?? "N/A"}%
+            {"  "}
+            Rain Rate {sensorReading?.rainfall_rate_mm_hr ?? "N/A"} mm/hr
+          </small>
+        </article>
+      </section>
 
       <div className="reference-data-status">
         <span className="status-pulse" />
@@ -614,13 +552,5 @@ export default function DashboardPage() {
     </main>
   );
 }
-
-
-
-
-
-
-
-
 
 

@@ -5,6 +5,40 @@ import apiClient from "../api/client";
 import "./SensorsPage.css";
 
 
+function formatLabel(value) {
+  if (!value) {
+    return "—";
+  }
+
+  return String(value).replaceAll("_", " ");
+}
+
+
+function formatTime(value) {
+  if (!value) {
+    return "—";
+  }
+
+  return new Date(value).toLocaleString();
+}
+
+
+function TelemetryItem({ label, value, unit }) {
+  return (
+    <div className="sensor-telemetry-item">
+      <span>{label}</span>
+
+      <strong>
+        {value ?? "—"}
+        {value !== null && value !== undefined && unit
+          ? ` ${unit}`
+          : ""}
+      </strong>
+    </div>
+  );
+}
+
+
 export default function SensorsPage() {
   const [sensors, setSensors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -114,42 +148,112 @@ export default function SensorsPage() {
         </section>
       ) : (
         <section className="sensor-list">
-          {sensors.map((sensor) => (
-            <article
-              className="sensor-card"
-              key={sensor.public_id}
-            >
-              <div className="sensor-card-header">
-                <div>
-                  <span className="sensor-code">
-                    {sensor.sensor_code}
+          {sensors.map((sensor) => {
+            const reading = sensor.latest_reading;
+
+            return (
+              <article
+                className="sensor-card"
+                key={sensor.public_id}
+              >
+                <div className="sensor-card-header">
+                  <div>
+                    <span className="sensor-code">
+                      {sensor.sensor_code}
+                    </span>
+
+                    <h2>{sensor.name}</h2>
+
+                    <p>
+                      {formatLabel(sensor.sensor_type)}
+                    </p>
+                  </div>
+
+                  <span className="sensor-status">
+                    {formatLabel(sensor.status)}
                   </span>
-
-                  <h2>{sensor.name}</h2>
-
-                  <p>{sensor.sensor_type}</p>
                 </div>
 
-                <span className="sensor-status">
-                  {sensor.status}
-                </span>
-              </div>
 
-              {sensor.latest_reading ? (
-                <div className="sensor-live-status">
-                  Verified live reading available
-                </div>
-              ) : (
-                <div className="sensor-no-reading">
-                  No telemetry received from this sensor yet.
-                </div>
-              )}
-            </article>
-          ))}
+                {reading ? (
+                  <>
+                    <div className="sensor-live-status">
+                      Verified live telemetry available
+                    </div>
+
+                    <div className="sensor-telemetry-grid">
+                      <TelemetryItem
+                        label="Soil Moisture"
+                        value={reading.soil_moisture_percent}
+                        unit="%"
+                      />
+
+                      <TelemetryItem
+                        label="Rainfall"
+                        value={reading.rainfall_mm}
+                        unit="mm"
+                      />
+
+                      <TelemetryItem
+                        label="Rainfall Rate"
+                        value={reading.rainfall_rate_mm_hr}
+                        unit="mm/hr"
+                      />
+
+                      <TelemetryItem
+                        label="Temperature"
+                        value={reading.temperature_c}
+                        unit="°C"
+                      />
+
+                      <TelemetryItem
+                        label="Humidity"
+                        value={reading.humidity_percent}
+                        unit="%"
+                      />
+
+                      <TelemetryItem
+                        label="Battery"
+                        value={reading.battery_level_percent}
+                        unit="%"
+                      />
+
+                      <TelemetryItem
+                        label="Signal"
+                        value={reading.signal_strength_dbm}
+                        unit="dBm"
+                      />
+
+                      <TelemetryItem
+                        label="Data Quality"
+                        value={reading.data_quality_status}
+                      />
+                    </div>
+
+                    <div className="sensor-reading-meta">
+                      <span>
+                        Event: {reading.device_event_id}
+                      </span>
+
+                      <span>
+                        Recorded: {formatTime(reading.recorded_at)}
+                      </span>
+
+                      <span>
+                        Received: {formatTime(reading.received_at)}
+                      </span>
+                    </div>
+                  </>
+                ) : (
+                  <div className="sensor-no-reading">
+                    No telemetry received from this sensor yet.
+                  </div>
+                )}
+              </article>
+            );
+          })}
         </section>
       )}
     </main>
   );
 }
-
-

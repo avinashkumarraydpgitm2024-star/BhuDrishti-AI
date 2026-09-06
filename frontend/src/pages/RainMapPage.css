@@ -1,0 +1,1129 @@
+.rain-page {
+  min-height: 100vh;
+  padding: 32px;
+  background: var(--page-bg, #f5f8fc);
+  color: var(--text-primary, #172033);
+}
+
+.rain-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.rain-kicker {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: #1677c8;
+}
+
+.rain-page-header h1 {
+  margin: 0;
+  font-size: 32px;
+  line-height: 1.15;
+}
+
+.rain-page-header p {
+  max-width: 720px;
+  margin: 10px 0 0;
+  color: var(--text-secondary, #667085);
+  line-height: 1.6;
+}
+
+.rain-live-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border: 1px solid #b7e4c7;
+  border-radius: 999px;
+  background: #effcf3;
+  color: #18794e;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.rain-live-indicator span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22a06b;
+  box-shadow: 0 0 0 4px rgba(34, 160, 107, 0.12);
+}
+
+.rain-location-card,
+.rain-map-card,
+.rain-forecast-card {
+  border: 1px solid var(--border-color, #e3e8ef);
+  border-radius: 18px;
+  background: var(--card-bg, #ffffff);
+  box-shadow: 0 8px 28px rgba(20, 32, 50, 0.06);
+}
+
+.rain-location-card {
+  padding: 22px;
+  margin-bottom: 22px;
+}
+
+.rain-location-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.rain-location-title > div:first-child > span {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #667085;
+}
+
+.rain-location-title h3 {
+  margin: 5px 0 0;
+  font-size: 19px;
+}
+
+.rain-location-symbol {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: #eef6ff;
+  font-size: 20px;
+}
+
+.rain-search-form {
+  display: flex;
+  gap: 10px;
+}
+
+.rain-search-form input {
+  min-width: 0;
+  flex: 1;
+  height: 46px;
+  padding: 0 15px;
+  border: 1px solid #d7dee8;
+  border-radius: 10px;
+  outline: none;
+  background: var(--input-bg, #ffffff);
+  color: var(--text-primary, #172033);
+}
+
+.rain-search-form input:focus {
+  border-color: #2489d8;
+  box-shadow: 0 0 0 3px rgba(36, 137, 216, 0.12);
+}
+
+.rain-search-form button,
+.rain-map-note button,
+.rain-page-state button {
+  border: 0;
+  border-radius: 10px;
+  padding: 0 20px;
+  background: #1677c8;
+  color: white;
+  font-weight: 700;
+}
+
+.rain-search-form button {
+  min-width: 100px;
+}
+
+.rain-location-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 13px;
+}
+
+.rain-location-actions > span {
+  font-size: 12px;
+  color: var(--text-secondary, #667085);
+}
+
+.rain-my-location {
+  border: 1px solid #cbd8e6;
+  border-radius: 9px;
+  padding: 9px 13px;
+  background: var(--card-bg, #ffffff);
+  color: var(--text-primary, #172033);
+  font-weight: 700;
+}
+
+.rain-my-location:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.rain-detected-location {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+  padding: 11px 13px;
+  border-radius: 10px;
+  background: #f4f8fc;
+}
+
+.rain-detected-location span {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #667085;
+}
+
+.rain-detected-location strong {
+  font-size: 13px;
+}
+
+.rain-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.rain-metric-card {
+  min-height: 150px;
+  padding: 20px;
+  border: 1px solid var(--border-color, #e3e8ef);
+  border-radius: 16px;
+  background: var(--card-bg, #ffffff);
+  box-shadow: 0 6px 20px rgba(20, 32, 50, 0.05);
+}
+
+.rain-metric-card.primary {
+  border-color: #b9daf3;
+  background: linear-gradient(
+    145deg,
+    #ffffff,
+    #f0f8ff
+  );
+}
+
+.rain-metric-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #667085;
+}
+
+.rain-metric-card strong {
+  display: block;
+  margin: 13px 0 8px;
+  font-size: 31px;
+  line-height: 1;
+}
+
+.rain-metric-card strong small {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.rain-metric-card > span:not(.rain-intensity-badge) {
+  color: var(--text-secondary, #667085);
+  font-size: 12px;
+}
+
+.rain-intensity-badge {
+  display: inline-flex;
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.rain-intensity-badge.none {
+  background: #eef2f6;
+  color: #667085;
+}
+
+.rain-intensity-badge.light {
+  background: #e8f5ff;
+  color: #1677c8;
+}
+
+.rain-intensity-badge.moderate {
+  background: #fff4d6;
+  color: #9a6700;
+}
+
+.rain-intensity-badge.heavy {
+  background: #ffe7d9;
+  color: #b54708;
+}
+
+.rain-intensity-badge.extreme {
+  background: #ffe1e8;
+  color: #b4233c;
+}
+
+.rain-map-card {
+  padding: 22px;
+  margin-bottom: 22px;
+}
+
+.rain-map-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+
+.rain-map-header h2 {
+  margin: 4px 0 0;
+  font-size: 21px;
+}
+
+.rain-map-header p {
+  margin: 7px 0 0;
+  color: var(--text-secondary, #667085);
+  font-size: 13px;
+}
+
+.rain-map-source {
+  min-width: 130px;
+  padding: 10px 13px;
+  border-radius: 10px;
+  background: #f5f8fc;
+}
+
+.rain-map-source span {
+  display: block;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #667085;
+}
+
+.rain-map-source strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+}
+
+.rain-map-container {
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.rain-map-visual {
+  position: relative;
+  min-height: 470px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(
+      circle at 50% 48%,
+      rgba(36, 137, 216, 0.16),
+      transparent 26%
+    ),
+    linear-gradient(
+      135deg,
+      #eaf4fc,
+      #dbeaf5 48%,
+      #edf5f0
+    );
+}
+
+.rain-map-visual.moderate {
+  background:
+    radial-gradient(
+      circle at 50% 48%,
+      rgba(246, 185, 59, 0.25),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #eaf4fc,
+      #f1edda
+    );
+}
+
+.rain-map-visual.heavy,
+.rain-map-visual.extreme {
+  background:
+    radial-gradient(
+      circle at 50% 48%,
+      rgba(217, 83, 79, 0.18),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #e7eef5,
+      #e7e5e5
+    );
+}
+
+.rain-map-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  background-image:
+    linear-gradient(
+      rgba(68, 91, 112, 0.12) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(68, 91, 112, 0.12) 1px,
+      transparent 1px
+    );
+  background-size: 42px 42px;
+}
+
+.rain-map-center {
+  position: relative;
+  z-index: 2;
+  width: min(320px, 80%);
+  padding: 28px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 16px 45px rgba(30, 55, 80, 0.16);
+  backdrop-filter: blur(8px);
+}
+
+.rain-map-pulse {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  width: 52px;
+  height: 52px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: rgba(22, 119, 200, 0.14);
+  animation: rainPulse 2s infinite;
+}
+
+.rain-map-marker {
+  position: relative;
+  z-index: 2;
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 14px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #ffffff;
+  font-size: 25px;
+  box-shadow: 0 5px 18px rgba(20, 32, 50, 0.12);
+}
+
+.rain-map-center strong {
+  display: block;
+  font-size: 17px;
+}
+
+.rain-map-center span {
+  display: block;
+  margin-top: 5px;
+  color: #667085;
+  font-size: 12px;
+}
+
+.rain-map-center b {
+  display: block;
+  margin-top: 15px;
+  color: #1677c8;
+  font-size: 25px;
+}
+
+.rain-map-coordinate {
+  position: absolute;
+  left: 18px;
+  bottom: 17px;
+  z-index: 2;
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.88);
+  font-size: 11px;
+  font-weight: 700;
+  color: #475467;
+}
+
+.rain-map-legend {
+  position: absolute;
+  right: 18px;
+  bottom: 17px;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  max-width: 60%;
+  padding: 9px 11px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.rain-map-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  color: #475467;
+}
+
+.rain-map-legend i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.legend-none {
+  background: #98a2b3;
+}
+
+.legend-light {
+  background: #4ba3e3;
+}
+
+.legend-moderate {
+  background: #f6b93b;
+}
+
+.legend-heavy {
+  background: #e67e22;
+}
+
+.legend-extreme {
+  background: #d9534f;
+}
+
+.rain-map-note {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 10px 2px 0;
+  color: #667085;
+  font-size: 12px;
+}
+
+.rain-map-note strong {
+  color: var(--text-primary, #172033);
+}
+
+.rain-weather-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.rain-weather-card {
+  padding: 18px;
+  border: 1px solid var(--border-color, #e3e8ef);
+  border-radius: 14px;
+  background: var(--card-bg, #ffffff);
+}
+
+.rain-weather-card span {
+  display: block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  color: #667085;
+}
+
+.rain-weather-card strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 23px;
+}
+
+.rain-forecast-card {
+  padding: 22px;
+}
+
+.rain-forecast-count {
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: #eef6ff;
+  color: #1677c8;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.rain-forecast-list {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+}
+
+.rain-forecast-item {
+  padding: 13px 10px;
+  border: 1px solid #e4e9ef;
+  border-radius: 11px;
+  background: #f9fbfd;
+  text-align: center;
+}
+
+.rain-forecast-item span,
+.rain-forecast-item small {
+  display: block;
+  color: #667085;
+  font-size: 10px;
+}
+
+.rain-forecast-item strong {
+  display: block;
+  margin: 8px 0;
+  font-size: 15px;
+}
+
+.rain-page-state {
+  min-height: 70vh;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+  padding: 30px;
+  text-align: center;
+  color: var(--text-primary, #172033);
+}
+
+.rain-page-state p {
+  margin: 0;
+  color: #667085;
+}
+
+.rain-loader {
+  width: 38px;
+  height: 38px;
+  border: 4px solid #dbe8f4;
+  border-top-color: #1677c8;
+  border-radius: 50%;
+  animation: rainSpin 0.8s linear infinite;
+}
+
+.rain-error h2 {
+  margin-bottom: 0;
+}
+
+.rain-error button {
+  height: 42px;
+  margin-top: 10px;
+}
+
+@keyframes rainPulse {
+  0%,
+  100% {
+    transform: translateX(-50%) scale(0.9);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: translateX(-50%) scale(1.35);
+    opacity: 0;
+  }
+}
+
+@keyframes rainSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+
+[data-theme="dark"] .rain-page {
+  --page-bg: #07111f;
+  --card-bg: #0f1d2d;
+  --input-bg: #0b1728;
+  --border-color: #26384d;
+  --text-primary: #e5eef8;
+  --text-secondary: #94a3b8;
+}
+
+[data-theme="dark"] .rain-live-indicator {
+  background: #102c22;
+  border-color: #1e6045;
+  color: #73d6a5;
+}
+
+[data-theme="dark"] .rain-location-symbol {
+  background: #12283d;
+}
+
+[data-theme="dark"] .rain-search-form input {
+  border-color: #31465d;
+}
+
+[data-theme="dark"] .rain-my-location {
+  border-color: #31465d;
+}
+
+[data-theme="dark"] .rain-detected-location,
+[data-theme="dark"] .rain-map-source,
+[data-theme="dark"] .rain-forecast-item {
+  background: #0b1728;
+}
+
+[data-theme="dark"] .rain-metric-card.primary {
+  background: linear-gradient(
+    145deg,
+    #0f1d2d,
+    #10283d
+  );
+  border-color: #245174;
+}
+
+[data-theme="dark"] .rain-map-visual {
+  background:
+    radial-gradient(
+      circle at 50% 48%,
+      rgba(36, 137, 216, 0.18),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #0b1a2b,
+      #10283d
+    );
+}
+
+[data-theme="dark"] .rain-map-visual.moderate {
+  background:
+    radial-gradient(
+      circle at 50% 48%,
+      rgba(246, 185, 59, 0.16),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #0b1a2b,
+      #302b19
+    );
+}
+
+[data-theme="dark"] .rain-map-visual.heavy,
+[data-theme="dark"] .rain-map-visual.extreme {
+  background:
+    radial-gradient(
+      circle at 50% 48%,
+      rgba(217, 83, 79, 0.16),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #0b1a2b,
+      #2a1e23
+    );
+}
+
+[data-theme="dark"] .rain-map-grid {
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.06) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.06) 1px,
+      transparent 1px
+    );
+}
+
+[data-theme="dark"] .rain-map-center {
+  border-color: #31465d;
+  background: rgba(15, 29, 45, 0.94);
+}
+
+[data-theme="dark"] .rain-map-marker {
+  background: #16283b;
+}
+
+[data-theme="dark"] .rain-map-coordinate,
+[data-theme="dark"] .rain-map-legend {
+  background: rgba(15, 29, 45, 0.94);
+}
+
+[data-theme="dark"] .rain-forecast-item {
+  border-color: #26384d;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .rain-metrics,
+  .rain-weather-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .rain-forecast-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .rain-page {
+    padding: 18px;
+  }
+
+  .rain-page-header,
+  .rain-map-header {
+    flex-direction: column;
+  }
+
+  .rain-live-indicator {
+    align-self: flex-start;
+  }
+
+  .rain-search-form {
+    flex-direction: column;
+  }
+
+  .rain-search-form button {
+    height: 44px;
+  }
+
+  .rain-location-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .rain-metrics,
+  .rain-weather-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rain-map-visual {
+    min-height: 430px;
+  }
+
+  .rain-map-legend {
+    left: 18px;
+    right: 18px;
+    max-width: none;
+    justify-content: center;
+  }
+
+  .rain-forecast-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .rain-page-header h1 {
+    font-size: 26px;
+  }
+
+  .rain-location-card,
+  .rain-map-card,
+  .rain-forecast-card {
+    padding: 16px;
+  }
+
+  .rain-map-center {
+    padding: 22px 15px;
+  }
+
+  .rain-map-coordinate {
+    left: 10px;
+    bottom: 70px;
+  }
+
+  .rain-map-legend {
+    bottom: 10px;
+    gap: 6px;
+  }
+
+  .rain-forecast-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.rain-leaflet-map {
+  width: 100%;
+  height: 470px;
+  min-height: 470px;
+  z-index: 1;
+}
+
+.rain-leaflet-map .leaflet-control {
+  z-index: 10;
+}
+
+@media (max-width: 760px) {
+  .rain-leaflet-map {
+    height: 430px;
+    min-height: 430px;
+  }
+}
+
+@media (max-width: 480px) {
+  .rain-leaflet-map {
+    height: 380px;
+    min-height: 380px;
+  }
+}
+
+/* =========================================================
+   BHUDRISHTI AI — RAIN INTELLIGENCE FINAL DARK UI
+   ========================================================= */
+
+.rain-page {
+  min-height: calc(100vh - 72px) !important;
+  padding: 25px 30px 34px !important;
+
+  background:
+    radial-gradient(
+      circle at 88% 3%,
+      rgba(38, 130, 180, .07),
+      transparent 28%
+    ),
+    #071523 !important;
+
+  color: #edf5fa !important;
+}
+
+.rain-page-header {
+  margin-bottom: 18px !important;
+}
+
+.rain-page-header h1 {
+  color: #f4f8fc !important;
+  font-size: 30px !important;
+  font-weight: 800 !important;
+  letter-spacing: -.035em !important;
+}
+
+.rain-page-header p {
+  color: #8198a9 !important;
+  font-size: 11px !important;
+}
+
+.rain-kicker {
+  color: #38bdf8 !important;
+  font-size: 9px !important;
+  letter-spacing: .12em !important;
+}
+
+.rain-live-indicator {
+  border: 1px solid rgba(41,204,137,.25) !important;
+  background: rgba(41,204,137,.05) !important;
+  color: #69d29b !important;
+}
+
+.rain-location-card,
+.rain-map-card,
+.rain-forecast-card,
+.rain-metric-card,
+.rain-weather-card {
+  border: 1px solid #203d53 !important;
+  border-radius: 10px !important;
+
+  background:
+    linear-gradient(
+      145deg,
+      #0d2132,
+      #091a29
+    ) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.018),
+    0 10px 25px rgba(0,0,0,.10) !important;
+}
+
+.rain-location-card,
+.rain-map-card,
+.rain-forecast-card {
+  padding: 17px !important;
+}
+
+.rain-location-title h3,
+.rain-map-header h2 {
+  color: #edf5fa !important;
+}
+
+.rain-location-title > div:first-child > span,
+.rain-map-header p {
+  color: #71899b !important;
+}
+
+.rain-location-symbol {
+  background: #102b40 !important;
+}
+
+.rain-search-form input {
+  height: 40px !important;
+  border: 1px solid #29465b !important;
+  background: #091a28 !important;
+  color: #e3edf3 !important;
+}
+
+.rain-search-form button {
+  background: #126d9f !important;
+}
+
+.rain-my-location {
+  border-color: #29465b !important;
+  background: #0b1d2c !important;
+  color: #dce8ef !important;
+}
+
+.rain-detected-location {
+  background: #091a28 !important;
+}
+
+.rain-detected-location span {
+  color: #60798a !important;
+}
+
+.rain-detected-location strong {
+  color: #dce8ef !important;
+}
+
+.rain-metrics,
+.rain-weather-grid {
+  gap: 11px !important;
+}
+
+.rain-metric-card {
+  min-height: 112px !important;
+  padding: 15px !important;
+}
+
+.rain-metric-label,
+.rain-weather-card span {
+  color: #647d8f !important;
+  font-size: 8px !important;
+}
+
+.rain-metric-card strong,
+.rain-weather-card strong {
+  color: #eaf3f8 !important;
+  font-size: 25px !important;
+}
+
+.rain-metric-card > span:not(.rain-intensity-badge) {
+  color: #71899b !important;
+}
+
+.rain-metric-card.primary {
+  border-color: #245174 !important;
+
+  background:
+    linear-gradient(
+      145deg,
+      #0e2639,
+      #0b1d2c
+    ) !important;
+}
+
+.rain-map-visual {
+  min-height: 390px !important;
+
+  background:
+    radial-gradient(
+      circle at 50% 48%,
+      rgba(38,130,180,.16),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #0a1b2b,
+      #10283b
+    ) !important;
+}
+
+.rain-map-center {
+  border: 1px solid #29485e !important;
+  background: rgba(11,29,44,.94) !important;
+  box-shadow: 0 16px 45px rgba(0,0,0,.22) !important;
+}
+
+.rain-map-marker {
+  background: #142d40 !important;
+}
+
+.rain-map-center strong {
+  color: #e5eef4 !important;
+}
+
+.rain-map-center span {
+  color: #71899b !important;
+}
+
+.rain-map-center b {
+  color: #38bdf8 !important;
+}
+
+.rain-map-coordinate,
+.rain-map-legend {
+  background: rgba(8,22,34,.92) !important;
+  color: #d5e3eb !important;
+}
+
+.rain-map-legend span {
+  color: #c5d5de !important;
+}
+
+.rain-map-note {
+  color: #71899b !important;
+}
+
+.rain-map-note strong {
+  color: #dce8ef !important;
+}
+
+.rain-forecast-count {
+  background: rgba(56,189,248,.07) !important;
+  color: #55bde8 !important;
+}
+
+.rain-forecast-item {
+  border-color: #20394e !important;
+  background: #091a28 !important;
+}
+
+.rain-forecast-item span,
+.rain-forecast-item small {
+  color: #61798a !important;
+}
+
+.rain-forecast-item strong {
+  color: #dce8ef !important;
+}
+
+.rain-leaflet-map {
+  border-radius: 9px !important;
+}
+
+.rain-page-state {
+  min-height: 70vh !important;
+  background: #071523 !important;
+  color: #dce8ef !important;
+}
+
+@media (max-width: 760px) {
+  .rain-page {
+    padding: 18px 15px 28px !important;
+  }
+
+  .rain-map-visual {
+    min-height: 360px !important;
+  }
+}
+

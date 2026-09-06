@@ -1,0 +1,1964 @@
+﻿/* =========================================================
+   BHUDRISHTI AI — REFERENCE COMMAND CENTER DASHBOARD
+   ========================================================= */
+
+.dashboard-main.reference-dashboard {
+  min-height: calc(100vh - 84px);
+  padding: 28px 30px 42px;
+  background:
+    radial-gradient(
+      circle at 85% 0%,
+      rgba(18, 82, 125, 0.16),
+      transparent 32%
+    ),
+    #07111f;
+  color: #edf5fc;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+.reference-dashboard *,
+.reference-dashboard *::before,
+.reference-dashboard *::after {
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   WELCOME HEADER
+   ========================================================= */
+
+.reference-welcome {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 22px;
+}
+
+.reference-welcome > div:first-child {
+  min-width: 0;
+}
+
+.reference-welcome h1 {
+  margin: 7px 0 7px;
+  font-size: clamp(28px, 2.3vw, 36px);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+}
+
+.reference-welcome p {
+  margin: 0;
+  color: #8fa4b8;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.section-kicker {
+  display: block;
+  color: #27b8ee;
+  font-size: 9px;
+  line-height: 1.2;
+  font-weight: 850;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   ZONE SELECTOR
+   ========================================================= */
+
+.zone-selector {
+  min-width: 250px;
+  height: 42px;
+  padding: 0 13px;
+
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  border: 1px solid #2a526e;
+  border-radius: 8px;
+
+  background: #0d1d2d;
+  color: #e8f2fa;
+
+  cursor: pointer;
+}
+
+.zone-selector-icon {
+  width: 22px;
+  height: 22px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 6px;
+
+  background: #103b58;
+  color: #49baf1;
+
+  font-size: 11px;
+}
+
+.zone-selector-arrow {
+  margin-left: auto;
+  color: #90a5b8;
+  font-size: 11px;
+}
+
+/* =========================================================
+   KPI GRID
+   ========================================================= */
+
+.reference-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.reference-kpi {
+  position: relative;
+  min-height: 106px;
+  padding: 16px 15px;
+
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  overflow: hidden;
+
+  border: 1px solid #20394e;
+  border-radius: 11px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(18, 38, 57, 0.96),
+      rgba(10, 27, 43, 0.98)
+    );
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+.reference-kpi::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 2px;
+  opacity: 0.8;
+}
+
+.monitoring-kpi::after {
+  background: #20a96b;
+}
+
+.sensor-kpi::after {
+  background: #238fe1;
+}
+
+.alert-kpi::after {
+  background: #ef4c54;
+}
+
+.risk-kpi::after {
+  background: #8663e9;
+}
+
+.kpi-icon {
+  width: 48px;
+  height: 48px;
+
+  flex: 0 0 48px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  font-size: 20px;
+}
+
+.monitoring-kpi .kpi-icon {
+  background: rgba(28, 176, 111, 0.16);
+  color: #32d58b;
+}
+
+.sensor-kpi .kpi-icon {
+  background: rgba(35, 143, 225, 0.15);
+  color: #38a8f4;
+}
+
+.alert-kpi .kpi-icon {
+  background: rgba(239, 76, 84, 0.14);
+  color: #ff5b63;
+}
+
+.risk-kpi .kpi-icon {
+  background: rgba(134, 99, 233, 0.15);
+  color: #9b82ff;
+}
+
+.kpi-content {
+  min-width: 0;
+}
+
+.kpi-content strong {
+  display: block;
+  margin: 3px 0 2px;
+  font-size: 27px;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+.kpi-content span {
+  display: block;
+  color: #dce7ef;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.kpi-positive {
+  display: block;
+  margin-top: 6px;
+  color: #31d78d;
+  font-size: 9px;
+}
+
+.kpi-action {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+
+  color: #65a8cf;
+  font-size: 15px;
+}
+
+/* =========================================================
+   PRIMARY GRID
+   ========================================================= */
+
+.reference-primary-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(300px, 0.82fr);
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.reference-panel {
+  min-width: 0;
+  overflow: hidden;
+
+  border: 1px solid #20394e;
+  border-radius: 11px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #0c1c2b,
+      #091725
+    );
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+.reference-panel-header {
+  min-height: 62px;
+  padding: 14px 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+
+  border-bottom: 1px solid #1d3346;
+}
+
+.reference-panel-header h3 {
+  margin: 4px 0 0;
+  color: #edf5fc;
+  font-size: 14px;
+  line-height: 1.25;
+  font-weight: 750;
+}
+
+.reference-panel-header p {
+  margin: 3px 0 0;
+  color: #71889b;
+  font-size: 10px;
+}
+
+.panel-view-button,
+.map-view-button {
+  min-height: 34px;
+  padding: 0 12px;
+
+  border: 1px solid #31536b;
+  border-radius: 7px;
+
+  background: #0c2133;
+  color: #d7e7f1;
+
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.panel-view-button:hover,
+.map-view-button:hover {
+  border-color: #4a7695;
+  background: #112b40;
+}
+
+/* =========================================================
+   MAP
+   ========================================================= */
+
+.reference-map {
+  position: relative;
+  height: 265px;
+  overflow: hidden;
+}
+
+.reference-map .leaflet-container {
+  width: 100%;
+  height: 100%;
+}
+
+.reference-map-legend {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  z-index: 500;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  padding: 8px 11px;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 7px;
+
+  background: rgba(7, 17, 31, 0.88);
+  backdrop-filter: blur(8px);
+
+  color: #d8e4ec;
+  font-size: 9px;
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 4px;
+  border-radius: 50%;
+}
+
+.legend-dot.low {
+  background: #28c981;
+}
+
+.legend-dot.moderate {
+  background: #f2bd35;
+}
+
+.legend-dot.high {
+  background: #f04d4d;
+}
+
+.legend-dot.critical {
+  background: #9a65e9;
+}
+
+/* =========================================================
+   ALERTS
+   ========================================================= */
+
+.reference-alert-panel {
+  min-height: 327px;
+}
+
+.reference-alert-list {
+  min-height: 265px;
+}
+
+.reference-no-alerts {
+  min-height: 265px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  color: #8095a7;
+}
+
+.no-alert-icon {
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid rgba(41, 204, 137, 0.25);
+  border-radius: 50%;
+
+  background: rgba(41, 204, 137, 0.08);
+  color: #32d58b;
+
+  font-size: 18px;
+}
+
+.reference-no-alerts strong {
+  color: #e1ebf2;
+  font-size: 12px;
+}
+
+.reference-no-alerts span {
+  color: #71889b;
+  font-size: 9px;
+}
+
+.reference-alert-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  min-height: 53px;
+  padding: 8px 15px;
+
+  border-bottom: 1px solid #192e40;
+}
+
+.alert-dot {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  border-radius: 50%;
+}
+
+.alert-item-content {
+  min-width: 0;
+  flex: 1;
+}
+
+.alert-item-content strong {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: #e5eef5;
+  font-size: 10px;
+}
+
+.alert-item-content span {
+  display: block;
+  margin-top: 3px;
+  color: #72899a;
+  font-size: 9px;
+}
+
+.alert-badge {
+  padding: 4px 8px;
+  border-radius: 999px;
+
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: 0.07em;
+}
+
+/* =========================================================
+   WEATHER
+   ========================================================= */
+
+.reference-weather-panel {
+  min-height: 327px;
+}
+
+.weather-location {
+  padding: 16px;
+}
+
+.weather-location strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #e8f1f7;
+  font-size: 14px;
+}
+
+.weather-location span {
+  display: block;
+  color: #758d9f;
+  font-size: 10px;
+}
+
+.weather-temperature {
+  padding: 0 16px 14px;
+}
+
+.weather-temperature strong {
+  display: block;
+  font-size: 34px;
+  line-height: 1;
+  font-weight: 800;
+}
+
+.weather-temperature span {
+  display: block;
+  margin-top: 6px;
+  color: #8298a9;
+  font-size: 10px;
+}
+
+.weather-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-top: 1px solid #1d3346;
+}
+
+.weather-stats > div {
+  padding: 11px 15px;
+  border-right: 1px solid #1d3346;
+  border-bottom: 1px solid #1d3346;
+}
+
+.weather-stats span {
+  display: block;
+  color: #698194;
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.weather-stats strong {
+  display: block;
+  margin-top: 4px;
+  color: #dce8ef;
+  font-size: 12px;
+}
+
+.weather-updated {
+  display: block;
+  padding: 11px 15px;
+  color: #637b8d;
+  font-size: 8px;
+}
+
+/* =========================================================
+   ANALYTICS
+   ========================================================= */
+
+.reference-analytics-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.15fr) minmax(280px, 0.8fr);
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.trend-panel,
+.rainfall-panel,
+.sensor-status-panel {
+  min-height: 280px;
+}
+
+.current-risk-box {
+  margin: 12px 16px 0;
+  padding: 10px 12px;
+
+  border: 1px solid rgba(239, 76, 84, 0.28);
+  border-radius: 8px;
+
+  background: rgba(239, 76, 84, 0.06);
+}
+
+.current-risk-box strong {
+  display: block;
+  color: #ff7777;
+  font-size: 19px;
+}
+
+.current-risk-box span {
+  color: #a77b7f;
+  font-size: 9px;
+}
+
+.risk-chart {
+  height: 185px;
+  padding: 12px 14px 8px;
+
+  display: flex;
+  gap: 7px;
+}
+
+.risk-y-axis {
+  width: 28px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  color: #5e7587;
+  font-size: 8px;
+}
+
+.risk-svg {
+  width: calc(100% - 28px);
+  height: 150px;
+  overflow: visible;
+}
+
+.chart-grid-line {
+  stroke: #20394a;
+  stroke-width: 1;
+}
+
+.risk-line {
+  fill: none;
+  stroke: #f25b5b;
+  stroke-width: 2.5;
+}
+
+.risk-point {
+  fill: #f25b5b;
+  stroke: #091725;
+  stroke-width: 2;
+}
+
+.risk-x-axis {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 14px 12px 42px;
+
+  color: #61798b;
+  font-size: 8px;
+}
+
+/* =========================================================
+   RAINFALL CHART
+   ========================================================= */
+
+.chart-legend {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  color: #8398a8;
+  font-size: 8px;
+}
+
+.observed-dot,
+.forecast-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 4px;
+  border-radius: 50%;
+}
+
+.observed-dot {
+  background: #289ee8;
+}
+
+.forecast-dot {
+  background: #39c982;
+}
+
+.rainfall-chart {
+  height: 212px;
+  padding: 15px 12px 5px;
+}
+
+.rainfall-bars {
+  height: 175px;
+
+  display: grid;
+  grid-template-columns: repeat(24, minmax(8px, 1fr));
+  gap: 5px;
+  align-items: end;
+}
+
+.rainfall-column {
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.rainfall-track {
+  height: 145px;
+
+  display: flex;
+  align-items: flex-end;
+
+  border-radius: 3px 3px 0 0;
+
+  background: rgba(35, 81, 101, 0.12);
+}
+
+.rainfall-bar {
+  width: 100%;
+  min-height: 2px;
+
+  border-radius: 3px 3px 0 0;
+
+  background: #43b487;
+}
+
+.rainfall-column span {
+  display: block;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: center;
+
+  color: #5f7788;
+  font-size: 6px;
+}
+
+.rainfall-total {
+  padding: 0 15px 12px;
+
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+
+  color: #7790a1;
+  font-size: 9px;
+}
+
+.rainfall-total strong {
+  color: #dce8ef;
+}
+
+/* =========================================================
+   SENSOR STATUS
+   ========================================================= */
+
+.sensor-status-content {
+  min-height: 210px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  padding: 15px;
+}
+
+.sensor-donut {
+  width: 135px;
+  height: 135px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background:
+    conic-gradient(
+      #29cf84 0deg 360deg,
+      #23384a 360deg
+    );
+
+  position: relative;
+}
+
+.sensor-donut::after {
+  content: "";
+  position: absolute;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  background: #0c1c2b;
+}
+
+.sensor-donut > div {
+  position: relative;
+  z-index: 1;
+
+  text-align: center;
+}
+
+.sensor-donut strong {
+  display: block;
+  font-size: 24px;
+}
+
+.sensor-donut span {
+  display: block;
+  margin-top: 2px;
+  color: #7890a1;
+  font-size: 8px;
+}
+
+.sensor-status-legend {
+  min-width: 100px;
+}
+
+.sensor-status-legend > div {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  margin-bottom: 9px;
+
+  color: #8da2b2;
+  font-size: 9px;
+}
+
+.sensor-status-legend i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.sensor-status-active {
+  background: #29cf84;
+}
+
+.sensor-status-maintenance {
+  background: #f1c23b;
+}
+
+.sensor-status-offline {
+  background: #ef4c54;
+}
+
+.sensor-status-faulty {
+  background: #9daabc;
+}
+
+.sensor-status-legend strong {
+  margin-left: auto;
+  color: #dbe7ee;
+}
+
+/* =========================================================
+   INTELLIGENCE STRIP
+   ========================================================= */
+
+.reference-intelligence-strip {
+  min-height: 70px;
+  padding: 14px 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+
+  border: 1px solid #20394e;
+  border-radius: 11px;
+
+  background: #0b1a27;
+}
+
+.reference-intelligence-strip > div:first-child {
+  min-width: 0;
+  flex: 1;
+}
+
+.reference-intelligence-strip strong {
+  display: block;
+  margin-top: 5px;
+  color: #dfeaf1;
+  font-size: 11px;
+  font-weight: 550;
+}
+
+.reference-intelligence-strip > div:last-child {
+  display: flex;
+  gap: 34px;
+}
+
+.reference-intelligence-strip > div:last-child span {
+  display: block;
+  color: #627a8b;
+  font-size: 7px;
+  text-transform: uppercase;
+}
+
+.reference-intelligence-strip > div:last-child strong {
+  margin-top: 3px;
+  color: #d8e5ed;
+  font-size: 9px;
+}
+
+/* =========================================================
+   DATA STATUS
+   ========================================================= */
+
+.reference-data-status {
+  margin-top: 13px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 7px;
+
+  color: #668091;
+  font-size: 8px;
+}
+
+.status-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #29cf84;
+  box-shadow: 0 0 8px rgba(41, 207, 132, 0.7);
+}
+
+/* =========================================================
+   LOADING / ERROR
+   ========================================================= */
+
+.dashboard-state {
+  min-height: calc(100vh - 84px);
+
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 12px;
+
+  background: #07111f;
+  color: #dce8ef;
+}
+
+.dashboard-loader {
+  width: 34px;
+  height: 34px;
+
+  border: 3px solid #1d3448;
+  border-top-color: #27aef0;
+  border-radius: 50%;
+
+  animation: dashboard-spin 0.8s linear infinite;
+}
+
+.dashboard-state p {
+  color: #8298a9;
+  font-size: 12px;
+}
+
+.dashboard-error h2 {
+  margin: 0;
+}
+
+.dashboard-error p {
+  max-width: 500px;
+  text-align: center;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1200px) {
+  .reference-kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .reference-analytics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sensor-status-panel {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 900px) {
+  .dashboard-main.reference-dashboard {
+    padding: 20px;
+  }
+
+  .reference-primary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reference-analytics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sensor-status-panel {
+    grid-column: auto;
+  }
+
+  .reference-welcome {
+    flex-direction: column;
+  }
+
+  .zone-selector {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-main.reference-dashboard {
+    padding: 15px;
+  }
+
+  .reference-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reference-welcome h1 {
+    font-size: 27px;
+  }
+
+  .reference-kpi {
+    min-height: 95px;
+  }
+
+  .reference-map {
+    height: 230px;
+  }
+
+  .sensor-status-content {
+    flex-direction: column;
+  }
+
+  .reference-intelligence-strip {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .reference-intelligence-strip > div:last-child {
+    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+  }
+}
+
+@keyframes dashboard-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}/* =========================================================
+   REFERENCE PRIMARY GRID — MAP / ALERTS / WEATHER
+   ========================================================= */
+
+.reference-primary-grid {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.65fr)
+    minmax(0, 0.85fr)
+    minmax(0, 0.85fr);
+
+  gap: 14px;
+
+  margin-bottom: 16px;
+
+  align-items: stretch;
+}
+
+
+/* =========================================================
+   REFERENCE PANELS
+   ========================================================= */
+
+.reference-panel {
+  min-width: 0;
+  overflow: hidden;
+
+  border: 1px solid #20394e;
+  border-radius: 11px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #0c1c2b,
+      #091725
+    );
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+
+/* =========================================================
+   MAP
+   ========================================================= */
+
+.reference-map {
+  position: relative;
+
+  height: 265px;
+
+  overflow: hidden;
+}
+
+.reference-map .leaflet-container {
+  width: 100%;
+  height: 100%;
+}
+
+
+/* =========================================================
+   ALERTS
+   ========================================================= */
+
+.reference-alert-panel {
+  min-height: 327px;
+}
+
+.reference-alert-list {
+  min-height: 265px;
+}
+
+
+/* =========================================================
+   WEATHER
+   ========================================================= */
+
+.reference-weather-panel {
+  min-height: 327px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .reference-primary-grid {
+    grid-template-columns:
+      minmax(0, 1.55fr)
+      minmax(0, 0.9fr);
+
+    gap: 14px;
+  }
+
+  .reference-weather-panel {
+    grid-column: 1 / -1;
+  }
+}
+
+
+@media (max-width: 760px) {
+  .reference-primary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reference-weather-panel {
+    grid-column: auto;
+  }
+}
+/* =========================================================
+   REFERENCE DASHBOARD SCALE / PROPORTION FIX
+   ========================================================= */
+
+.dashboard-sidebar {
+  width: 190px !important;
+  padding: 20px 12px !important;
+}
+
+.dashboard-content {
+  width: calc(100% - 190px) !important;
+  margin-left: 190px !important;
+}
+
+.dashboard-topbar {
+  min-height: 72px !important;
+  padding: 14px 24px !important;
+}
+
+.dashboard-topbar h2 {
+  font-size: 18px !important;
+}
+
+.topbar-description {
+  font-size: 10px !important;
+}
+
+.brand-mark {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+.brand-block h1 {
+  font-size: 15px !important;
+}
+
+.nav-item {
+  min-height: 42px !important;
+  font-size: 12px !important;
+}
+
+.dashboard-main.reference-dashboard {
+  padding: 28px 30px 36px !important;
+}
+
+.reference-welcome {
+  margin-bottom: 18px !important;
+}
+
+.reference-welcome h1 {
+  font-size: clamp(30px, 2.5vw, 38px) !important;
+  line-height: 1.08 !important;
+}
+
+.reference-welcome p {
+  font-size: 12px !important;
+}
+
+.reference-kpi-grid {
+  gap: 14px !important;
+  margin-bottom: 16px !important;
+}
+
+.reference-kpi {
+  min-height: 102px !important;
+}
+
+.kpi-content strong {
+  font-size: 28px !important;
+}
+
+.reference-primary-grid {
+  grid-template-columns: minmax(0, 1.72fr) minmax(250px, 0.78fr) minmax(250px, 0.78fr) !important;
+  gap: 12px !important;
+}
+
+.reference-map {
+  height: 265px !important;
+}
+
+.reference-panel-header {
+  min-height: 62px !important;
+  padding: 14px 16px !important;
+}
+
+.reference-panel-header h3 {
+  font-size: 14px !important;
+}
+
+.reference-analytics-grid {
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr) minmax(250px, 0.72fr) !important;
+  gap: 12px !important;
+}
+
+.reference-intelligence-strip {
+  margin-top: 12px !important;
+}
+
+/* Keep mobile behavior intact */
+@media (max-width: 900px) {
+  .dashboard-sidebar {
+    width: 190px !important;
+  }
+
+  .dashboard-content {
+    width: calc(100% - 190px) !important;
+    margin-left: 190px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .dashboard-sidebar {
+    width: 100% !important;
+  }
+
+  .dashboard-content {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+}
+
+/* =========================================================
+   FINAL REFERENCE PROPORTION CORRECTION
+   ========================================================= */
+
+.dashboard-sidebar {
+  width: 215px !important;
+}
+
+.dashboard-content {
+  width: calc(100% - 215px) !important;
+  margin-left: 215px !important;
+}
+
+.dashboard-topbar {
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+}
+
+.dashboard-main.reference-dashboard {
+  padding-left: 26px !important;
+  padding-right: 26px !important;
+}
+
+.reference-primary-grid {
+  grid-template-columns:
+    minmax(0, 1.95fr)
+    minmax(245px, 0.80fr)
+    minmax(245px, 0.80fr) !important;
+  gap: 12px !important;
+}
+
+.reference-map {
+  height: 265px !important;
+}
+
+.reference-panel-header {
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+
+.reference-analytics-grid {
+  grid-template-columns:
+    minmax(0, 1.12fr)
+    minmax(0, 1fr)
+    minmax(245px, 0.72fr) !important;
+  gap: 12px !important;
+}
+
+@media (max-width: 900px) {
+  .dashboard-sidebar {
+    width: 215px !important;
+  }
+
+  .dashboard-content {
+    width: calc(100% - 215px) !important;
+    margin-left: 215px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .dashboard-sidebar {
+    width: 100% !important;
+  }
+
+  .dashboard-content {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+}
+
+/* =========================================================
+   REFERENCE FINAL LAYOUT PROPORTIONS
+   ========================================================= */
+
+.dashboard-sidebar {
+  width: 255px !important;
+}
+
+.dashboard-content {
+  width: calc(100% - 255px) !important;
+  margin-left: 255px !important;
+}
+
+.dashboard-main.reference-dashboard {
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+  padding: 28px 28px 40px !important;
+}
+
+.reference-kpi-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
+
+.reference-primary-grid {
+  grid-template-columns:
+    minmax(0, 1.9fr)
+    minmax(280px, 0.95fr)
+    minmax(260px, 0.82fr) !important;
+}
+
+.reference-analytics-grid {
+  grid-template-columns:
+    minmax(0, 1.15fr)
+    minmax(0, 1fr)
+    minmax(270px, 0.72fr) !important;
+}
+
+.reference-map {
+  height: 265px !important;
+}
+
+@media (max-width: 1100px) {
+  .dashboard-sidebar {
+    width: 225px !important;
+  }
+
+  .dashboard-content {
+    width: calc(100% - 225px) !important;
+    margin-left: 225px !important;
+  }
+
+  .dashboard-main.reference-dashboard {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  .reference-primary-grid {
+    grid-template-columns:
+      minmax(0, 1.7fr)
+      minmax(240px, 0.8fr) !important;
+  }
+
+  .reference-weather-panel {
+    grid-column: 1 / -1 !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .dashboard-sidebar {
+    width: 100% !important;
+  }
+
+  .dashboard-content {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+
+  .reference-kpi-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .reference-primary-grid,
+  .reference-analytics-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* =========================================================
+   REFERENCE PANEL BALANCE - FINAL
+   ========================================================= */
+
+.reference-primary-grid {
+  grid-template-columns:
+    minmax(0, 1.65fr)
+    minmax(260px, 1fr)
+    minmax(250px, 0.86fr) !important;
+  gap: 14px !important;
+}
+
+.reference-analytics-grid {
+  grid-template-columns:
+    minmax(0, 1.10fr)
+    minmax(0, 1fr)
+    minmax(250px, 0.78fr) !important;
+  gap: 14px !important;
+}
+
+.reference-map {
+  height: 265px !important;
+}
+
+.reference-alert-panel {
+  min-height: 327px !important;
+}
+
+.reference-weather-panel {
+  min-height: 327px !important;
+}
+
+/* Reference-style internal spacing */
+.reference-panel-header {
+  padding: 14px 16px !important;
+}
+
+.reference-panel-header h3 {
+  font-size: 14px !important;
+  line-height: 1.3 !important;
+}
+
+@media (max-width: 1100px) {
+  .reference-primary-grid {
+    grid-template-columns:
+      minmax(0, 1.55fr)
+      minmax(250px, 0.9fr) !important;
+  }
+
+  .reference-weather-panel {
+    grid-column: auto !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .reference-primary-grid,
+  .reference-analytics-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* =========================================================
+   REFERENCE VISUAL POLISH
+   ========================================================= */
+
+.reference-welcome h1 {
+  letter-spacing: -0.035em !important;
+  font-weight: 800 !important;
+}
+
+.reference-welcome p {
+  color: #8fa3b4 !important;
+}
+
+.reference-kpi {
+  border-radius: 10px !important;
+  background:
+    linear-gradient(145deg, #102437, #0b1a29) !important;
+}
+
+.reference-kpi:hover {
+  transform: translateY(-1px);
+  border-color: #31516a !important;
+}
+
+.reference-primary-grid,
+.reference-analytics-grid {
+  align-items: stretch !important;
+}
+
+.reference-panel {
+  border-radius: 10px !important;
+}
+
+.reference-panel-header {
+  background: rgba(255,255,255,0.008) !important;
+}
+
+.reference-map {
+  border-top: 0 !important;
+}
+
+.reference-alert-panel,
+.reference-weather-panel {
+  height: 100% !important;
+}
+
+.reference-analytics-grid .reference-panel {
+  min-height: 295px !important;
+}
+
+.trend-panel,
+.rainfall-panel,
+.sensor-status-panel {
+  overflow: hidden !important;
+}
+
+.reference-intelligence-strip {
+  min-height: 68px !important;
+  border-radius: 10px !important;
+}
+
+.reference-data-status {
+  margin-top: 10px !important;
+}
+
+/* Cleaner dashboard scrollbar */
+.dashboard-main.reference-dashboard {
+  scrollbar-width: thin;
+}
+
+@media (max-width: 700px) {
+  .reference-analytics-grid .reference-panel {
+    min-height: 280px !important;
+  }
+}
+
+/* =========================================================
+   BHUDRISHTI AI — FINAL REFERENCE DASHBOARD POLISH
+   Visual-only overrides — functionality untouched
+   ========================================================= */
+
+.reference-dashboard {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 28px 30px 34px;
+  box-sizing: border-box;
+}
+
+.reference-welcome {
+  margin-bottom: 18px;
+}
+
+.reference-welcome h1 {
+  margin: 0 0 6px;
+  color: #edf5fc;
+  font-size: clamp(30px, 2.6vw, 40px);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+}
+
+.reference-welcome p {
+  margin: 0;
+  color: #8196a8;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* Zone selector */
+.zone-selector {
+  min-width: 220px;
+  height: 42px;
+  padding: 0 13px;
+  border: 1px solid #27465d;
+  border-radius: 8px;
+  background: #0b1d2d;
+  color: #dceaf4;
+}
+
+/* KPI ROW */
+.reference-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.reference-kpi {
+  min-height: 104px;
+  padding: 14px 15px;
+  box-sizing: border-box;
+  border: 1px solid #20394e;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #102335, #0b1b2a);
+}
+
+.reference-kpi .kpi-content {
+  min-width: 0;
+}
+
+.reference-kpi .kpi-value {
+  font-size: 25px;
+  line-height: 1;
+  font-weight: 800;
+}
+
+.reference-kpi .kpi-label {
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.reference-kpi small {
+  font-size: 8px;
+}
+
+.reference-kpi .kpi-icon {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+}
+
+/* =========================================================
+   PRIMARY THREE-COLUMN AREA
+   MAP | ALERTS | WEATHER
+   ========================================================= */
+
+.reference-primary-grid {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.75fr)
+    minmax(245px, 0.78fr)
+    minmax(245px, 0.78fr);
+  gap: 12px;
+  margin-bottom: 12px;
+  align-items: stretch;
+}
+
+.reference-primary-grid .reference-panel {
+  min-width: 0;
+}
+
+/* Map */
+.reference-map-panel {
+  min-height: 280px;
+}
+
+.reference-map-panel .reference-panel-header {
+  min-height: 82px;
+  padding: 15px 16px;
+  align-items: flex-start;
+}
+
+.reference-map-panel .reference-panel-header h2 {
+  max-width: 620px;
+  margin: 5px 0 0;
+  color: #edf5fc;
+  font-size: 18px;
+  line-height: 1.25;
+  font-weight: 780;
+}
+
+.reference-map {
+  height: 205px;
+}
+
+/* Legend must remain INSIDE map */
+.reference-map-panel {
+  position: relative;
+}
+
+.reference-map-legend {
+  left: 10px;
+  bottom: 10px;
+  padding: 6px 9px;
+  gap: 10px;
+  z-index: 1000;
+  font-size: 8px;
+}
+
+/* Alerts */
+.reference-alert-panel {
+  min-height: 287px;
+}
+
+.reference-alert-panel .reference-panel-header {
+  min-height: 82px;
+  padding: 15px 15px;
+  align-items: flex-start;
+}
+
+.reference-alert-panel .reference-panel-header h2 {
+  margin-top: 5px;
+  color: #edf5fc;
+  font-size: 17px;
+  line-height: 1.25;
+  font-weight: 760;
+}
+
+.reference-alert-list,
+.reference-no-alerts {
+  min-height: 205px;
+}
+
+/* Weather */
+.reference-weather-panel {
+  min-height: 287px;
+}
+
+.reference-weather-panel .reference-panel-header {
+  min-height: 82px;
+  padding: 15px 15px;
+  align-items: flex-start;
+}
+
+.reference-weather-panel .reference-panel-header h2 {
+  margin-top: 5px;
+  color: #edf5fc;
+  font-size: 17px;
+  line-height: 1.25;
+  font-weight: 760;
+}
+
+.weather-location {
+  padding: 15px;
+}
+
+.weather-location strong {
+  font-size: 12px;
+}
+
+.weather-location span {
+  font-size: 8px;
+}
+
+.weather-temperature {
+  padding: 0 15px 12px;
+}
+
+.weather-temperature strong {
+  font-size: 29px;
+}
+
+.weather-stats {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.weather-stat {
+  padding: 11px 14px;
+}
+
+.weather-stat strong {
+  font-size: 11px;
+}
+
+.weather-stat span {
+  font-size: 7px;
+}
+
+.weather-updated {
+  padding: 8px 14px;
+  font-size: 7px;
+}
+
+/* =========================================================
+   ANALYTICS
+   ========================================================= */
+
+.reference-analytics-grid {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.25fr)
+    minmax(0, 1fr)
+    minmax(245px, 0.72fr);
+  gap: 12px;
+  margin-bottom: 12px;
+  align-items: stretch;
+}
+
+.reference-analytics-grid .reference-panel {
+  min-width: 0;
+  min-height: 285px;
+}
+
+.reference-analytics-grid .reference-panel-header {
+  min-height: 78px;
+  padding: 14px 15px;
+  align-items: flex-start;
+}
+
+.reference-analytics-grid .reference-panel-header h3 {
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+/* Risk chart */
+.trend-panel .risk-chart {
+  height: 180px;
+  padding: 12px 14px 10px;
+}
+
+.current-risk-box {
+  min-width: 64px;
+  padding: 8px 10px;
+}
+
+.current-risk-box strong {
+  font-size: 14px;
+}
+
+/* Rainfall */
+.rainfall-panel .rainfall-chart {
+  min-height: 180px;
+  padding: 12px 14px 10px;
+}
+
+.rainfall-bars {
+  height: 145px;
+}
+
+/* Sensor */
+.sensor-status-content {
+  min-height: 190px;
+  padding: 12px 14px;
+}
+
+.sensor-donut {
+  width: 118px;
+  height: 118px;
+}
+
+/* =========================================================
+   BOTTOM INTELLIGENCE STRIP
+   ========================================================= */
+
+.reference-intelligence-strip {
+  min-height: 66px;
+  padding: 13px 15px;
+  box-sizing: border-box;
+  border: 1px solid #20394e;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #0c1c2b, #091725);
+}
+
+/* =========================================================
+   DATA STATUS
+   ========================================================= */
+
+.reference-data-status {
+  margin-top: 9px;
+  font-size: 8px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1200px) {
+  .reference-primary-grid {
+    grid-template-columns:
+      minmax(0, 1.55fr)
+      minmax(230px, 0.8fr)
+      minmax(220px, 0.75fr);
+  }
+
+  .reference-analytics-grid {
+    grid-template-columns:
+      minmax(0, 1.15fr)
+      minmax(0, 1fr)
+      minmax(220px, 0.72fr);
+  }
+
+  .reference-dashboard {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+}
+
+@media (max-width: 950px) {
+  .reference-kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .reference-primary-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);
+  }
+
+  .reference-weather-panel {
+    grid-column: 1 / -1;
+  }
+
+  .reference-analytics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sensor-status-panel {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 700px) {
+  .reference-dashboard {
+    padding: 18px 14px 24px;
+  }
+
+  .reference-kpi-grid,
+  .reference-primary-grid,
+  .reference-analytics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reference-weather-panel,
+  .sensor-status-panel {
+    grid-column: auto;
+  }
+
+  .reference-map {
+    height: 250px;
+  }
+
+  .reference-map-panel .reference-panel-header h2 {
+    font-size: 16px;
+  }
+}
+
