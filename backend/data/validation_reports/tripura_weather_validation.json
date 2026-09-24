@@ -1,0 +1,58 @@
+{
+  "file": "backend\\data\\incoming\\team_data\\Tripura_Weather_Rainfall_1Lakh.csv",
+  "rows": 140160,
+  "columns": 14,
+  "duplicate_rows": 0,
+  "missing_values": {
+    "observation_id": 0,
+    "Date/Time": 0,
+    "date": 0,
+    "state": 0,
+    "district": 0,
+    "location": 0,
+    "latitude": 0,
+    "longitude": 0,
+    "temperature_C": 0,
+    "relative_humidity_percent": 0,
+    "rainfall_mm": 0,
+    "daily_rainfall_mm": 0,
+    "extreme_rainfall_flag": 0,
+    "rainfall_category": 0
+  },
+  "checks": {
+    "timestamp_column": "Date/Time",
+    "invalid_timestamps": 0,
+    "date_min": "2022-01-01 00:00:00",
+    "date_max": "2023-12-31 23:00:00",
+    "invalid_latitude": 0,
+    "invalid_longitude": 0,
+    "temperature_C_non_numeric": 0,
+    "temperature_C_min": 7.31,
+    "temperature_C_max": 40.26,
+    "temperature_C_invalid_range": 0,
+    "relative_humidity_percent_non_numeric": 0,
+    "relative_humidity_percent_min": 13.35,
+    "relative_humidity_percent_max": 100.0,
+    "relative_humidity_percent_invalid_range": 0,
+    "rainfall_mm_non_numeric": 0,
+    "rainfall_mm_min": 0.0,
+    "rainfall_mm_max": 35.49,
+    "rainfall_mm_invalid_range": 0,
+    "daily_rainfall_mm_non_numeric": 0,
+    "daily_rainfall_mm_min": 0.0,
+    "daily_rainfall_mm_max": 164.09,
+    "daily_rainfall_mm_invalid_range": 0,
+    "daily_rainfall_groups": 5840,
+    "daily_rainfall_mismatches": 0,
+    "daily_rainfall_max_difference_mm": 7.105427357601002e-15,
+    "extreme_flag_counts": {
+      "0": 140160
+    },
+    "provenance_columns_found": []
+  },
+  "warnings": [
+    "No rows are marked as extreme rainfall; verify the threshold and flag-generation methodology.",
+    "No source/provider provenance columns found. Dataset provenance must be verified separately."
+  ],
+  "status": "PASS_WITH_WARNINGS"
+}
