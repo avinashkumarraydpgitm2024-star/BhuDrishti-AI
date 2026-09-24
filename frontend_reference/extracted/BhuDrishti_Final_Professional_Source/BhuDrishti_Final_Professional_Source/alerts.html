@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <meta content="#f4f7f4" name="theme-color"/>
+  <title>
+   BhuDrishti AI
+  </title>
+  <link href="css/base.css" rel="stylesheet"/>
+  <link href="css/theme.css" rel="stylesheet"/>
+  <script>
+   try{document.documentElement.setAttribute('data-theme',localStorage.getItem('bhudrishtiTheme')==='dark'?'dark':'light')}catch(e){}
+  </script>
+  <link href="css/responsive-fixes.css" rel="stylesheet"/>
+  <link href="css/final-polish.css" rel="stylesheet"/>
+ </head>
+ <body class="page-alerts">
+  <div class="app">
+   <aside class="sidebar">
+    <div class="sidebar-inner">
+     <a class="logo" href="home.html">
+      <span class="logo-mark">
+       <svg fill="none" viewbox="0 0 32 32">
+        <path d="M5 16c4.4-7.1 10-9.5 16.8-7.2 2.3.8 4.1 2.1 5.2 3.9-3.1 7.5-8.6 11.2-16.5 8.6L5 16Z" stroke="currentColor" stroke-width="2.2">
+        </path>
+        <circle cx="18" cy="14" fill="currentColor" r="3">
+        </circle>
+       </svg>
+      </span>
+      <span>
+       <div class="logo-title">
+        BHU
+        <span>
+         DRISHTI
+        </span>
+       </div>
+       <div class="logo-sub">
+        AI
+       </div>
+      </span>
+     </a>
+     <div class="sidebar-main">
+      <section class="nav-section">
+       <div class="nav-label" data-i18n="main">
+       </div>
+       <nav class="nav-list">
+        <a class="nav-item" href="home.html">
+         <span class="nav-icon" data-icon="home">
+         </span>
+         <span class="nav-text" data-i18n="home">
+         </span>
+        </a>
+        <a class="nav-item" href="map.html">
+         <span class="nav-icon" data-icon="map">
+         </span>
+         <span class="nav-text" data-i18n="map">
+         </span>
+        </a>
+        <a class="nav-item active" href="alerts.html">
+         <span class="nav-icon" data-icon="alerts">
+         </span>
+         <span class="nav-text" data-i18n="alerts">
+         </span>
+         <span class="nav-badge" data-alert-badge="" hidden="">
+         </span>
+        </a>
+        <a class="nav-item" href="assistant.html">
+         <span class="nav-icon" data-icon="assistant">
+         </span>
+         <span class="nav-text" data-i18n="assistant">
+         </span>
+        </a>
+        <a class="nav-item" href="area-safety.html">
+         <span class="nav-icon" data-icon="safety">
+         </span>
+         <span class="nav-text" data-i18n="safety">
+         </span>
+        </a>
+       </nav>
+      </section>
+      <section class="nav-section">
+       <div class="nav-label" data-i18n="tools">
+       </div>
+       <nav class="nav-list">
+        <a class="nav-item" href="change-detection.html">
+         <span class="nav-icon" data-icon="change">
+         </span>
+         <span class="nav-text" data-i18n="change">
+         </span>
+        </a>
+        <a class="nav-item" href="saved-places.html">
+         <span class="nav-icon" data-icon="saved">
+         </span>
+         <span class="nav-text" data-i18n="saved">
+         </span>
+        </a>
+       </nav>
+      </section>
+     </div>
+     <div class="sidebar-account">
+      <section class="nav-section">
+       <div class="nav-label" data-i18n="account">
+       </div>
+       <nav class="nav-list">
+        <a class="nav-item" href="settings.html">
+         <span class="nav-icon" data-icon="settings">
+         </span>
+         <span class="nav-text" data-i18n="settings">
+         </span>
+        </a>
+        <a class="nav-item" href="help.html">
+         <span class="nav-icon" data-icon="help">
+         </span>
+         <span class="nav-text" data-i18n="help">
+         </span>
+        </a>
+       </nav>
+      </section>
+     </div>
+    </div>
+   </aside>
+   <div class="mobile-overlay">
+   </div>
+   <main class="main">
+    <header class="topbar">
+     <div class="area-box">
+      <button aria-label="Menu" class="icon-btn mobile-menu" data-menu-toggle="" type="button">
+       <span data-icon="menu">
+       </span>
+      </button>
+      <div class="area-icon" data-icon="pin">
+      </div>
+      <div style="min-width:0">
+       <div class="area-meta" data-i18n="yourArea">
+       </div>
+       <div class="area-name" data-current-area="">
+       </div>
+      </div>
+     </div>
+     <div class="top-actions">
+      <select aria-label="Language" class="lang-select" data-lang-select="">
+       <option value="en">
+        English
+       </option>
+       <option value="hi">
+        हिंदी
+       </option>
+       <option value="hinglish">
+        Hinglish
+       </option>
+      </select>
+      <button aria-label="Theme" class="icon-btn" data-theme-toggle="" type="button">
+       <span data-icon="theme">
+       </span>
+      </button>
+      <div class="profile">
+       <button class="profile-btn" data-profile-toggle="" type="button">
+        <span class="avatar" data-user-initial="">
+         R
+        </span>
+        <span class="profile-copy">
+         <span class="profile-small" data-i18n="welcome">
+         </span>
+         <br/>
+         <span class="profile-name" data-user-name="">
+          Rohit
+         </span>
+        </span>
+        <span class="profile-chevron" data-icon="chevron">
+        </span>
+       </button>
+       <div class="profile-menu">
+        <a href="settings.html">
+         <span data-icon="settings">
+         </span>
+         <span data-i18n="profileMenuSettings">
+         </span>
+        </a>
+        <a href="saved-places.html">
+         <span data-icon="saved">
+         </span>
+         <span data-i18n="profileMenuSaved">
+         </span>
+        </a>
+        <button class="danger" data-logout="" type="button">
+         <span data-icon="logout">
+         </span>
+         <span data-i18n="logout">
+         </span>
+        </button>
+       </div>
+      </div>
+     </div>
+    </header>
+    <section class="hero">
+     <div class="eyebrow" data-i18n="alerts">
+     </div>
+     <h1 data-i18n="alertsHero">
+     </h1>
+     <p data-i18n="alertsDesc">
+     </p>
+    </section>
+    <section class="card">
+     <div class="alert-toolbar">
+      <div class="unread-summary" id="unreadSummary">
+       <span class="unread-pulse">
+       </span>
+       <strong id="unreadCount">
+        0
+       </strong>
+       <span data-i18n="unreadAlerts">
+       </span>
+      </div>
+      <button class="btn btn-secondary" data-i18n="markRead" id="markRead" type="button">
+      </button>
+     </div>
+     <div class="alert-list" id="alertsList">
+     </div>
+    </section>
+   </main>
+  </div>
+  <script src="js/app.js">
+  </script>
+  <script src="js/alerts-page.js">
+  </script>
+ </body>
+</html>

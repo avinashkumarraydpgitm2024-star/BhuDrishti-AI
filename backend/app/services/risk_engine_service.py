@@ -13,9 +13,15 @@ class RiskEngineInput:
     tilt_degrees: float | None = None
     precipitation_probability_percent: float | None = None
     historical_risk_score: float | None = None
+
     satellite_ndwi: float | None = None
     satellite_soil_moisture_index: float | None = None
     satellite_ndvi: float | None = None
+
+    # Optional Assam ML layer.
+    # This is the probability returned by the trained
+    # Assam landslide occurrence model.
+    assam_ml_probability_percent: float | None = None
 
 
 @dataclass
@@ -148,36 +154,100 @@ def calculate_baseline_risk(
         else 0.0
     )
 
+    # ---------------------------------------------------------
+    # Existing baseline factors
+    # ---------------------------------------------------------
+
     weighted_scores = {
-        "rainfall_rate": rainfall_rate_score * 0.15,
-        "rainfall_24h": rainfall_24h_score * 0.15,
-        "soil_moisture": soil_moisture_score * 0.15,
-        "slope": slope_score * 0.15,
-        "historical_risk": historical_risk_score * 0.12,
+        "rainfall_rate": (
+            rainfall_rate_score * 0.15
+        ),
+        "rainfall_24h": (
+            rainfall_24h_score * 0.15
+        ),
+        "soil_moisture": (
+            soil_moisture_score * 0.15
+        ),
+        "slope": (
+            slope_score * 0.15
+        ),
+        "historical_risk": (
+            historical_risk_score * 0.12
+        ),
         "satellite_ndwi": (
             satellite_ndwi_score * 0.05
             if data.satellite_ndwi is not None
-            else 0
+            else 0.0
         ),
         "satellite_soil_moisture": (
             satellite_soil_moisture_score * 0.05
             if data.satellite_soil_moisture_index is not None
-            else 0
+            else 0.0
         ),
         "satellite_vegetation_stress": (
             satellite_vegetation_stress_score * 0.05
             if data.satellite_ndvi is not None
-            else 0
+            else 0.0
         ),
-        "vibration": vibration_score * 0.05,
-        "tilt": tilt_score * 0.05,
+        "vibration": (
+            vibration_score * 0.05
+        ),
+        "tilt": (
+            tilt_score * 0.05
+        ),
         "precipitation_probability": (
             precipitation_probability_score * 0.03
         ),
     }
 
-    raw_score = sum(
+    # ---------------------------------------------------------
+    # Existing baseline score
+    # ---------------------------------------------------------
+
+    baseline_score = sum(
         weighted_scores.values()
+    )
+
+    # ---------------------------------------------------------
+    # Optional Assam ML layer
+    #
+    # IMPORTANT:
+    # The ML probability is only added when the actual
+    # prediction service supplies a value.
+    #
+    # It is treated as supporting model evidence, not as
+    # ground-truth probability.
+    # ---------------------------------------------------------
+
+    ml_available = (
+        data.assam_ml_probability_percent
+        is not None
+    )
+
+    ml_score = 0.0
+
+    if ml_available:
+        ml_score = _normalize(
+            data.assam_ml_probability_percent,
+            minimum=0,
+            maximum=100,
+        )
+
+        # 15% supporting contribution.
+        weighted_scores[
+            "assam_ml_prediction"
+        ] = ml_score * 0.15
+
+        # Reduce the baseline contribution proportionally
+        # so the total weighting does not exceed 1.0.
+        baseline_score *= 0.85
+
+    raw_score = (
+        baseline_score
+        + weighted_scores.get(
+            "assam_ml_prediction",
+            0.0,
+        )
     )
 
     probability = round(
@@ -199,6 +269,10 @@ def calculate_baseline_risk(
         weighted_scores,
         key=weighted_scores.get,
     )
+
+    # ---------------------------------------------------------
+    # Confidence
+    # ---------------------------------------------------------
 
     available_inputs = [
         data.rainfall_rate_mm_hr,
@@ -232,12 +306,34 @@ def calculate_baseline_risk(
         2,
     )
 
+    # ML availability adds evidence, but does not
+    # automatically claim high confidence.
+    if ml_available:
+        confidence = round(
+            min(
+                95.0,
+                confidence + 5.0,
+            ),
+            2,
+        )
+
+    # ---------------------------------------------------------
+    # Explanation
+    # ---------------------------------------------------------
+
     explanation = (
-        f"Baseline landslide risk is {probability}% "
-        f"with {severity.value} severity. "
+        f"Combined landslide risk is "
+        f"{probability}% with "
+        f"{severity.value} severity. "
         f"The dominant contributing factor is "
         f"{dominant_factor.replace('_', ' ')}."
     )
+
+    if ml_available:
+        explanation += (
+            " The Assam ML model is included as "
+            "supporting predictive evidence."
+        )
 
     return RiskEngineResult(
         risk_probability_percent=probability,

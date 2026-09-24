@@ -1,0 +1,561 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<metadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <idinfo>
+    <citation>
+      <citeinfo>
+        <origin>Gina M Belair</origin>
+        <origin>Eric S Jones</origin>
+        <origin>Lisa V Luna</origin>
+        <origin>Ben B Mirus</origin>
+        <pubdate>20190919</pubdate>
+        <title>Landslide Inventories across the United States (ver. 3.0, February 2025)</title>
+        <geoform>vector digital data</geoform>
+        <pubinfo>
+          <pubplace>Reston, VA</pubplace>
+          <publish>U.S. Geological Survey data release</publish>
+        </pubinfo>
+        <onlink>https://doi.org/10.5066/P14AJF8I</onlink>
+        <lworkcit>
+          <citeinfo>
+            <origin>Benjamin B. Mirus</origin>
+            <origin>Eric S. Jones</origin>
+            <origin>Rex L. Baum</origin>
+            <origin>Jonathan W. Godt</origin>
+            <origin>Stephen Slaughter</origin>
+            <origin>Matthew M. Crawford</origin>
+            <origin>Jeremy Lancaster</origin>
+            <origin>Thomas Stanley</origin>
+            <origin>Dalia B. Kirschbaum</origin>
+            <origin>William J. Burns</origin>
+            <origin>Robert G. Schmitt</origin>
+            <origin>Kassandra O. Lindsey</origin>
+            <origin>Kevin M. McCoy</origin>
+            <pubdate>20200529</pubdate>
+            <title>Landslides across the USA: occurrence, susceptibility, and data limitations</title>
+            <geoform>publication</geoform>
+            <serinfo>
+              <sername>Landslides</sername>
+              <issue>vol. 17, issue 10</issue>
+            </serinfo>
+            <pubinfo>
+              <pubplace>n/a</pubplace>
+              <publish>Springer Science and Business Media LLC</publish>
+            </pubinfo>
+            <othercit>ppg. 2271-2285</othercit>
+            <onlink>https://doi.org/10.1007/s10346-020-01424-4</onlink>
+          </citeinfo>
+        </lworkcit>
+      </citeinfo>
+    </citation>
+    <descript>
+      <abstract>1. Abstract
+
+Landslides are damaging and deadly, and they occur in every U.S. state. However, our current ability to understand landslide hazards at the national scale is limited, in part because spatial data on landslide occurrence across the U.S. varies greatly in quality, accessibility, and extent. Landslide inventories are typically collected and maintained by different agencies and institutions, usually within specific jurisdictional boundaries, and often with varied objectives and information attributes or even in disparate formats. The purpose of this data release is to provide an openly accessible, centralized map of existing information about landslide occurrence across the entire U.S. This data release is an update of previous versions 1 (Jones and others, 2019) and 2 (Belair and others, 2022). Changes relative to version 2 are summarized in us_ls_v3_changes.txt. It provides an integrated database of the landslides from these inventories (refer to US_Landslide_v3_gpkg) with a selection of uniform attributes, including links to the original digital inventory files (whenever available) (“Inv_URL”). The data release includes digital inventories created by both USGS and non-USGS authors. The original inventory is denoted by an abbreviation in the “Inventory” attribute. The full citation for each abbreviation can be found in us_ls_v3_references.csv. The date of the landslide event is included as a minimum and maximum (“Date_Min” and “Date_Max”) to accommodate events that happen within a range of dates. The date value is inherently difficult to interpret or discern due to the nature of landsliding, where some landslides move for long periods of time or move intermittently, and some areas can exhibit multiple landslide events. To preserve the constituent inventories as much as possible, we include all entries even if they are not considered landslides, such as “gullies” or “avalanche chutes.” We include a landslide type attribute when that information is available (“LS_Type”). The landslide classification system used in the original inventories is not always known or stated in the metadata, but many mapping entities use the schema from Cruden and Varnes (1996) or the updated schema from Hungr and others (2014). Given the wide range of landslide information sources in this data compilation, we provide an attribute to assess the relative confidence in the characterization of the location and extent of each landslide (entry) (“Confidence”). The confidence level reflects the resolution and quality of input data, as well as the method used for identification and mapping. This confidence does not reflect a formal accuracy assessment of field attributes. Relative to the previous data releases (version 1 and 2), this update (v3) includes more inventories, updated confidence rules, a new landslide type attribute, a new unique identifier (“USGS_ID”), new machine-readable date fields, and an ancillary database containing all fields from the original inventories (refer to US_Landslide_v3_ancillary). Please contact gs-haz_landslides_inventory@usgs.gov for more information on how to contribute additional inventories to this community effort. When possible, please cite the constituent inventories as well as this data release.
+
+This data release includes: (1) a landslide point file and polygon file in multiple forms (US_Landslide_v3_gpkg, US_Landslide_v3_shp, US_Landslide_v3_csv), (2) an ancillary database with original fields (US_Landslide_v3_ancillary), (3) a spreadsheet that summarizes the confidence rules, their justification, and any extra analyses (us_ls_v3_analyses.csv), (4) a summary file of the changes made between version 2 and version 3 (us_ls_v3_changes.txt), (5) a file containing the references of the constituent inventories (us_ls_v3_references.csv), (6) and a readme (README.txt).
+
+Disclaimer: Any use of trade, firm, or product names is for descriptive purposes only and does not imply endorsement by the U.S. Government.
+
+2. Data fields
+
+Field Names	Definitions
+USGS_ID	Unique USGS identifier for each landslide entry.
+Date_Min	Minimum possible date of landslide occurrence. If date is known to the day, Date_Min will have a value while Date_Max is empty. Time zone is assumed to be local, except for Inventories ‘USGS Earthquake-Triggered Ground Failure’ and ‘USGS Seismogenic Mass Movements’ which are in UTC.
+Date_Max	Maximum possible date of landslide occurrence. If date is known to the day, Date_Max will be empty while Date_Min has a value. Time zone is assumed to be local, except for Inventories ‘USGS Earthquake-Triggered Ground Failure’ and ‘USGS Seismogenic Mass Movements’ which are in UTC.
+Fatalities	Number of fatalities caused by landslide event.
+Confidence	Confidence in landslide (entry) extent, nature, and location.
+LS_Type	Landslide (entry) type. Classification schema of original inventories is often not specified. 
+Inventory	Name of original source inventory.
+Inv_URL	URL or link to original source inventory.
+Info_Source	Information source or sub-layer from original source inventory.
+Notes	Unformatted notes field, includes additional information.
+Lat_N	Latitude of point or polygon centroid in WGS 1984
+Lon_W	Longitude of point or polygon centroid in WGS 1984
+
+3. Confidence attributes
+
+Confidence	Definitions
+1	Possible landslide (feature) in the area
+2	Probable landslide (feature) in the area
+3	Likely landslide (feature) at or near this location
+5	Moderate confidence in extent or nature of landslide (feature) at this location
+8	High confidence in extent or nature of landslide (feature)
+
+4. References
+
+Belair, G.M., Jones, E.S., Slaughter, S.L., and Mirus, B.B., 2022, Landslide Inventories across the United States version 2: U.S. Geological Survey data release, https://doi.org/10.5066/P9FZUX6N.
+
+Cruden, D.M. and Varnes, D.J., 1996, Landslide Types and Processes, in Turner, K.A. and Schuster R. L., eds., Landslides Investigation and Mitigation: Transportation Research Board, U.S. National Research Council Special Report 247, U.S. National Academy of Sciences, Chapter 3, p. 36-75.
+
+ESRI, 2023, ArcGIS Pro (Version 3.1.3), Redlands, CA: Environmental Systems Research Institute, Retrieved from https://www.esri.com/en-us/arcgis/products/arcgis-pro/resources.
+
+Hungr, O., Leroueil, S., and Picarelli, L., 2014, The Varnes classification of landslide types, an update, Landslides, 11(2), p. 167-194, https://doi.org/10.1007/s10346-013-0436-y.
+
+Jones, E.S., Mirus, B.B, Schmitt, R.G., Baum, R.L., Burns, W.J., Crawford, M., Godt, J.W., Kirschbaum, D.B., Lancaster, J.T., Lindsey, K.O., McCoy, K.E., Slaughter, S., and Stanley, T.A., 2019, Landslide Inventories across the United States: U.S. Geological Survey data release, https://doi.org/10.5066/P9E2A37P.
+
+Python Software Foundation, 2023, Python Language Reference, version 3.9, Retrieved from http://www.python.org.
+
+QGIS.org, 2022, QGIS Geographic Information System (Version 3.28.4-Firenze), QGIS Association, Retrieved from http://www.qgis.org.</abstract>
+      <purpose>This project compiled data on landslide occurrence within the U.S. into a searchable, web-based map interface that can be used by researchers, emergency planners, and the public. This interface enhances access to landslide information and facilitates future integration of other interdisciplinary spatial data into national scale risk assessment products.</purpose>
+      <supplinf>Landslide Confidence 
+
+High confidence in extent or nature of landslide (feature) (8)
+Moderate confidence in extent or nature of landslide (feature) at this location (5)
+Likely landslide (feature) at or near this location (3)
+Probable landslide (feature) in the area (2)
+Possible landslide (feature) in the area (1)</supplinf>
+    </descript>
+    <timeperd>
+      <timeinfo>
+        <sngdate>
+          <caldate>20250131</caldate>
+        </sngdate>
+      </timeinfo>
+      <current>publication date</current>
+    </timeperd>
+    <status>
+      <progress>Planned</progress>
+      <update>Annually</update>
+    </status>
+    <spdom>
+      <bounding>
+        <westbc>-178.9453</westbc>
+        <eastbc>-53.4375</eastbc>
+        <northbc>71.7464</northbc>
+        <southbc>2.8114</southbc>
+      </bounding>
+    </spdom>
+    <keywords>
+      <theme>
+        <themekt>ISO 19115 Topic Category</themekt>
+        <themekey>geoscientificInformation</themekey>
+      </theme>
+      <theme>
+        <themekt>USGS Thesaurus</themekt>
+        <themekey>USGS</themekey>
+        <themekey>Geologic Hazards Science Center</themekey>
+        <themekey>GHSC</themekey>
+        <themekey>Landslide Hazard Program</themekey>
+        <themekey>landslide hazard</themekey>
+        <themekey>landslides</themekey>
+        <themekey>landslide</themekey>
+        <themekey>ground failure</themekey>
+        <themekey>geology</themekey>
+        <themekey>gis</themekey>
+      </theme>
+      <theme>
+        <themekt>USGS Metadata Identifier</themekt>
+        <themekey>USGS:671eef1fd34ed0f827ea9f12</themekey>
+      </theme>
+      <place>
+        <placekt>Common geographic areas</placekt>
+        <placekey>United States</placekey>
+        <placekey>Puerto Rico</placekey>
+      </place>
+      <temporal>
+        <tempkt>USGS Thesaurus</tempkt>
+        <tempkey>Current</tempkey>
+      </temporal>
+    </keywords>
+    <accconst>none</accconst>
+    <useconst>none</useconst>
+    <ptcontac>
+      <cntinfo>
+        <cntperp>
+          <cntper>Benjamin B Mirus</cntper>
+          <cntorg>USGS - ROCKY MOUNTAIN REGION</cntorg>
+        </cntperp>
+        <cntpos>Research Geologist</cntpos>
+        <cntaddr>
+          <addrtype>mailing and physical</addrtype>
+          <address>Colorado School of Mines,1711 Illinois St</address>
+          <city>Golden</city>
+          <state>CO</state>
+          <postal>80401</postal>
+        </cntaddr>
+        <cntvoice>303-273-8613</cntvoice>
+        <cntemail>bbmirus@usgs.gov</cntemail>
+      </cntinfo>
+    </ptcontac>
+    <datacred>Belair G.M., Jones, E.S., Luna, L.V., and Mirus, B.B.</datacred>
+    <native>Environment as of Metadata Creation:  Esri ArcGIS, QGIS, Python</native>
+    <crossref>
+      <citeinfo>
+        <origin>Gina M Belair</origin>
+        <origin>Eric S Jones</origin>
+        <origin>Stephen L Slaughter</origin>
+        <origin>Benjamin B Mirus</origin>
+        <pubdate>2022</pubdate>
+        <title>Landslide Inventories across the United States version 2</title>
+        <geoform>dataset</geoform>
+        <pubinfo>
+          <pubplace>https://www.sciencebase.gov</pubplace>
+          <publish>U.S. Geological Survey</publish>
+        </pubinfo>
+        <onlink>https://doi.org/10.5066/p9fzux6n</onlink>
+      </citeinfo>
+    </crossref>
+    <crossref>
+      <citeinfo>
+        <origin>Eric S Jones</origin>
+        <origin>Benjamin B Mirus</origin>
+        <origin>Robert G Schmitt</origin>
+        <origin>Rex L Baum</origin>
+        <origin>Jonathan W Godt</origin>
+        <origin>Dalia B Kirschbaum</origin>
+        <origin>Thomas A Stanley</origin>
+        <origin>Kevin E. MCCoy</origin>
+        <pubdate>2019</pubdate>
+        <title>Landslide Inventories across the United States</title>
+        <geoform>dataset</geoform>
+        <pubinfo>
+          <pubplace>https://www.sciencebase.gov</pubplace>
+          <publish>U.S. Geological Survey</publish>
+        </pubinfo>
+        <onlink>https://doi.org/10.5066/p9e2a37p</onlink>
+      </citeinfo>
+    </crossref>
+  </idinfo>
+  <dataqual>
+    <attracc>
+      <attraccr>No formal attribute accuracy tests were conducted. We have included a confidence column based on the information given to us by the inventory owner.</attraccr>
+    </attracc>
+    <logic>No formal logical accuracy tests were conducted</logic>
+    <complete>Data set is considered complete for the information presented, as described in the abstract. Users are advised to read the rest of the metadata record carefully for additional details.</complete>
+    <posacc>
+      <horizpa>
+        <horizpar>No formal positional accuracy tests were conducted</horizpar>
+      </horizpa>
+      <vertacc>
+        <vertaccr>No formal positional accuracy tests were conducted</vertaccr>
+      </vertacc>
+    </posacc>
+    <lineage>
+      <procstep>
+        <procdesc>We compiled existing landslide inventories by downloading data from publicly available sources and by contacting inventory owners. We converted attribute names to match a common simplified schema, and included additional information that does not match this schema in an unformatted "Notes" section. We assigned confidence and polygon classification attributes with systematic rules informed by available information about the data and mapping methods used in each composite database. We combined this information into a national scale landslide inventory product that is available for download via ScienceBase or can be viewed through our interactive online map viewer.</procdesc>
+        <procdate>20241101</procdate>
+        <proccont>
+          <cntinfo>
+            <cntperp>
+              <cntper>Gina M Belair</cntper>
+              <cntorg>USGS - ROCKY MOUNTAIN REGION</cntorg>
+            </cntperp>
+            <cntpos>Geologist</cntpos>
+            <cntaddr>
+              <addrtype>mailing and physical</addrtype>
+              <address>Colorado School of Mines,1711 Illinois St</address>
+              <city>Golden</city>
+              <state>CO</state>
+              <postal>80401</postal>
+            </cntaddr>
+            <cntvoice>NA</cntvoice>
+            <cntemail>gbelair@usgs.gov</cntemail>
+          </cntinfo>
+        </proccont>
+      </procstep>
+    </lineage>
+  </dataqual>
+  <spdoinfo>
+    <direct>Vector</direct>
+    <ptvctinf>
+      <sdtsterm>
+        <sdtstype>Point</sdtstype>
+      </sdtsterm>
+    </ptvctinf>
+  </spdoinfo>
+  <spref>
+    <horizsys>
+      <planar>
+        <mapproj>
+          <mapprojn>WGS_1984</mapprojn>
+          <mercator>
+            <stdparll>0.0</stdparll>
+            <longcm>0.0</longcm>
+            <feast>0.0</feast>
+            <fnorth>0.0</fnorth>
+          </mercator>
+        </mapproj>
+        <planci>
+          <plance>coordinate pair</plance>
+          <coordrep>
+            <absres>0.6096</absres>
+            <ordres>0.6096</ordres>
+          </coordrep>
+          <plandu>meters</plandu>
+        </planci>
+      </planar>
+      <geodetic>
+        <horizdn>D_WGS_1984</horizdn>
+        <ellips>WGS_1984</ellips>
+        <semiaxis>6378137.0</semiaxis>
+        <denflat>298.257223563</denflat>
+      </geodetic>
+    </horizsys>
+  </spref>
+  <eainfo>
+    <detailed>
+      <enttyp>
+        <enttypl>us_ls_v3_point and us_ls_v3_poly</enttypl>
+        <enttypd>Comma Separated Value (CSV) files containing data. Geopackage files containing data.</enttypd>
+        <enttypds>Producer Defined</enttypds>
+      </enttyp>
+      <attr>
+        <attrlabl>fid</attrlabl>
+        <attrdef>Unique identifier for each entry</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <udom>Unique identifier for each entry</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>USGS_ID</attrlabl>
+        <attrdef>Unique USGS identifier for each landslide entry</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <udom>Unique USGS identifier for each landslide entry.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Date_Min</attrlabl>
+        <attrdef>Minimum possible date of landslide occurrence</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>&lt;&lt; empty cell &gt;&gt;</edomv>
+            <edomvd>No Data</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <udom>Minimum possible date of landslide occurrence.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Date_Max</attrlabl>
+        <attrdef>Maximum possible date of landslide occurrence</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>&lt;&lt; empty cell &gt;&gt;</edomv>
+            <edomvd>No Data</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <udom>Maximum possible date of landslide occurrence</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Fatalities</attrlabl>
+        <attrdef>Number of fatalities caused by landslide event</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>&lt;&lt; empty cell &gt;&gt;</edomv>
+            <edomvd>No Data</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <rdom>
+            <rdommin>0</rdommin>
+            <rdommax>50</rdommax>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Confidence</attrlabl>
+        <attrdef>Confidence in landslide (entry) extent, nature, and location</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>1</edomv>
+            <edomvd>Possible landslide (feature) in the area</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>2</edomv>
+            <edomvd>Probable landslide (feature) in the area</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>3</edomv>
+            <edomvd>Likely landslide (feature) at or near this location</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>5</edomv>
+            <edomvd>Moderate confidence in extent or nature of landslide (feature) at this location</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>8</edomv>
+            <edomvd>High confidence in extent or nature of landslide (feature)</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>LS_Type</attrlabl>
+        <attrdef>Landslide (entry) type</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>&lt;&lt; empty cell &gt;&gt;</edomv>
+            <edomvd>No Data</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <udom>Landslide (entry) type</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Inventory</attrlabl>
+        <attrdef>Name of original source inventory</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <udom>Name of original source inventory</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Inv_URL</attrlabl>
+        <attrdef>URL or link to original source inventory</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <udom>URL or link to original source inventory</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Info_Source</attrlabl>
+        <attrdef>Information source or sub-layer from original source inventory</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>&lt;&lt; empty cell &gt;&gt;</edomv>
+            <edomvd>No Data</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <udom>Information source or sub-layer from original source inventory</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Notes</attrlabl>
+        <attrdef>Unformatted notes field, includes additional information</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <udom>Unformatted notes field, includes additional information</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Lat_N</attrlabl>
+        <attrdef>Latitude of point or polygon centroid in WGS 1984</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>&lt;&lt; empty cell &gt;&gt;</edomv>
+            <edomvd>No Data</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <rdom>
+            <rdommin>17.954294208</rdommin>
+            <rdommax>70.205716549</rdommax>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Lon_W</attrlabl>
+        <attrdef>Longitude of point or polygon centroid in WGS 1984</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>&lt;&lt; empty cell &gt;&gt;</edomv>
+            <edomvd>No Data</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <rdom>
+            <rdommin>-164.773123493</rdommin>
+            <rdommax>-65.632759283</rdommax>
+          </rdom>
+        </attrdomv>
+      </attr>
+    </detailed>
+  </eainfo>
+  <distinfo>
+    <distrib>
+      <cntinfo>
+        <cntorgp>
+          <cntorg>U.S. Geological Survey</cntorg>
+          <cntper>GS ScienceBase</cntper>
+        </cntorgp>
+        <cntaddr>
+          <addrtype>mailing address</addrtype>
+          <address>Denver Federal Center, Building 810, Mail Stop 302</address>
+          <city>Denver</city>
+          <state>CO</state>
+          <postal>80225</postal>
+          <country>United States</country>
+        </cntaddr>
+        <cntvoice>1-888-275-8747</cntvoice>
+        <cntemail>sciencebase@usgs.gov</cntemail>
+      </cntinfo>
+    </distrib>
+    <distliab>Unless otherwise stated, all data, metadata and related materials are considered to satisfy the quality standards relative to the purpose for which the data were collected. Although these data and associated metadata have been reviewed for accuracy and completeness and approved for release by the U.S. Geological Survey (USGS), no warranty expressed or implied is made regarding the display or utility of the data on any other system or for general or scientific purposes, nor shall the act of distribution constitute any such warranty.</distliab>
+    <stdorder>
+      <digform>
+        <digtinfo>
+          <formname>Vector Digital Data Set (Point)</formname>
+        </digtinfo>
+        <digtopt>
+          <onlinopt>
+            <computer>
+              <networka>
+                <networkr>https://doi.org/10.5066/P9FZUX6N</networkr>
+                <networkr>https://usgs.maps.arcgis.com/apps/webappviewer/index.html?id=ae120962f459434b8c904b456c82669d</networkr>
+              </networka>
+            </computer>
+          </onlinopt>
+        </digtopt>
+      </digform>
+      <fees>None. No fees are applicable for obtaining the data set.</fees>
+    </stdorder>
+  </distinfo>
+  <metainfo>
+    <metd>20250203</metd>
+    <metc>
+      <cntinfo>
+        <cntperp>
+          <cntper>GHSC Data Steward</cntper>
+          <cntorg>U.S. Geological Survey, Geologic Hazards Science Center</cntorg>
+        </cntperp>
+        <cntpos>Open Data Policy coordinator</cntpos>
+        <cntaddr>
+          <addrtype>mailing and physical</addrtype>
+          <address>1711 Illinois Street</address>
+          <city>Golden</city>
+          <state>Colorado</state>
+          <postal>80401</postal>
+          <country>USA</country>
+        </cntaddr>
+        <cntvoice>303-273-8500</cntvoice>
+        <cntemail>ghsc_metadata@usgs.gov</cntemail>
+      </cntinfo>
+    </metc>
+    <metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+    <metstdv>FGDC-STD-001-1998</metstdv>
+  </metainfo>
+</metadata>

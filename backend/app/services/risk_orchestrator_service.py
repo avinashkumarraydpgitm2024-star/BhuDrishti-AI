@@ -50,6 +50,22 @@ def run_risk_assessment(
         minutes=forecast_horizon_minutes
     )
 
+    assam_ml_active = (
+        engine_input.assam_ml_probability_percent
+        is not None
+    )
+
+    if assam_ml_active:
+        model_name = (
+            "bhudrishti-hybrid-risk-engine-assam-ml"
+        )
+        model_version = "0.2.0-assam-synthetic-v1"
+    else:
+        model_name = (
+            "bhudrishti-baseline-risk-engine"
+        )
+        model_version = "0.1.0"
+
     assessment_data = RiskAssessmentCreate(
         risk_zone_public_id=risk_zone.public_id,
         severity=result.severity,
@@ -62,8 +78,8 @@ def run_risk_assessment(
         forecast_horizon_minutes=(
             forecast_horizon_minutes
         ),
-        model_name="bhudrishti-baseline-risk-engine",
-        model_version="0.1.0",
+        model_name=model_name,
+        model_version=model_version,
         dominant_factor=result.dominant_factor,
         explanation=result.explanation,
         assessed_at=assessed_at,

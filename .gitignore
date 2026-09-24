@@ -22,3 +22,11 @@ Thumbs.db
 
 # Pytest cache
 .pytest_cache/
+
+# Large local ML/data artifacts (kept locally; excluded from normal GitHub push)
+backend/models/*.pkl
+backups/**/*.pkl
+backend/data/india_sources/gsi_landslide_report.pdf
+backend/data/US_Landslide_v3_csv/US_Landslide_v3_csv/us_ls_v3_poly.csv
+backend/data/US_Landslide_v3_csv/US_Landslide_v3_csv/us_ls_v3_point.csv
+backend/data/usgs_landslides_clean.csv

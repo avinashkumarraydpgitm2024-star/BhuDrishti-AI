@@ -1,0 +1,14 @@
+{
+  "country": "India",
+  "sources": [
+    {
+      "name": "GSI National Landslide Inventory",
+      "organization": "Geological Survey of India",
+      "portal": "Bhusanket / National Landslide Forecasting Centre",
+      "country": "India",
+      "hazard": "landslide",
+      "status": "verified_official_source",
+      "downloaded": false
+    }
+  ]
+}

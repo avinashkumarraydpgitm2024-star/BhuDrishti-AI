@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="light dark" name="color-scheme"/>
+  <meta content="#f4f7f4" name="theme-color"/>
+  <title>
+   BhuDrishti AI
+  </title>
+  <link href="css/base.css" rel="stylesheet"/>
+  <link href="css/theme.css" rel="stylesheet"/>
+  <script>
+   try{document.documentElement.setAttribute('data-theme',localStorage.getItem('bhudrishtiTheme')==='dark'?'dark':'light')}catch(e){}
+  </script>
+  <link href="css/responsive-fixes.css" rel="stylesheet"/>
+  <link href="css/final-polish.css" rel="stylesheet"/>
+ </head>
+ <body class="page-home">
+  <div class="app">
+   <aside class="sidebar">
+    <div class="sidebar-inner">
+     <a class="logo" href="home.html">
+      <span class="logo-mark">
+       <svg fill="none" viewbox="0 0 32 32">
+        <path d="M5 16c4.4-7.1 10-9.5 16.8-7.2 2.3.8 4.1 2.1 5.2 3.9-3.1 7.5-8.6 11.2-16.5 8.6L5 16Z" stroke="currentColor" stroke-width="2.2">
+        </path>
+        <circle cx="18" cy="14" fill="currentColor" r="3">
+        </circle>
+       </svg>
+      </span>
+      <span>
+       <div class="logo-title">
+        BHU
+        <span>
+         DRISHTI
+        </span>
+       </div>
+       <div class="logo-sub">
+        AI
+       </div>
+      </span>
+     </a>
+     <div class="sidebar-main">
+      <section class="nav-section">
+       <div class="nav-label" data-i18n="main">
+       </div>
+       <nav class="nav-list">
+        <a class="nav-item active" href="home.html">
+         <span class="nav-icon" data-icon="home">
+         </span>
+         <span class="nav-text" data-i18n="home">
+         </span>
+        </a>
+        <a class="nav-item" href="map.html">
+         <span class="nav-icon" data-icon="map">
+         </span>
+         <span class="nav-text" data-i18n="map">
+         </span>
+        </a>
+        <a class="nav-item" href="alerts.html">
+         <span class="nav-icon" data-icon="alerts">
+         </span>
+         <span class="nav-text" data-i18n="alerts">
+         </span>
+         <span class="nav-badge" data-alert-badge="" hidden="">
+         </span>
+        </a>
+        <a class="nav-item" href="assistant.html">
+         <span class="nav-icon" data-icon="assistant">
+         </span>
+         <span class="nav-text" data-i18n="assistant">
+         </span>
+        </a>
+        <a class="nav-item" href="area-safety.html">
+         <span class="nav-icon" data-icon="safety">
+         </span>
+         <span class="nav-text" data-i18n="safety">
+         </span>
+        </a>
+       </nav>
+      </section>
+      <section class="nav-section">
+       <div class="nav-label" data-i18n="tools">
+       </div>
+       <nav class="nav-list">
+        <a class="nav-item" href="change-detection.html">
+         <span class="nav-icon" data-icon="change">
+         </span>
+         <span class="nav-text" data-i18n="change">
+         </span>
+        </a>
+        <a class="nav-item" href="saved-places.html">
+         <span class="nav-icon" data-icon="saved">
+         </span>
+         <span class="nav-text" data-i18n="saved">
+         </span>
+        </a>
+       </nav>
+      </section>
+     </div>
+     <div class="sidebar-account">
+      <section class="nav-section">
+       <div class="nav-label" data-i18n="account">
+       </div>
+       <nav class="nav-list">
+        <a class="nav-item" href="settings.html">
+         <span class="nav-icon" data-icon="settings">
+         </span>
+         <span class="nav-text" data-i18n="settings">
+         </span>
+        </a>
+        <a class="nav-item" href="help.html">
+         <span class="nav-icon" data-icon="help">
+         </span>
+         <span class="nav-text" data-i18n="help">
+         </span>
+        </a>
+       </nav>
+      </section>
+     </div>
+    </div>
+   </aside>
+   <div class="mobile-overlay">
+   </div>
+   <main class="main">
+    <header class="topbar">
+     <div class="area-box">
+      <button aria-label="Menu" class="icon-btn mobile-menu" data-menu-toggle="" type="button">
+       <span data-icon="menu">
+       </span>
+      </button>
+      <div class="area-icon" data-icon="pin">
+      </div>
+      <div style="min-width:0">
+       <div class="area-meta" data-i18n="yourArea">
+       </div>
+       <div class="area-name" data-current-area="">
+       </div>
+      </div>
+     </div>
+     <div class="top-actions">
+      <select aria-label="Language" class="lang-select" data-lang-select="">
+       <option value="en">
+        English
+       </option>
+       <option value="hi">
+        हिंदी
+       </option>
+       <option value="hinglish">
+        Hinglish
+       </option>
+      </select>
+      <button aria-label="Theme" class="icon-btn" data-theme-toggle="" type="button">
+       <span data-icon="theme">
+       </span>
+      </button>
+      <div class="profile">
+       <button class="profile-btn" data-profile-toggle="" type="button">
+        <span class="avatar" data-user-initial="">
+         R
+        </span>
+        <span class="profile-copy">
+         <span class="profile-small" data-i18n="welcome">
+         </span>
+         <br/>
+         <span class="profile-name" data-user-name="">
+          Rohit
+         </span>
+        </span>
+        <span class="profile-chevron" data-icon="chevron">
+        </span>
+       </button>
+       <div class="profile-menu">
+        <a href="settings.html">
+         <span data-icon="settings">
+         </span>
+         <span data-i18n="profileMenuSettings">
+         </span>
+        </a>
+        <a href="saved-places.html">
+         <span data-icon="saved">
+         </span>
+         <span data-i18n="profileMenuSaved">
+         </span>
+        </a>
+        <button class="danger" data-logout="" type="button">
+         <span data-icon="logout">
+         </span>
+         <span data-i18n="logout">
+         </span>
+        </button>
+       </div>
+      </div>
+     </div>
+    </header>
+    <section class="hero">
+     <div class="eyebrow" data-i18n="homeEyebrow">
+     </div>
+     <h1>
+      <span data-i18n="homeTitle">
+      </span>
+      <span class="accent" data-user-name="">
+       Rohit
+      </span>
+     </h1>
+     <p data-i18n="homeDesc">
+     </p>
+     <div class="hero-actions">
+      <a class="btn btn-primary" href="area-safety.html">
+       <span data-i18n="viewSafety">
+       </span>
+      </a>
+      <a class="btn btn-secondary" href="map.html">
+       <span data-i18n="openMap">
+       </span>
+      </a>
+     </div>
+    </section>
+    <section class="grid-2">
+     <article class="card">
+      <div class="section-title">
+       <div>
+        <div class="eyebrow" data-i18n="safety">
+        </div>
+        <h2 data-i18n="currentRisk">
+        </h2>
+       </div>
+       <span class="status-chip chip-high" id="homeRiskChip">
+       </span>
+      </div>
+      <div class="risk-summary" style="margin-top:18px">
+       <div class="risk-ring" id="homeRiskRing" style="--score:83">
+        <div class="risk-ring-inner">
+         <div class="risk-num" id="homeRiskScore">
+          83
+         </div>
+         <div class="risk-unit" data-i18n="riskScore">
+         </div>
+        </div>
+       </div>
+       <div>
+        <h3 id="homeRiskLocation">
+         Chungthang
+        </h3>
+        <div class="muted">
+         <span data-i18n="primaryRisk">
+         </span>
+         :
+         <b id="homeRiskType">
+         </b>
+        </div>
+        <p class="muted" data-i18n="researchPreview">
+        </p>
+        <a class="btn btn-secondary" data-i18n="viewDetails" href="area-safety.html">
+        </a>
+       </div>
+      </div>
+     </article>
+     <article class="card">
+      <div class="eyebrow" data-i18n="weather">
+      </div>
+      <h2>
+       29°C ·
+       <span data-i18n="weatherText">
+       </span>
+      </h2>
+      <div class="metric-grid">
+       <div class="metric">
+        <div class="metric-value">
+         12%
+        </div>
+        <div class="metric-label" data-i18n="rain">
+        </div>
+       </div>
+       <div class="metric">
+        <div class="metric-value">
+         9 km/h
+        </div>
+        <div class="metric-label" data-i18n="wind">
+        </div>
+       </div>
+       <div class="metric">
+        <div class="metric-value">
+         72%
+        </div>
+        <div class="metric-label" data-i18n="humidity">
+        </div>
+       </div>
+      </div>
+     </article>
+    </section>
+    <section class="grid-3">
+     <a class="card link-card" href="map.html">
+      <div class="eyebrow" data-i18n="map">
+      </div>
+      <h3 data-i18n="openMap">
+      </h3>
+      <p class="muted" data-i18n="researchMarkers">
+      </p>
+     </a>
+     <a class="card link-card" href="change-detection.html">
+      <div class="eyebrow" data-i18n="change">
+      </div>
+      <h3 data-i18n="changeHero">
+      </h3>
+      <p class="muted" data-i18n="changeCardText">
+      </p>
+     </a>
+     <a class="card link-card" href="saved-places.html">
+      <div class="eyebrow" data-i18n="saved">
+      </div>
+      <h3 data-i18n="savedHero">
+      </h3>
+      <p class="muted" data-i18n="savedCardText">
+      </p>
+     </a>
+    </section>
+   </main>
+  </div>
+  <script src="js/app.js">
+  </script>
+  <script src="js/risk-data.js">
+  </script>
+  <script src="js/home-page.js">
+  </script>
+ </body>
+</html>

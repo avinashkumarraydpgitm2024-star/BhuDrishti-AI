@@ -1,0 +1,285 @@
+/* =========================================================
+BhuDrishti AI - Final UI fixes
+Small, readable overrides kept separate from the main theme.
+========================================================= */
+/* Prevent long English/Hindi/Hinglish text from leaving cards. */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.card, .hero, .topbar, .auth-card, .profile-menu, .field, .btn, .nav-item, .area-name, h1, h2, h3, p, li, a, button, span {
+  min-width: 0;
+}
+
+.card p, .card li, .card h2, .card h3, .area-name, .profile-menu a, .profile-menu button {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+/* Keep the brand crisp and readable on the login/verify artwork. */
+.auth-brand .logo {
+  color: #18372f;
+}
+
+.auth-brand .logo-title {
+  color: #18372f;
+  white-space: nowrap;
+}
+
+.auth-brand .logo-title span {
+  color: #2f7d61;
+}
+
+.auth-brand .logo-sub {
+  color: #647c73;
+}
+
+html[data-theme="dark"] .auth-brand .logo, html[data-theme="dark"] .auth-brand .logo-title {
+  color: #f4fbf7;
+}
+
+html[data-theme="dark"] .auth-brand .logo-title span {
+  color: #8ee0bd;
+}
+
+html[data-theme="dark"] .auth-brand .logo-sub {
+  color: #a8beb5;
+}
+
+/* Help page: stop headings/content from clipping inside the glass hero. */
+.page-help .hero, .page-help .card {
+  overflow: visible;
+}
+
+.page-help .hero h1, .page-help .hero p {
+  max-width: 100%;
+}
+
+/* Area Safety search stays usable even with long location names. */
+.page-safety .search-row, .page-safety .search-box, .page-safety .field {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.page-safety .field {
+  text-overflow: ellipsis;
+}
+
+/* OTP: six boxes remain visible on smaller screens. */
+.otp-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(38px, 1fr));
+  gap: 8px;
+}
+
+.otp {
+  width: 100%;
+  min-width: 0;
+}
+
+@media (max-width: 520px) {
+  .otp-row {
+    gap: 6px;
+  }
+  .otp {
+    height: 50px;
+    font-size: 20px;
+  }
+}
+
+/* =========================================================
+Stable custom language picker
+Native <select> option colors vary between Windows/browser
+themes. The visual picker below is fully app-controlled.
+========================================================= */
+.native-language-select {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+}
+
+.language-picker {
+  position: relative;
+  flex: none;
+  min-width: 118px;
+  max-width: 160px;
+  z-index: 120;
+}
+
+.language-picker-trigger {
+  width: 100%;
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 13px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  color: var(--text);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.56);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 780;
+  cursor: pointer;
+  transition: border-color .18s ease, background .18s ease, box-shadow .18s ease;
+}
+
+.language-picker-trigger:hover, .language-picker.open .language-picker-trigger {
+  border-color: color-mix(in srgb, var(--brand) 36%, var(--line));
+  background: var(--surface);
+  box-shadow: 0 8px 22px rgba(27,52,44,.10), inset 0 1px 0 rgba(255,255,255,.72);
+}
+
+.language-picker-chevron {
+  font-size: 17px;
+  line-height: 1;
+  color: var(--text-soft);
+  transform: translateY(-1px);
+  transition: transform .18s ease;
+}
+
+.language-picker.open .language-picker-chevron {
+  transform: rotate(180deg) translateY(1px);
+}
+
+.language-picker-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: max(100%, 154px);
+  padding: 7px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--glass-solid, var(--surface));
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(22px) saturate(135%);
+  -webkit-backdrop-filter: blur(22px) saturate(135%);
+  overflow: hidden;
+  z-index: 500;
+}
+
+.language-picker.open .language-picker-menu {
+  display: grid;
+  gap: 3px;
+}
+
+.language-picker-option {
+  width: 100%;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 9px 11px;
+  border: 0;
+  border-radius: 11px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 680;
+  text-align: left;
+  cursor: pointer;
+}
+
+.language-picker-option:hover {
+  background: var(--surface-soft);
+}
+
+.language-picker-option.active {
+  background: var(--brand-soft);
+  color: var(--brand-strong, var(--brand));
+  font-weight: 850;
+}
+
+html[data-theme="dark"] .language-picker-trigger {
+  background: rgba(255,255,255,.045);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+}
+
+html[data-theme="dark"] .language-picker-trigger:hover, html[data-theme="dark"] .language-picker.open .language-picker-trigger {
+  background: rgba(255,255,255,.07);
+  box-shadow: 0 12px 32px rgba(0,0,0,.30);
+}
+
+/* Global layout safety: no grid/flex child is allowed to force overflow. */
+.main, .main > *, .topbar > *, .hero > *, .card > *, .grid-2 > *, .grid-3 > *, .settings-grid > *, .detail-grid > *, .safety-overview > *, .compare-grid > *, .saved-grid > *, .form-row > *, .setting-row > *, .place-head > * {
+  min-width: 0;
+}
+
+input, textarea, select, button, a {
+  max-width: 100%;
+}
+
+button, .btn, .mini-btn, .nav-item, .status-chip {
+  overflow-wrap: anywhere;
+}
+
+/* Keep page heroes fluid; prevents Help/translated headings clipping. */
+.hero, .page-help .hero, .page-help .card {
+  height: auto !important;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.page-help .hero h1, .page-help .hero p, .page-help .help-item, .page-help .help-item * {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+/* Profile menu stays inside the viewport even with translated labels. */
+.profile-menu {
+  max-width: min(240px, calc(100vw - 24px));
+}
+
+/* Auth controls must remain visible and aligned from login through verify. */
+.auth-top {
+  gap: 10px;
+  align-items: center;
+}
+
+.auth-top .language-picker {
+  margin-left: auto;
+}
+
+.otp-row {
+  grid-template-columns: repeat(6, minmax(42px, 1fr));
+}
+
+@media (max-width: 840px) {
+  .top-actions .language-picker {
+    min-width: 100px;
+    max-width: 112px;
+  }
+}
+
+@media (max-width: 540px) {
+  .top-actions .language-picker {
+    min-width: 92px;
+    max-width: 100px;
+  }
+  .top-actions .language-picker-trigger {
+    min-height: 38px;
+    padding: 0 9px;
+    font-size: 10.5px;
+  }
+  .language-picker-menu {
+    width: 146px;
+  }
+  .auth-top .language-picker {
+    min-width: 116px;
+    max-width: 132px;
+  }
+  .otp-row {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 5px;
+  }
+}

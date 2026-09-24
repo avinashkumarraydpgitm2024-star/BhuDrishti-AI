@@ -4,6 +4,9 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from backend.app.models.landslide_event import LandslideEvent
+from backend.data_pipeline.india_spatial_index import (
+    get_india_spatial_evidence,
+)
 
 
 def get_historical_event_count(
@@ -50,7 +53,7 @@ def get_recent_landslide_events(
     )
 
 
-def calculate_historical_risk_score(
+def calculate_database_historical_risk_score(
     db: Session,
     *,
     risk_zone_id: int,
@@ -77,3 +80,75 @@ def calculate_historical_risk_score(
         return 0.20
 
     return 0.0
+
+
+def calculate_gsi_spatial_risk_score(
+    *,
+    latitude: float,
+    longitude: float,
+) -> float:
+    evidence = get_india_spatial_evidence(
+        latitude,
+        longitude,
+    )
+
+    within_1km = evidence["gsi_inventory_within_1km"]
+    within_5km = evidence["gsi_inventory_within_5km"]
+    within_10km = evidence["gsi_inventory_within_10km"]
+
+    if within_1km >= 5:
+        return 1.0
+
+    if within_1km >= 2:
+        return 0.90
+
+    if within_1km >= 1:
+        return 0.80
+
+    if within_5km >= 10:
+        return 0.75
+
+    if within_5km >= 5:
+        return 0.65
+
+    if within_5km >= 1:
+        return 0.50
+
+    if within_10km >= 10:
+        return 0.40
+
+    if within_10km >= 5:
+        return 0.30
+
+    if within_10km >= 1:
+        return 0.20
+
+    return 0.0
+
+
+def calculate_historical_risk_score(
+    db: Session,
+    *,
+    risk_zone_id: int,
+    latitude: float | None = None,
+    longitude: float | None = None,
+) -> float:
+    database_score = calculate_database_historical_risk_score(
+        db=db,
+        risk_zone_id=risk_zone_id,
+    )
+
+    if latitude is None or longitude is None:
+        return database_score
+
+    gsi_score = calculate_gsi_spatial_risk_score(
+        latitude=latitude,
+        longitude=longitude,
+    )
+
+    # Keep both evidence sources without treating GSI proximity
+    # as a calibrated landslide probability.
+    return round(
+        max(database_score, gsi_score),
+        3,
+    )

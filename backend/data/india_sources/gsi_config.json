@@ -1,0 +1,136 @@
+prod = [
+    {
+        "Layers": {
+            "basemapLayer": {
+                "url": "https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_v2/VectorTileServer",
+                "id": "basemapLayer"
+            },
+            "terrainmap": {
+                "url": "https://services.arcgisonline.com/arcgis/rest/services/World_Terrain_Base/MapServer",
+                "id": "terrainmap"
+            },
+            "hillshade": {
+                "url": "https://services.arcgisonline.com/arcgis/rest/services/World_Terrain_Base/MapServer",
+                "id": "hillshade"
+            },
+            "district_Lyr": {
+                "url": "https://bhusanket.gsi.gov.in/gisserver/rest/services/GSI/Bulletin_Map/FeatureServer/1",
+                "id": "district_Lyr"
+            },
+            "state_Lyr": {
+                "url": "https://bhusanket.gsi.gov.in/gisserver/rest/services/Hosted/India_Boundary/FeatureServer/1",
+                "id": "district_Lyr"
+            },
+            "India_boundary": {
+                "url": "https://bhusanket.gsi.gov.in/gisserver/rest/services/Hosted/India_Boundary/FeatureServer/2",
+                "id": "India_boundary"
+            },
+            "landslide_lyr": {
+                "url": "https://bhusanket.gsi.gov.in/gisserver/rest/services/Hosted/India_All_Landslided/FeatureServer/0",
+                "id": "landslide_lyr"
+            },
+
+            "Landslide_Polygon": {
+                "url": "https://bhusanket.gsi.gov.in/gisserver/rest/services/GSI/Landslide_Polygon/FeatureServer",
+                "id": "Landslide_Polygon"
+            },
+            "state_boundary": {
+                "id": "state_bound",
+                "url": "https://bhusanket.gsi.gov.in/gisserver/rest/services/Hosted/LFS_map/FeatureServer/6"
+            },
+            "dist_boundary": {
+                "id": "dist_bound",
+                "url": "https://bhusanket.gsi.gov.in/gisserver/rest/services/Hosted/LFS_map/FeatureServer/5"
+            },
+            "Bulletin_2024": {
+                "id": "Bullet_2020",
+                "url": "https://bhusanket.gsi.gov.in/gisserver/rest/services/Hosted/LFS_map/FeatureServer/0"
+            },
+            "Bulletin_2020": {
+                "id": "Bullet_2020",
+                "url": "https://bhusanket.gsi.gov.in/gisserver/rest/services/Hosted/LFS_map/FeatureServer/4"
+            },
+            "Bulletin_2021": {
+                "id": "Bullet_2021",
+                "url": "https://bhusanket.gsi.gov.in/gisserver/rest/services/Hosted/LFS_map/FeatureServer/1"
+            },
+            "Bulletin_2022": {
+                "id": "Bullet_2022",
+                "url": "https://bhusanket.gsi.gov.in/gisserver/rest/services/Hosted/LFS_map/FeatureServer/3"
+            },
+            "data_collection": {
+                "id": "data_coll",
+                "url": "https://bhusanket.gsi.gov.in/gisserver/rest/services/Hosted/LFS_map/FeatureServer/2"
+            },
+            "state_lfs": {
+                "id": "state_lfs",
+                "url": "https://bhusanket.gsi.gov.in/gisserver/rest/services/Hosted/LFS_map/FeatureServer/7"
+            },
+            "susceptibility_lyr": {
+                "id": "susceptibilityLayer",
+                "url": "https://bhusanket.gsi.gov.in/gisserver/rest/services/GSI/Susceptibility/ImageServer"
+            },
+            "Bulletin_lyr": {
+                "id": "BulletinstateLayer",
+                "url": "https://bhusanket.gsi.gov.in/gisserver/rest/services/GSI/Bulletin_Map/FeatureServer/1"
+            },
+            "Landslide_Dashboard": {
+                "id": "SuseApp",
+                "url": "https://bhusanket.gsi.gov.in/gisportal/apps/dashboards/71a3971256a341549eff1b8e2196f712"
+            },
+            "SuseApp": {
+                "id": "SuseApp",
+                "url": "https://bhusanket.gsi.gov.in/suse/"
+            },
+            "LfsApp": {
+                "id": "LfsApp",
+                "url": "https://bhusanket.gsi.gov.in/lfs/"
+            },
+            "LandslideApp": {
+                "id": "LandslideApp",
+                "url": "https://bhusanket.gsi.gov.in/landslide/"
+            },
+            "Toposheet_lyr":{
+                "id": "Toposheet",
+                "url": "https://bhusanket.gsi.gov.in/gisserver/rest/services/Hosted/TopoNo/FeatureServer/0"
+            }
+        },
+        "Port": {
+            "server": {
+                "baseUrl": "https://bhusanket.gsi.gov.in",
+                "apiUrl": "https://bhusanket.gsi.gov.in/WebAPI_v2",
+                "api_Url":"https://bhusanket.gsi.gov.in/ArcGis_Api_Integration",
+                "resourceFolderUrl": "https://bhusanket.gsi.gov.in/Output",
+                "sitekey": "6LcPxGsrAAAAAEBueofiRgwDupSqFQOzbNWz-E00"
+            },
+            "homepageRedirect": {
+                "url": "https://bhusanket.gsi.gov.in/index.html"
+            },
+        
+            "ProjectRedirect": {
+                "mesoScaleUrl": "https://bhusanket.gsi.gov.in/projectStatusNew.html",
+                "macroScaleUrl": "https://bhusanket.gsi.gov.in/MacroProject.html",
+                "microScaleUrl": "https://bhusanket.gsi.gov.in/MicroProject.html",
+                "ResearchAndDevelopment":"https://bhusanket.gsi.gov.in/ResearchAndDevelopment.html"
+            }
+        },
+        "Proxy": {
+            "urlPrefix": "https://bhusanket.gsi.gov.in",
+            "proxyUrl": "https://bhusanket.gsi.gov.in/DotNet/proxy.ashx"
+        },
+        "Basemap": {
+            "map": "3731ffe6b1b64168b9c3a4381698afee",
+        },
+        "Basemap_LandslideReport": {
+            "map": "8dda0e7b5e2d4fafa80132d59122268c",
+        },
+        "zoomvalue": {
+            "minScale": "0",
+        },
+        "filterdistrict":{
+            "districts": ["Darjeeling", "The Nilgiris", "Kalimpong","Rudraprayag"]
+        },
+    }
+    
+]
+config = prod;

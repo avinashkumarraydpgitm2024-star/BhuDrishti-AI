@@ -1,0 +1,400 @@
+{
+  "theme": {
+    "name": "PlateauTheme",
+    "styles": [
+      "dark-blue",
+      "default",
+      "black",
+      "medium-grey",
+      "esri-blue",
+      "dark-green",
+      "esri-green",
+      "orange"
+    ],
+    "version": "2.27",
+    "sharedTheme": {
+      "isPortalSupport": false,
+      "useHeader": false,
+      "useLogo": false
+    }
+  },
+  "portalUrl": "https://bhusanket.gsi.gov.in/gisportal",
+  "appId": "",
+  "authorizedCrossOriginDomains": [],
+  "title": "<div class=\"attribute-custom-style\"><font color=\"#191970\"></font>Recent Landslide Map</div>",
+  "subtitle": "<div class=\"attribute-custom-style\"><font color=\"#c24f19\">Landslide Incidence Details</font></div>",
+  "keepAppState": false,
+  "logo": "images/logo.png",
+  
+  "links": [],
+  "widgetOnScreen": {
+    "widgets": [
+      {
+        "uri": "themes/PlateauTheme/widgets/HeaderController/Widget",
+        "position": {
+          "left": 0,
+          "top": 0,
+          "right": 0,
+          "height": 40,
+          "relativeTo": "browser"
+        },
+        "version": "2.27",
+        "id": "themes_PlateauTheme_widgets_HeaderController_Widget_20",
+        "name": "HeaderController"
+      },
+      {
+        "uri": "widgets/Scalebar/Widget",
+        "position": {
+          "left": 25,
+          "bottom": 25,
+          "relativeTo": "map"
+        },
+        "version": "2.27",
+        "id": "widgets_Scalebar_Widget_21",
+        "name": "Scalebar"
+      },
+      {
+        "uri": "widgets/Search/Widget",
+        "visible": false,
+        "position": {
+          "left": 55,
+          "top": 5,
+          "relativeTo": "map"
+        },
+        "version": "2.27",
+        "id": "widgets_Search_Widget_22",
+        "name": "Search"
+      },
+      {
+        "uri": "widgets/Coordinate/Widget",
+        "visible": false,
+        "position": {
+          "left": 200,
+          "bottom": 20,
+          "relativeTo": "map"
+        },
+        "version": "2.27",
+        "id": "widgets_Coordinate_Widget_23",
+        "name": "Coordinate"
+      },
+      {
+        "uri": "widgets/OverviewMap/Widget",
+        "visible": false,
+        "position": {
+          "right": 0,
+          "bottom": 0,
+          "zIndex": 1,
+          "relativeTo": "map"
+        },
+        "version": "2.27",
+        "id": "widgets_OverviewMap_Widget_24",
+        "name": "OverviewMap"
+      },
+      {
+        "uri": "widgets/HomeButton/Widget",
+        "position": {
+          "left": 7,
+          "top": 75,
+          "relativeTo": "map"
+        },
+        "version": "2.27",
+        "id": "widgets_HomeButton_Widget_25",
+        "name": "HomeButton"
+      },
+      {
+        "uri": "widgets/MyLocation/Widget",
+        "position": {
+          "left": 7,
+          "top": 110,
+          "relativeTo": "map"
+        },
+        "version": "2.27",
+        "id": "widgets_MyLocation_Widget_26",
+        "name": "MyLocation"
+      },
+      {
+        "uri": "widgets/AttributeTable/Widget",
+        "visible": false,
+        "version": "2.27",
+        "position": {
+          "relativeTo": "browser"
+        },
+        "id": "widgets_AttributeTable_Widget_27",
+        "name": "AttributeTable"
+      },
+      {
+        "uri": "widgets/Splash/Widget",
+        "visible": false,
+        "position": {
+          "relativeTo": "browser"
+        },
+        "version": "2.27",
+        "id": "widgets_Splash_Widget_28",
+        "name": "Splash"
+      },
+      {
+        "uri": "widgets/ZoomSlider/Widget",
+        "position": {
+          "top": 5,
+          "left": 7,
+          "relativeTo": "map"
+        },
+        "version": "2.27",
+        "id": "widgets_ZoomSlider_Widget_29",
+        "name": "ZoomSlider"
+      },
+      {
+        "uri": "widgets/ExtentNavigate/Widget",
+        "visible": false,
+        "position": {
+          "top": 149,
+          "left": 7,
+          "relativeTo": "map"
+        },
+        "version": "2.27",
+        "id": "widgets_ExtentNavigate_Widget_30",
+        "name": "ExtentNavigate"
+      }
+    ],
+    "panel": {
+      "uri": "jimu/OnScreenWidgetPanel",
+      "position": {
+        "relativeTo": "map"
+      }
+    }
+  },
+  "map": {
+    "3D": false,
+    "2D": true,
+    "position": {
+      "left": 0,
+      "top": 40,
+      "right": 0,
+      "bottom": 0
+    },
+    "itemId": "4a6072e64d124763b26cd540ccd5bd27",
+    "mapOptions": {
+      "extent": {
+        "xmin": 4664319.870721007,
+        "ymin": 217990.87520089123,
+        "xmax": 14115605.544123968,
+        "ymax": 5090392.806209872,
+        "spatialReference": {
+          "wkid": 102100
+        }
+      }
+    },
+    "id": "map",
+    "portalUrl": "https://bhusanket.gsi.gov.in/gisportal",
+    "mapRefreshInterval": {
+      "useWebMapRefreshInterval": true
+    }
+  },
+  "widgetPool": {
+    "panel": {
+      "uri": "themes/PlateauTheme/panels/FoldablePanel/Panel",
+      "position": {
+        "top": 5,
+        "right": 5,
+        "bottom": 5,
+        "zIndex": 5,
+        "relativeTo": "map"
+      }
+    },
+    "widgets": [
+      {
+        "uri": "widgets/Legend/Widget",
+        "version": "2.27",
+        "id": "widgets_Legend_Widget_18",
+        "name": "Legend",
+        "index": 2
+      },
+      {
+        "name": "BasemapGallery",
+        "version": "2.27",
+        "uri": "widgets/BasemapGallery/Widget",
+        "config": "configs/BasemapGallery/config_widgets_BasemapGallery_Widget_31.json",
+        "index": 4,
+        "id": "widgets_BasemapGallery_Widget_31"
+      },
+	  {
+        "name": "Filter",
+        "version": "2.27",
+        "uri": "widgets/Filter/Widget",
+        "index": 5,
+        "id": "widgets_Filter_Widget_32",
+        "config": "configs/Filter/config_widgets_Filter_Widget_32.json",
+        "openAtStart": false
+      }
+    ],
+    "groups": []
+  },
+  "mobileLayout": {
+    "widgetOnScreen": {
+      "widgets": [
+        {
+          "uri": "themes/PlateauTheme/widgets/HeaderController/Widget",
+          "position": {
+            "left": 0,
+            "top": 0,
+            "right": 0,
+            "height": 40,
+            "relativeTo": "browser"
+          },
+          "version": "2.27"
+        },
+        {
+          "uri": "widgets/Scalebar/Widget",
+          "visible": true,
+          "position": {
+            "left": 25,
+            "bottom": 25,
+            "relativeTo": "map"
+          },
+          "version": "2.27"
+        },
+        {
+          "uri": "widgets/Search/Widget",
+          "visible": false,
+          "position": {
+            "left": 55,
+            "top": 5,
+            "relativeTo": "map"
+          },
+          "version": "2.27"
+        },
+        {
+          "uri": "widgets/Coordinate/Widget",
+          "visible": false,
+          "position": {
+            "left": 200,
+            "bottom": 20,
+            "relativeTo": "map"
+          },
+          "version": "2.27"
+        },
+        {
+          "uri": "widgets/OverviewMap/Widget",
+          "visible": false,
+          "position": {
+            "right": 0,
+            "bottom": 0,
+            "zIndex": 1
+          },
+          "version": "2.27"
+        },
+        {
+          "uri": "widgets/HomeButton/Widget",
+          "visible": true,
+          "inPanel": false,
+          "position": {
+            "left": 7,
+            "top": 75,
+            "relativeTo": "map"
+          },
+          "version": "2.27"
+        },
+        {
+          "uri": "widgets/MyLocation/Widget",
+          "visible": true,
+          "inPanel": false,
+          "position": {
+            "left": 7,
+            "top": 110,
+            "relativeTo": "map"
+          },
+          "version": "2.27"
+        },
+        {
+          "uri": "widgets/AttributeTable/Widget",
+          "visible": false,
+          "version": "2.27",
+          "position": {
+            "relativeTo": "browser"
+          }
+        },
+        {
+          "uri": "widgets/Splash/Widget",
+          "visible": false,
+          "position": {
+            "relativeTo": "browser"
+          },
+          "version": "2.27"
+        },
+        {
+          "uri": "widgets/ZoomSlider/Widget",
+          "visible": true,
+          "position": {
+            "top": 5,
+            "left": 7,
+            "relativeTo": "map"
+          },
+          "version": "2.27"
+        },
+        {
+          "uri": "widgets/ExtentNavigate/Widget",
+          "visible": false,
+          "position": {
+            "top": 149,
+            "left": 7
+          },
+          "version": 2.3
+        }
+      ]
+    },
+    "map": {
+      "position": {
+        "left": 0,
+        "top": 40,
+        "right": 0,
+        "bottom": 0
+      }
+    },
+    "widgetPool": {
+      "panel": {
+        "uri": "themes/PlateauTheme/panels/FoldablePanel/Panel",
+        "position": {
+          "top": 5,
+          "right": 5,
+          "bottom": 5,
+          "zIndex": 5
+        }
+      }
+    }
+  },
+  "loadingPage": {
+    "backgroundColor": "#508dca",
+    "backgroundImage": {
+      "visible": true,
+      "uri": "configs/loading/images/background.png",
+      "width": 225,
+      "height": 225
+    },
+    "loadingGif": {
+      "visible": true,
+      "uri": "/webappbuilder/apps/4/configs/loading/images/predefined_loading_2.gif",
+      "width": 58,
+      "height": 10
+    }
+  },
+  "wabVersion": "2.27",
+  "isTemplateApp": true,
+  "isWebTier": false,
+  "httpProxy": {
+    "useProxy": true,
+    "url": "",
+    "rules": [{
+			"urlPrefix": "https://bhusanket.gsi.gov.in/gisportal/sharing/rest/",
+			"proxyUrl": "https://bhusanket.gsi.gov.in/DotNet/proxy.ashx"
+		},
+	{
+			"urlPrefix": "https://bhusanket.gsi.gov.in/gisserver/rest/services/",
+			"proxyUrl": "https://bhusanket.gsi.gov.in/DotNet/proxy.ashx"
+		}
+		]
+  },
+  "dataSource": {
+    "dataSources": {},
+    "settings": {}
+  }
+}
