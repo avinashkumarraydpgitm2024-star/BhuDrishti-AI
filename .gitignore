@@ -35,3 +35,6 @@ backend/data/usgs_landslides_clean.csv
 backend/data/incoming/team_data/*
 !backend/data/incoming/metadata/
 !backend/data/incoming/metadata/team_data_manifest.csv
+
+# Local extracted teammate review artifacts
+backend/data/incoming/geo_pipeline_review/
