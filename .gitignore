@@ -38,3 +38,6 @@ backend/data/incoming/team_data/*
 
 # Local extracted teammate review artifacts
 backend/data/incoming/geo_pipeline_review/
+
+# Local extracted RAG teammate review artifacts
+backend/data/incoming/rag_submission_review/
