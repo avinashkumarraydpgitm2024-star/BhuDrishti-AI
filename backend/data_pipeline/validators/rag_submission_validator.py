@@ -42,6 +42,19 @@ REQUIRED_SOURCE_COLUMNS = {
     "Notes",
 }
 
+INTERNAL_CAUTION_TERMS = (
+    "re-verify",
+    "reverify",
+    "verify against",
+    "not captured",
+    "not directly",
+    "secondary",
+    "approximate",
+    "exact numeric",
+    "needs verification",
+    "requires verification",
+)
+
 
 def _clean(value: Any) -> str:
     if pd.isna(value):
@@ -209,11 +222,28 @@ def validate_rag_submission(base_dir: str | Path) -> dict[str, Any]:
     unmatched_source_chunks: list[str] = []
     reverify_chunks: list[dict[str, str]] = []
     verified_status_overclaims: list[dict[str, str]] = []
+    internal_caution_chunks: list[dict[str, Any]] = []
 
     for _, row in chunks.iterrows():
         chunk_id = _clean(row["Chunk ID"])
         chunk_url = _normalize_url(row["Source URL"])
         status = _clean(row["Status"]).upper()
+        chunk_text = _clean(row["Chunk Text (paraphrased)"])
+        chunk_text_lower = chunk_text.casefold()
+
+        caution_terms = [
+            term
+            for term in INTERNAL_CAUTION_TERMS
+            if term in chunk_text_lower
+        ]
+
+        if caution_terms:
+            internal_caution_chunks.append(
+                {
+                    "chunk_id": chunk_id,
+                    "matched_terms": caution_terms,
+                }
+            )
 
         source_info = source_lookup.get(chunk_url)
 
@@ -274,6 +304,12 @@ def validate_rag_submission(base_dir: str | Path) -> dict[str, Any]:
             "is required."
         )
 
+    if internal_caution_chunks:
+        warnings.append(
+            f"{len(internal_caution_chunks)} chunks contain internal "
+            "re-verification or uncertainty language."
+        )
+
     if len(rejected) > 0:
         warnings.append(
             f"{len(rejected)} entries are stored in Unverified Rejected."
@@ -293,6 +329,7 @@ def validate_rag_submission(base_dir: str | Path) -> dict[str, Any]:
         and not missing_values
         and not unmatched_source_chunks
         and not verified_status_overclaims
+        and not internal_caution_chunks
     )
 
     status = (
@@ -318,6 +355,7 @@ def validate_rag_submission(base_dir: str | Path) -> dict[str, Any]:
         "sources_requiring_reverification": source_reverification,
         "chunks_requiring_reverification": reverify_chunks,
         "verified_status_overclaims": verified_status_overclaims,
+        "internal_caution_chunks": internal_caution_chunks,
         "errors": errors,
         "warnings": warnings,
         "ready_for_merge": ready_for_merge,

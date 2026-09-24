@@ -162,3 +162,105 @@ def test_duplicate_chunk_text_prevents_merge(
         "TEST-001",
         "TEST-002",
     }
+
+def test_internal_caution_text_prevents_merge(
+    tmp_path: Path,
+) -> None:
+    root = tmp_path / "rag_submission"
+    _write_submission(root)
+
+    workbook = root / "CLEAN_VERIFIED" / "clean_verified_chunks.xlsx"
+
+    chunks = pd.read_excel(
+        workbook,
+        sheet_name="Clean Verified Chunks",
+    )
+
+    rejected = pd.read_excel(
+        workbook,
+        sheet_name="Unverified Rejected",
+    )
+
+    chunks.loc[
+        0,
+        "Chunk Text (paraphrased)",
+    ] = (
+        "Exact numeric cut-offs were not captured and should be "
+        "re-verified against the official source."
+    )
+
+    with pd.ExcelWriter(
+        workbook,
+        engine="openpyxl",
+    ) as writer:
+        chunks.to_excel(
+            writer,
+            sheet_name="Clean Verified Chunks",
+            index=False,
+        )
+        rejected.to_excel(
+            writer,
+            sheet_name="Unverified Rejected",
+            index=False,
+        )
+
+    report = validate_rag_submission(root)
+
+    assert report["status"] == "PASS_WITH_WARNINGS"
+    assert report["ready_for_merge"] is False
+    assert len(report["internal_caution_chunks"]) == 1
+    assert (
+        report["internal_caution_chunks"][0]["chunk_id"]
+        == "TEST-001"
+    )
+
+def test_internal_caution_text_prevents_merge(
+    tmp_path: Path,
+) -> None:
+    root = tmp_path / "rag_submission"
+    _write_submission(root)
+
+    workbook = root / "CLEAN_VERIFIED" / "clean_verified_chunks.xlsx"
+
+    chunks = pd.read_excel(
+        workbook,
+        sheet_name="Clean Verified Chunks",
+    )
+
+    rejected = pd.read_excel(
+        workbook,
+        sheet_name="Unverified Rejected",
+    )
+
+    chunks.loc[
+        0,
+        "Chunk Text (paraphrased)",
+    ] = (
+        "Exact numeric cut-offs were not captured and should be "
+        "re-verified against the official source."
+    )
+
+    with pd.ExcelWriter(
+        workbook,
+        engine="openpyxl",
+    ) as writer:
+        chunks.to_excel(
+            writer,
+            sheet_name="Clean Verified Chunks",
+            index=False,
+        )
+        rejected.to_excel(
+            writer,
+            sheet_name="Unverified Rejected",
+            index=False,
+        )
+
+    report = validate_rag_submission(root)
+
+    assert report["status"] == "PASS_WITH_WARNINGS"
+    assert report["ready_for_merge"] is False
+    assert len(report["internal_caution_chunks"]) == 1
+    assert (
+        report["internal_caution_chunks"][0]["chunk_id"]
+        == "TEST-001"
+    )
