@@ -28,7 +28,7 @@ def answer_risk_question(
     if not results:
         return {
             "answer": (
-                "No sufficiently relevant verified research "
+                "No sufficiently relevant research record "
                 "was found in the current BhuDrishti "
                 "knowledge base."
             ),
@@ -66,7 +66,7 @@ def answer_risk_question(
         )
 
     answer = (
-        f"Most relevant verified record: "
+        f"Most relevant research record: "
         f"{metadata.get('location_name') or 'Unknown location'}.\n\n"
         f"{primary['content']}\n\n"
         f"This response is grounded in BhuDrishti's "
@@ -82,4 +82,5 @@ def answer_risk_question(
         "sources": source_entries,
         "grounded": True,
     }
+
 
