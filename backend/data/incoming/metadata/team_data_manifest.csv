@@ -1,0 +1,4 @@
+﻿file_name,data_type,verification_status,intended_use,notes
+bhudrishti_ai_synthetic_weather_100k.xlsx,synthetic,confirmed_synthetic,ml_experimentation_and_testing,"Dataset_Info explicitly identifies this as Synthetic/project dataset; do not use as real-world evidence."
+Tripura_Weather_Rainfall_1Lakh.csv,weather_timeseries,source_unverified,hold_for_validation,"140160 hourly rows covering 2022-2023; internal structural checks passed; original source/provider still required before real-data use."
+northeast_india_geo_dataset_pipeline.zip,geospatial_pipeline,pipeline_only,reference_and_future_processing,"Contains processing scripts and source manifest but no actual DEM/soil/geology/NDVI/road/river/boundary datasets."
