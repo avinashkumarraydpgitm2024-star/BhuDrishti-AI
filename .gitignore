@@ -41,3 +41,6 @@ backend/data/incoming/geo_pipeline_review/
 
 # Local extracted RAG teammate review artifacts
 backend/data/incoming/rag_submission_review/
+
+# Large synthetic 10M-row teammate datasets - local ML/testing only
+backend/data/incoming/synthetic_10m/
