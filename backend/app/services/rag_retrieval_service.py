@@ -1,4 +1,4 @@
-﻿from functools import lru_cache
+from functools import lru_cache
 from pathlib import Path
 import json
 import re
@@ -44,6 +44,23 @@ RISK_KEYWORDS = {
         "land slide",
         "slide",
         "slope failure",
+    ),
+    "rainfall": (
+        "rainfall",
+        "rain",
+        "precipitation",
+        "cloudburst",
+    ),
+    "earthquake": (
+        "earthquake",
+        "seismic",
+        "tremor",
+    ),
+    "weather": (
+        "weather",
+        "weather warning",
+        "storm",
+        "wind warning",
     ),
 }
 
@@ -106,30 +123,58 @@ def _document_matches_risk_type(
         return True
 
     metadata = document.get("metadata", {})
-    risk_type = str(
-        metadata.get("risk_type") or ""
+
+    searchable_type = " ".join(
+        [
+            str(metadata.get("risk_type") or ""),
+            str(metadata.get("topic") or ""),
+        ]
     ).casefold()
 
     for detected in detected_types:
         if detected == "glof":
-            if (
-                "glof" in risk_type
-                or "glacial" in risk_type
-                or "flood" in risk_type
+            if any(
+                term in searchable_type
+                for term in ("glof", "glacial", "flood")
             ):
                 return True
 
         elif detected == "flood":
-            if (
-                "flood" in risk_type
-                or "glof" in risk_type
+            if any(
+                term in searchable_type
+                for term in ("flood", "glof", "inundation")
             ):
                 return True
 
         elif detected == "landslide":
-            if (
-                "landslide" in risk_type
-                or "slide" in risk_type
+            if any(
+                term in searchable_type
+                for term in ("landslide", "slide", "slope")
+            ):
+                return True
+
+        elif detected == "rainfall":
+            if any(
+                term in searchable_type
+                for term in (
+                    "rain",
+                    "precipitation",
+                    "cloudburst",
+                )
+            ):
+                return True
+
+        elif detected == "earthquake":
+            if any(
+                term in searchable_type
+                for term in ("earthquake", "seismic", "tremor")
+            ):
+                return True
+
+        elif detected == "weather":
+            if any(
+                term in searchable_type
+                for term in ("weather", "storm", "warning")
             ):
                 return True
 
@@ -268,6 +313,104 @@ def _document_matches_state(
         and document_state == query_state
     )
 
+def _document_knowledge_scope(
+    document: dict,
+) -> str:
+    metadata = document.get("metadata", {})
+
+    scope = _normalize_location_text(
+        str(metadata.get("knowledge_scope") or "")
+    )
+
+    return scope or "location specific"
+
+
+def _document_applicable_states(
+    document: dict,
+) -> set[str]:
+    metadata = document.get("metadata", {})
+    states: set[str] = set()
+
+    raw_states = metadata.get("applicable_states")
+
+    if isinstance(raw_states, (list, tuple, set)):
+        values = raw_states
+    elif raw_states:
+        values = re.split(
+            r"[,;/|]+",
+            str(raw_states),
+        )
+    else:
+        values = []
+
+    for value in values:
+        normalized = _normalize_location_text(
+            str(value)
+        )
+
+        if normalized:
+            states.add(normalized)
+
+    state = _normalize_location_text(
+        str(metadata.get("state") or "")
+    )
+
+    if state and state != "india":
+        states.add(state)
+
+    return states
+
+
+def _document_applies_to_state(
+    document: dict,
+    state: str,
+) -> bool:
+    scope = _document_knowledge_scope(document)
+
+    if scope in {
+        "national",
+        "general",
+        "india wide",
+        "indiawide",
+    }:
+        return True
+
+    query_state = _normalize_location_text(state)
+
+    if not query_state:
+        return True
+
+    return (
+        query_state
+        in _document_applicable_states(document)
+    )
+
+
+def _known_location_states(
+    query: str,
+    documents: list[dict],
+) -> set[str]:
+    states: set[str] = set()
+
+    for document in documents:
+        if not _document_location_match(
+            query,
+            document,
+        ):
+            continue
+
+        metadata = document.get("metadata", {})
+
+        state = _normalize_location_text(
+            str(metadata.get("state") or "")
+        )
+
+        if state:
+            states.add(state)
+
+    return states
+
+
 def search_risk_knowledge(
     query: str,
     *,
@@ -291,9 +434,13 @@ def search_risk_knowledge(
 
     detected_types = _detect_query_risk_types(query)
 
-    has_known_location = _query_has_known_location(
+    known_location_states = _known_location_states(
         query,
         documents,
+    )
+
+    has_known_location = bool(
+        known_location_states
     )
 
     resolved_geography = (
@@ -301,6 +448,16 @@ def search_risk_knowledge(
         if has_known_location
         else _resolve_query_geography(query)
     )
+
+    query_state = None
+
+    if len(known_location_states) == 1:
+        query_state = next(
+            iter(known_location_states)
+        )
+
+    elif resolved_geography:
+        query_state = resolved_geography["state"]
 
     ranked_indices = np.argsort(scores)[::-1]
 
@@ -321,16 +478,21 @@ def search_risk_knowledge(
             continue
 
         if (
-            resolved_geography
-            and not _document_matches_state(
+            query_state
+            and not _document_applies_to_state(
                 document,
-                resolved_geography["state"],
+                query_state,
             )
         ):
             continue
 
+        scope = _document_knowledge_scope(
+            document
+        )
+
         if (
             has_known_location
+            and scope == "location specific"
             and not _document_location_match(
                 query,
                 document,

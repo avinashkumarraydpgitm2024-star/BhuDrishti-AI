@@ -1,4 +1,4 @@
-﻿from backend.app.services.rag_retrieval_service import (
+from backend.app.services.rag_retrieval_service import (
     search_risk_knowledge,
 )
 
@@ -46,12 +46,16 @@ def answer_risk_question(
     for result in results:
         item_metadata = result["metadata"]
 
+        source_location = (
+            item_metadata.get("location_name")
+            or item_metadata.get("region")
+            or item_metadata.get("state")
+        )
+
         source_entries.append(
             {
                 "document_id": result["document_id"],
-                "location": item_metadata.get(
-                    "location_name"
-                ),
+                "location": source_location,
                 "risk_type": item_metadata.get(
                     "risk_type"
                 ),
@@ -65,9 +69,34 @@ def answer_risk_question(
             }
         )
 
+    location_name = metadata.get(
+        "location_name"
+    )
+
+    context_name = (
+        location_name
+        or metadata.get("region")
+        or metadata.get("state")
+        or "General"
+    )
+
+    knowledge_scope = str(
+        metadata.get("knowledge_scope") or ""
+    ).strip().casefold()
+
+    if location_name:
+        context_label = "Most relevant research record"
+    elif knowledge_scope == "national":
+        context_label = "Most relevant national research context"
+    elif knowledge_scope == "state":
+        context_label = "Most relevant state research context"
+    elif knowledge_scope == "regional":
+        context_label = "Most relevant regional research context"
+    else:
+        context_label = "Most relevant research context"
+
     answer = (
-        f"Most relevant research record: "
-        f"{metadata.get('location_name') or 'Unknown location'}.\n\n"
+        f"{context_label}: {context_name}.\n\n"
         f"{primary['content']}\n\n"
         f"This response is grounded in BhuDrishti's "
         f"retrieved research record "

@@ -44,3 +44,7 @@ backend/data/incoming/rag_submission_review/
 
 # Large synthetic 10M-row teammate datasets - local ML/testing only
 backend/data/incoming/synthetic_10m/
+
+# Local RAG merge safety backups
+backend/app/services/rag_retrieval_service_before_general_knowledge.py
+backups/rag_before_team_merge/
